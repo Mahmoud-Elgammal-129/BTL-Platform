@@ -9,10 +9,8 @@ namespace BTL_Platform.Models
         public long RequestTypeID { get; set; }
         public string? TypeName { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }=false;
       
-        [ForeignKey(nameof(Request))]
-        public long RequestID { get; set; }
-        public virtual Request? Request { get; set; }
+
     }
 }

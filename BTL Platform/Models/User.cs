@@ -12,7 +12,7 @@ namespace BTL_Platform.Models
         public string? Email { get; set; }
         public string? Team { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }=false;
         
 
 

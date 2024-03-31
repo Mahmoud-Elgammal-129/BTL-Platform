@@ -24,10 +24,7 @@ namespace BTL_Platform.Models
         public decimal longitude { get; set; }
         public DateTime lastupdated { get; set; }=DateTime.Now;
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
-        [ForeignKey(nameof(Visit))]
-        public long VisitId { get; set; }
-        public virtual Visit? Visit { get; set; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BTL_Platform.Models
 {
-    public class BTLContext:DbContext
+    public class BTLContext:IdentityDbContext<ApplicationUser>
     {
         public BTLContext(DbContextOptions<BTLContext> options) : base(options)
         {

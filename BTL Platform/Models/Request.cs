@@ -20,11 +20,21 @@ namespace BTL_Platform.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }=false;
+
 
         [ForeignKey(nameof(Visit))]
         public long VisitId { get; set; }
         public virtual Visit? Visit { get; set; }
+
+
+        [ForeignKey(nameof(Employee))]
+        public Guid Employee_Id { get; set; }
+        public virtual Employees ? Employee {  get; set; }
+
+        [ForeignKey(nameof(Request_type))]
+        public long Request_type_Id { get; set; }
+        public virtual RequestType? Request_type { get; set; }
 
 
     }

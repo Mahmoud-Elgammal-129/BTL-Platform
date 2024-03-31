@@ -26,7 +26,11 @@ namespace BTL_Platform.Models
         public string Request_ID  { get; set; } = string.Empty;
         public int UnitsNumbers { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        [ForeignKey(nameof(request))]
+        public long Request_Id { get; set; }
+        public virtual Request? request { get; set; }
+
         [ForeignKey(nameof(User))]
         public long Id { get; set; }
         public virtual User? User { get; set; }
@@ -38,5 +42,9 @@ namespace BTL_Platform.Models
         [ForeignKey(nameof(VisitType))]
         public long VisitTypeId { get; set; }
         public virtual VisitType? VisitType { get; set; }
+
+        [ForeignKey(nameof(Place))]
+        public long Place_Id { get; set; }
+        public virtual Places? Place { get; set; }
     }
 }

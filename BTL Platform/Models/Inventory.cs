@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BTL_Platform.Models
 {
@@ -11,6 +12,10 @@ namespace BTL_Platform.Models
         public int count { get; set; }
         public string Status { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
+        [ForeignKey(nameof(unit))]
+        public long unit_Id { get; set; }
+        public virtual Unit? unit { get; set; }
     }
 }
