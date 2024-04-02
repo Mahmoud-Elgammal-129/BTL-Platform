@@ -23,12 +23,12 @@ namespace BTL_Platform.Models
         public DateTime PlannedDate { get; set; } 
         public string TaskId { get; set; } = string.Empty;
         public string TaskName { get; set; } = string.Empty;
-        public string Request_ID  { get; set; } = string.Empty;
+        //public string RequestID  { get; set; } = string.Empty;
         public int UnitsNumbers { get; set; }
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; } = false;
         [ForeignKey(nameof(request))]
-        public long Request_Id { get; set; }
+        public long RequestID { get; set; }
         public virtual Request? request { get; set; }
 
         [ForeignKey(nameof(User))]

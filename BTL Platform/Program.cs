@@ -1,4 +1,5 @@
 using BTL_Platform.Models;
+using BTL_Platform.Reposatiory;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ builder.Services.AddDbContext<BTLContext>(options =>
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<RequestRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

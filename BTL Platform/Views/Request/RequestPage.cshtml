@@ -1,0 +1,58 @@
+﻿@model List<Request>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requests</title>
+    <!-- Include any necessary CSS or JavaScript files -->
+</head>
+<a asp-action="New" asp-controller="Request" class="btn btn-success">NewRequest</a>
+
+
+<body>
+    <h1>Requests</h1>
+    <table class ="table table-border table-hover">
+        <thead>
+            <tr>
+                <th>RequestDate</th>
+                <th>Channel</th>
+                <th>Description</th>
+                <th>Assignee</th>
+                <th>WH_movements</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>POSNumber</th>
+                <th>OnGroundTeams</th>
+                <th>TrucksNeeded</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>RequestType</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                   @* <td>@request.RequestID</td>*@
+                    <td>@request.RequestDate</td>
+                    <td>@request.Channel</td>
+                    <td>@request.Description</td>
+                    <td>@request.Assignee</td>
+                    <td>@request.WH_movements</td>
+                    <td>@request.Status</td>
+                    <td>@request.Priority</td>
+                    <td>@request.POSNumber</td>
+                    <td>@request.OnGroundTeams</td>
+                    <td>@request.TrucksNeeded</td>
+                    <td>@request.StartDate</td>
+                    <td>@request.EndDate</td>
+                   @* <td>@request.Request_type.TypeName</td>*@
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+

@@ -29,7 +29,7 @@ namespace BTL_Platform.Models
 
 
         [ForeignKey(nameof(Employee))]
-        public Guid Employee_Id { get; set; }
+        public string Employee_Id { get; set; }
         public virtual Employees ? Employee {  get; set; }
 
         [ForeignKey(nameof(Request_type))]
