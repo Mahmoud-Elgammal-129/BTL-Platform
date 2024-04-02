@@ -4,7 +4,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BTL_Platform.Models
 {
-    public class Employees:ApplicationUser
+    public class Employee:ApplicationUser
     {
         //[Key]
         //public long Id { get; set; }

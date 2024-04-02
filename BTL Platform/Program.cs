@@ -1,15 +1,23 @@
 using BTL_Platform.Models;
 using BTL_Platform.Reposatiory;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<BTLContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectDB"));
 });
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+              .AddEntityFrameworkStores<BTLContext>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<RequestRepository>();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,11 +32,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=login}/{action=login}/{id?}");
 
 app.Run();
