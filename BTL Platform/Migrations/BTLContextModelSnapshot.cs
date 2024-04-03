@@ -106,16 +106,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6776690a-70eb-49c0-b6f4-4048571b3d86",
+                            ConcurrencyStamp = "c4eb72d4-f9a1-4328-a45a-1e04edafee79",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFR1lBCeB9J6OMDLUIWD/ORI/LNh6BPLIokbfP1XeLXmhLmCJpS20STZnNJeCPSZCg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED/X2DA+hn/Y/FdWFQBU9wsKGjuYmNNxwJ17vhxzRW/vRwhEHIH23rAkt9UYQIlqtA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16b92467-cf16-4110-82e6-8bef74b402e1",
+                            SecurityStamp = "0e280813-2b70-42f0-a569-9545b49ba9c8",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -152,7 +152,8 @@ namespace BTL_Platform.Migrations
 
                     b.HasKey("InventoryId");
 
-                    b.HasIndex("unit_Id");
+                    b.HasIndex("unit_Id")
+                        .IsUnique();
 
                     b.ToTable("Inventories");
                 });
@@ -335,6 +336,9 @@ namespace BTL_Platform.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UnitId"));
 
+                    b.Property<long>("InventoryId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -349,6 +353,8 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("UnitId");
+
+                    b.HasIndex("InventoryId");
 
                     b.HasIndex("Unit_type_Id");
 
@@ -710,8 +716,8 @@ namespace BTL_Platform.Migrations
             modelBuilder.Entity("BTL_Platform.Models.Inventory", b =>
                 {
                     b.HasOne("BTL_Platform.Models.Unit", "unit")
-                        .WithMany()
-                        .HasForeignKey("unit_Id")
+                        .WithOne()
+                        .HasForeignKey("BTL_Platform.Models.Inventory", "unit_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -747,11 +753,19 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
                 {
+                    b.HasOne("BTL_Platform.Models.Inventory", "Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BTL_Platform.Models.UnitType", "Unit_type")
                         .WithMany()
                         .HasForeignKey("Unit_type_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Inventory");
 
                     b.Navigation("Unit_type");
                 });

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BTL_Platform.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class c2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -264,28 +264,6 @@ namespace BTL_Platform.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    UnitId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitNumber = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Unit_type_Id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.UnitId);
-                    table.ForeignKey(
-                        name: "FK_Units_UnitTypes_Unit_type_Id",
-                        column: x => x.Unit_type_Id,
-                        principalTable: "UnitTypes",
-                        principalColumn: "UnitTypeId",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Inventories",
                 columns: table => new
                 {
@@ -301,11 +279,34 @@ namespace BTL_Platform.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inventories", x => x.InventoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    UnitId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitNumber = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Unit_type_Id = table.Column<long>(type: "bigint", nullable: false),
+                    InventoryId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.UnitId);
                     table.ForeignKey(
-                        name: "FK_Inventories_Units_unit_Id",
-                        column: x => x.unit_Id,
-                        principalTable: "Units",
-                        principalColumn: "UnitId",
+                        name: "FK_Units_Inventories_InventoryId",
+                        column: x => x.InventoryId,
+                        principalTable: "Inventories",
+                        principalColumn: "InventoryId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Units_UnitTypes_Unit_type_Id",
+                        column: x => x.Unit_type_Id,
+                        principalTable: "UnitTypes",
+                        principalColumn: "UnitTypeId",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -414,6 +415,21 @@ namespace BTL_Platform.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "1", null, "employee", "EMPLOYEE" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "address" },
+                values: new object[] { "1", 0, "c4eb72d4-f9a1-4328-a45a-1e04edafee79", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAED/X2DA+hn/Y/FdWFQBU9wsKGjuYmNNxwJ17vhxzRW/vRwhEHIH23rAkt9UYQIlqtA==", null, false, "0e280813-2b70-42f0-a569-9545b49ba9c8", false, "Zaghlol", null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "1", "1" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -456,7 +472,8 @@ namespace BTL_Platform.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Inventories_unit_Id",
                 table: "Inventories",
-                column: "unit_Id");
+                column: "unit_Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_Employee_Id",
@@ -472,6 +489,11 @@ namespace BTL_Platform.Migrations
                 name: "IX_Requests_VisitId",
                 table: "Requests",
                 column: "VisitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Units_InventoryId",
+                table: "Units",
+                column: "InventoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_Unit_type_Id",
@@ -504,6 +526,14 @@ namespace BTL_Platform.Migrations
                 column: "VisitTypeId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_Inventories_Units_unit_Id",
+                table: "Inventories",
+                column: "unit_Id",
+                principalTable: "Units",
+                principalColumn: "UnitId",
+                onDelete: ReferentialAction.NoAction);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_Requests_Visits_VisitId",
                 table: "Requests",
                 column: "VisitId",
@@ -518,6 +548,10 @@ namespace BTL_Platform.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Requests_AspNetUsers_Employee_Id",
                 table: "Requests");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Inventories_Units_unit_Id",
+                table: "Inventories");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Requests_RequestTypes_Request_type_Id",
@@ -543,19 +577,19 @@ namespace BTL_Platform.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Inventories");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Units");
 
             migrationBuilder.DropTable(
-                name: "UnitTypes");
+                name: "Inventories");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "UnitTypes");
 
             migrationBuilder.DropTable(
                 name: "RequestTypes");
