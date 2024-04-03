@@ -14,6 +14,9 @@ namespace BTL_Platform.Models
         [ForeignKey(nameof(Unit_type))]
         public long Unit_type_Id { get; set; }
         public virtual UnitType? Unit_type { get; set; }
+        [ForeignKey(nameof(Inventory))]
+        public long InventoryId { get; set; }
+        public virtual Inventory? Inventory { get; set; }
 
 
     }

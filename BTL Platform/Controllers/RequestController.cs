@@ -20,7 +20,10 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            List<Request> Requesttype = RequestRepository.GetRequests();
+            //onexecuted
+            return View(Requesttype);
+           
         }
         [HttpPost]
         public IActionResult Create(Request requests)
