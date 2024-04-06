@@ -6,7 +6,7 @@
     <title>Requests</title>
     <!-- Include any necessary CSS or JavaScript files -->
 </head>
-<a asp-action="New" asp-controller="Request" class="btn btn-success">NewRequest</a>
+<a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
 
 
 <body>
@@ -27,6 +27,7 @@
                 <th>StartDate</th>
                 <th>EndDate</th>
                 <th>RequestType</th>
+                <th></th>
                 
             </tr>
         </thead>
@@ -47,8 +48,20 @@
                     <td>@request.TrucksNeeded</td>
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
-                   @* <td>@request.Request_type.TypeName</td>*@
-                    
+                    @*<td>@request.Request_type.TypeName</td>*@
+                   <td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>
+                         
+                    </td>
+                   </td>
+                   @* <td>
+                        <form asp-controller="Request" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@request.RequestID" />
+                            <button type="submit">Soft Delete</button>
+                        </form>
+                    </td>*@
                 </tr>
             }
         </tbody>

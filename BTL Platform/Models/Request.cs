@@ -5,9 +5,10 @@ namespace BTL_Platform.Models
 {
     public class Request
     {
+            
         [Key]
         public long RequestID { get; set; }
-        public DateTime RequestDate { get; set; }=DateTime.Now;
+        public DateTime RequestDate { get; set; } = DateTime.Now;
         public string Channel { get; set; }
         public string Description { get; set; }
         public string Assignee { get; set; }
@@ -20,22 +21,14 @@ namespace BTL_Platform.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }=false;
-
-
-        [ForeignKey(nameof(Visit))]
-        public long VisitId { get; set; }
-        public virtual Visit? Visit { get; set; }
-
+        public bool IsDeleted { get; set; } = false;
 
         [ForeignKey(nameof(Employee))]
         public string Employee_Id { get; set; }
-        public virtual Employee ? Employee {  get; set; }
+        public virtual Employee? Employee { get; set; }
 
         [ForeignKey(nameof(Request_type))]
-        public long Request_type_Id { get; set; }
-        public virtual RequestType? Request_type { get; set; }
-
-
+        public long RequestTypeID { get; set; }
+        public virtual RequestType Request_type { get; set; }
     }
 }

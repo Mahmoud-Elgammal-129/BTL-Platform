@@ -4,6 +4,7 @@ using BTL_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    partial class BTLContextModelSnapshot : ModelSnapshot
+    [Migration("20240405142842_d")]
+    partial class d
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,16 +109,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf188a02-b734-4e4c-bbdc-a8fc766f4c04",
+                            ConcurrencyStamp = "46466b24-eaa6-4488-a6e6-92ac2bcf45aa",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAELmUCWcwRIMotPaNSoExXVVf6jmLRxFCd5P/Ae7Rzui8vyifLhVAj6WqGvksDQrOeQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL8PMWsB2X88mBgwd6jCjG2KyvVGgVQjKagfIHpv7Ilfe4XEISzohevwWJoFnzfC8Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "096b56d9-9677-40a2-8c1e-0b15bf52a535",
+                            SecurityStamp = "719ca67c-57ec-4e92-8c14-aba5d8cc53d2",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -285,6 +288,9 @@ namespace BTL_Platform.Migrations
                     b.Property<int>("TrucksNeeded")
                         .HasColumnType("int");
 
+                    b.Property<long>("VisitId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("WH_movements")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -294,6 +300,8 @@ namespace BTL_Platform.Migrations
                     b.HasIndex("Employee_Id");
 
                     b.HasIndex("RequestTypeID");
+
+                    b.HasIndex("VisitId");
 
                     b.ToTable("Requests");
                 });
@@ -333,6 +341,7 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UnitName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UnitNumber")
@@ -716,9 +725,17 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BTL_Platform.Models.Visit", "Visit")
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Employee");
 
                     b.Navigation("Request_type");
+
+                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
@@ -754,7 +771,7 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_Platform.Models.Places", "request")
+                    b.HasOne("BTL_Platform.Models.Request", "request")
                         .WithMany()
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade)

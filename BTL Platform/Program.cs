@@ -1,5 +1,6 @@
 using BTL_Platform.Models;
 using BTL_Platform.Reposatiory;
+using BTL_Platform.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<RequestRepository>();
+builder.Services.AddScoped<RequestTypeRepository>();
+builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<InventoryRepository>();
+builder.Services.AddScoped<PlacesRepository>();
+builder.Services.AddScoped<UnitRepository>();
+builder.Services.AddScoped<UnitTypeRepository>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 
