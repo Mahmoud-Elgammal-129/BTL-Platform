@@ -1,15 +1,15 @@
-﻿@model List<Request>
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+@model List<Request>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Requests</title>
-    <!-- Include any necessary CSS or JavaScript files -->
-</head>
-<a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
+
+</div>
 
 
-<body>
+<div class="m-5">
     <h1>Requests</h1>
     <table class ="table table-border table-hover">
         <thead>
@@ -66,6 +66,6 @@
             }
         </tbody>
     </table>
-</body>
-</html>
+</div>
+
 

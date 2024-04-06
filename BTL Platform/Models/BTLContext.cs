@@ -6,6 +6,8 @@ namespace BTL_Platform.Models
 {
     public class BTLContext:IdentityDbContext<ApplicationUser>
     {
+        private DbSet<User> users;
+
         public BTLContext(DbContextOptions<BTLContext> options) : base(options)
         {
         }
@@ -16,7 +18,7 @@ namespace BTL_Platform.Models
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UnitType> UnitTypes { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get => users; set => users = value; }
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<VisitStatus> VisitStatuses { get; set; }
         public virtual DbSet<VisitType> VisitTypes { get; set; }
