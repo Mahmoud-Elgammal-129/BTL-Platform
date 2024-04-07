@@ -1,5 +1,7 @@
 ﻿@model List<Request>
-
+@{
+    int counter = 1;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,7 @@
     <table class ="table table-border table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>RequestDate</th>
                 <th>Channel</th>
                 <th>Description</th>
@@ -34,7 +37,9 @@
         <tbody>
             @foreach (var request in Model)
             {
+                
                 <tr>
+                   <td>@(counter++)</td> 
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
                     <td>@request.Channel</td>
@@ -48,7 +53,7 @@
                     <td>@request.TrucksNeeded</td>
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
-                    @*<td>@request.Request_type.TypeName</td>*@
+                    <td>@request.Request_type.TypeName</td>
                    <td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>

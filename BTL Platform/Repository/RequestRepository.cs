@@ -33,7 +33,7 @@ namespace BTL_Platform.Reposatiory
 
             public List<Request> GetRequests()
             {
-           var request= bTLContext.Requests.ToList();
+           var request= bTLContext.Requests.Include(r=>r.Request_type).ToList();
             return request;
             }
 

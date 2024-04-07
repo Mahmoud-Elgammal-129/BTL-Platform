@@ -61,7 +61,11 @@ namespace BTL_Platform.Controllers
         public IActionResult Edit(long id)
         {
             Request requestid = RequestRepository.GetRequest(id);
+            ViewData["requestList"] = RequestRepository.GetRequests();
             return View(requestid);
+      
+
+           
         }
         [HttpPost]
         public IActionResult Edit(Request request, long id)
