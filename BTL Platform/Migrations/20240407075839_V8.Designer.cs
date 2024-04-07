@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    [Migration("20240405220612_b")]
-    partial class b
+    [Migration("20240407075839_V8")]
+    partial class V8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,16 +109,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf188a02-b734-4e4c-bbdc-a8fc766f4c04",
+                            ConcurrencyStamp = "8d2be72f-4463-4bfe-86eb-09b3f4a6df84",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAELmUCWcwRIMotPaNSoExXVVf6jmLRxFCd5P/Ae7Rzui8vyifLhVAj6WqGvksDQrOeQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAzUYm4zF6e+LNghli30rIDeWrm1LalF3uGM0BZYY2aMw38FkLjVTvNtkqntwESZog==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "096b56d9-9677-40a2-8c1e-0b15bf52a535",
+                            SecurityStamp = "66b16358-855f-4ca5-80ff-00ef1ebd10fc",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });

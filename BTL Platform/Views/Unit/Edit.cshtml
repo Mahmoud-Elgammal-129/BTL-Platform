@@ -1,0 +1,59 @@
+﻿@model BTL_Platform.Models.Unit
+@{
+
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+
+}
+<h1>Edit Unit</h1>
+
+<form asp-action="Edit" asp-route-id="@Model.UnitId" method="post">
+    <div class="row">
+        <div class="col-md-6">
+           
+            <div class="form-group">
+                <label asp-for="UnitName" class="form-label">UnitName</label>
+                <input asp-for="UnitName" class="form-control" />
+                <span asp-validation-for="UnitName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UnitNumber" class="form-label">UnitNumber</label>
+                <input asp-for="UnitNumber" class="form-control" />
+                <span asp-validation-for="UnitNumber" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="UnitId">UnitTypeName</label>
+                <select name="UnitId" id="UnitId" class="form-control">
+                    @foreach (Unit UnitItem in ViewBag.unitList)
+                    {
+                        if (Model.UnitId == UnitItem.UnitId)
+                        {
+                            <option value="@UnitItem.UnitId" selected>@UnitItem.Unit_type.UnitTypeName</option>
+                        }
+                        else
+                        {
+                            <option value="@UnitItem.UnitId">@UnitItem.Unit_type.UnitTypeName</option>
+                        }
+                    }
+                </select>
+            </div>
+           
+
+        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to unit List</a>
+        </div>
+    </div>
+</form>
+
+
+
+
+

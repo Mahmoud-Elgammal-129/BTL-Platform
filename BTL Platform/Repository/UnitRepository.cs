@@ -1,5 +1,6 @@
 ﻿using BTL_Platform.Intrface;
 using BTL_Platform.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
 namespace BTL_Platform.Repository
@@ -31,7 +32,7 @@ namespace BTL_Platform.Repository
 
         public List<Unit> GetUnits()
         {
-            var unit = bTLContext.Units.ToList();
+            var unit = bTLContext.Units.Include(r => r.Unit_type).Include(i=>i.inventory).ToList();
             return unit;
         }
 

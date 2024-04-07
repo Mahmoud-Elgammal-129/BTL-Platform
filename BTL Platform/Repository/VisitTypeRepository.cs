@@ -1,0 +1,57 @@
+﻿using BTL_Platform.Intrface;
+using BTL_Platform.Models;
+using BTL_Platform.ViewModels;
+
+namespace BTL_Platform.Repository
+{
+    public class VisitTypeRepository : IVisitTypeRepository
+    {
+        BTLContext bTLContext;
+        public VisitTypeRepository(BTLContext _bTLContext)
+        {
+
+            bTLContext = _bTLContext;
+        }
+        public void Delete(long id)
+        {
+            VisitType OldvisitType = GetVisitTypes(id);
+            if (OldvisitType != null)
+            {
+                OldvisitType.IsDeleted = true;
+                //Update(requestToDelete);
+                Save(); // Save method should handle the changes
+            }
+        }
+
+        public List<VisitType> GetVisitTypes()
+        {
+            var visitType = bTLContext.VisitTypes.ToList();
+            return visitType;
+        }
+
+        public VisitType GetVisitTypes(long id)
+        {
+            VisitType visitType = bTLContext.VisitTypes.FirstOrDefault(a => a.VisitTypeId == id);
+            return visitType;
+        }
+
+        public void Insert(VisitType visittype)
+        {
+            bTLContext.VisitTypes.Add(visittype);
+            bTLContext.SaveChanges();
+        }
+
+        public void Save()
+        {
+            bTLContext.SaveChanges();
+        }
+
+        public void Update(long id, VisitType visittype)
+        {
+            VisitType OldvisitType = GetVisitTypes(id);
+            OldvisitType.VisitTypeName = visittype.VisitTypeName;
+            bTLContext.VisitTypes.Update(OldvisitType);
+            Save();
+        }
+    }
+}

@@ -1,17 +1,17 @@
-﻿@model List<Request>
+@model List<Request>
 @{
     int counter = 1;
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Requests</title>
-    <!-- Include any necessary CSS or JavaScript files -->
-</head>
+
 <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
 
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
 
-<body>
+
+
+<div class="m-5">
     <h1>Requests</h1>
     <table class ="table table-border table-hover">
         <thead>
@@ -30,7 +30,7 @@
                 <th>StartDate</th>
                 <th>EndDate</th>
                 <th>RequestType</th>
-                <th></th>
+                <th>Action</th>
                 
             </tr>
         </thead>
@@ -71,6 +71,6 @@
             }
         </tbody>
     </table>
-</body>
-</html>
+</div>
+
 

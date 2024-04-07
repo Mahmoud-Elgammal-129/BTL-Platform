@@ -412,7 +412,7 @@ namespace BTL_Platform.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
+            modelBuilder.Entity("BTL_Platform.Models.IVisitRepository", b =>
                 {
                     b.Property<long>("VisitId")
                         .ValueGeneratedOnAdd()
@@ -741,7 +741,7 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_Platform.Models.Visit", "Visit")
+                    b.HasOne("BTL_Platform.Models.IVisitRepository", "IVisitRepository")
                         .WithMany()
                         .HasForeignKey("VisitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -751,7 +751,7 @@ namespace BTL_Platform.Migrations
 
                     b.Navigation("Request_type");
 
-                    b.Navigation("Visit");
+                    b.Navigation("IVisitRepository");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
@@ -773,7 +773,7 @@ namespace BTL_Platform.Migrations
                     b.Navigation("Unit_type");
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
+            modelBuilder.Entity("BTL_Platform.Models.IVisitRepository", b =>
                 {
                     b.HasOne("BTL_Platform.Models.User", "User")
                         .WithMany()

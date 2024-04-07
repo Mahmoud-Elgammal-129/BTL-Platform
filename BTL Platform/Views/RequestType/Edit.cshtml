@@ -1,0 +1,40 @@
+﻿@model BTL_Platform.Models.RequestType
+
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+
+<h1>Edit Request Type</h1>
+
+<form asp-action="Edit" asp-route-id="@Model.RequestTypeID" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="TypeName" class="form-label">Request Type Name</label>
+                <input asp-for="TypeName" class="form-control" />
+                <span asp-validation-for="TypeName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsDeleted" class="form-label">Is Deleted</label>
+                <input asp-for="IsDeleted" class="form-control" />
+                <span asp-validation-for="IsDeleted" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- Add the remaining form fields for the UnitType model here -->
+            <!-- Make sure to adjust the labels and input names accordingly -->
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col">
+            <a asp-action="Index" class="btn btn-outline-primary float-right">Back to RequestType List</a>
+        </div>
+    </div>
+</form>
+

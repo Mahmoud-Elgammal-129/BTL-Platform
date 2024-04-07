@@ -1,0 +1,33 @@
+﻿@model BTL_Platform.Models.RequestType
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+<div class="container mt-5">
+    <h1>Create Request Type</h1>
+    <form asp-controller="RequestType" asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TypeName" class="form-label">RequestType Name</label>
+                    <input asp-for="TypeName" class="form-control" />
+                    <span asp-validation-for="TypeName" class="text-danger"></span>
+                </div>
+
+             @*    <div class="form-group">
+                    <label asp-for="IsDeleted" class="form-label">Is Deleted</label>
+                    <input asp-for="IsDeleted" class="form-control" />
+                    <span asp-validation-for="IsDeleted" class="text-danger"></span>
+                </div>
+            </div> *@
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to UnitType List</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,42 @@
+﻿@model List<Unit>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="Unit" class="btn btn-success">New Unit Item</a>
+</div>
+
+<div class="m-5">
+    <h1>Unit </h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Unit  Name</th>
+                <th>Unit Number</th>
+                <th>Unit Type Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@unit.UnitName</td>
+                    <td>@unit.UnitNumber</td>
+                    <td>@unit.Unit_type.UnitTypeName</td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@unit.UnitId" class="btn btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@unit.UnitId" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -28,10 +28,6 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
-            //List<RequestType> requestTypes = RequestTypeRepository.GetRequestTypes();
-            ////var requestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
-            ////ViewBag.RequestTypesList = requestTypesList;
-            //ViewBag.RequestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
             ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
             return View();
 

@@ -1,0 +1,40 @@
+﻿@model List<RequestType>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="RequestType" class="btn btn-success">New RequestType </a>
+</div>
+
+<div class="m-5">
+    <h1>Request Types</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Request Type Name</th>
+               @*  <th>Request Type ID</th> *@
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var requestType in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@requestType.TypeName</td>
+                  @*   <td>@requestType.RequestTypeID</td> *@
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@requestType.RequestTypeID" class="btn btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@requestType.RequestTypeID" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
