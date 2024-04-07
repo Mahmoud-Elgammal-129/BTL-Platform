@@ -7,7 +7,7 @@ namespace BTL_Platform.Models
     {
         [Key]
         public long RequestTypeID { get; set; }
-        public string? TypeName { get; set; }
+        public string TypeName { get; set; }
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; }=false;
       

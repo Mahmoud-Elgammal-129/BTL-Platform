@@ -15,20 +15,25 @@ namespace BTL_Platform.Reposatiory
             }
             public void Delete(long id)
             {
-                Request oldRequest = GetRequest(id);
-                bTLContext.Requests.Remove(oldRequest);
-                Save();
+            Request requestToDelete = GetRequest(id);
+            if (requestToDelete != null)
+            {
+                requestToDelete.IsDeleted = true;
+                //Update(requestToDelete);
+                Save(); // Save method should handle the changes
+            }
+            
             }
 
             public Request GetRequest(long id)
             {
-                Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id);
+            Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id);
                 return request;
             }
 
             public List<Request> GetRequests()
             {
-            var request= bTLContext.Requests./*Include(r => r.Request_type.TypeName).*/ToList();
+           var request= bTLContext.Requests.ToList();
             return request;
             }
 
@@ -45,8 +50,8 @@ namespace BTL_Platform.Reposatiory
 
             public void Update(long id, Request request)
             {
-                //get old
-                Request oldRequest = GetRequest(id);
+            //get old
+                 Request oldRequest = GetRequest(id);
                 oldRequest.RequestDate = request.RequestDate;
                 oldRequest.Channel = request.Channel;
                 oldRequest.Description = request.Description;
@@ -59,6 +64,8 @@ namespace BTL_Platform.Reposatiory
                 oldRequest.TrucksNeeded = request.TrucksNeeded;
                 oldRequest.StartDate = request.StartDate;
                 oldRequest.EndDate = request.EndDate;
+                bTLContext.Requests.Update(oldRequest);
+                Save();
 
             }
         }

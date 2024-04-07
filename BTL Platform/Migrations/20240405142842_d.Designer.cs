@@ -4,6 +4,7 @@ using BTL_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    partial class BTLContextModelSnapshot : ModelSnapshot
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+    [Migration("20240403223612_c2")]
+    partial class c2
+========
+    [Migration("20240405142842_d")]
+    partial class d
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,16 +114,26 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf188a02-b734-4e4c-bbdc-a8fc766f4c04",
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+                            ConcurrencyStamp = "c4eb72d4-f9a1-4328-a45a-1e04edafee79",
+========
+                            ConcurrencyStamp = "46466b24-eaa6-4488-a6e6-92ac2bcf45aa",
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAELmUCWcwRIMotPaNSoExXVVf6jmLRxFCd5P/Ae7Rzui8vyifLhVAj6WqGvksDQrOeQ==",
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+                            PasswordHash = "AQAAAAIAAYagAAAAED/X2DA+hn/Y/FdWFQBU9wsKGjuYmNNxwJ17vhxzRW/vRwhEHIH23rAkt9UYQIlqtA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "096b56d9-9677-40a2-8c1e-0b15bf52a535",
+                            SecurityStamp = "0e280813-2b70-42f0-a569-9545b49ba9c8",
+========
+                            PasswordHash = "AQAAAAIAAYagAAAAEL8PMWsB2X88mBgwd6jCjG2KyvVGgVQjKagfIHpv7Ilfe4XEISzohevwWJoFnzfC8Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "719ca67c-57ec-4e92-8c14-aba5d8cc53d2",
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -149,6 +167,12 @@ namespace BTL_Platform.Migrations
 
                     b.HasKey("InventoryId");
 
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+                    b.HasIndex("unit_Id")
+                        .IsUnique();
+
+========
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
                     b.ToTable("Inventories");
                 });
 
@@ -285,6 +309,9 @@ namespace BTL_Platform.Migrations
                     b.Property<int>("TrucksNeeded")
                         .HasColumnType("int");
 
+                    b.Property<long>("VisitId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("WH_movements")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -294,6 +321,8 @@ namespace BTL_Platform.Migrations
                     b.HasIndex("Employee_Id");
 
                     b.HasIndex("RequestTypeID");
+
+                    b.HasIndex("VisitId");
 
                     b.ToTable("Requests");
                 });
@@ -333,6 +362,7 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UnitName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UnitNumber")
@@ -702,6 +732,20 @@ namespace BTL_Platform.Migrations
                     b.HasDiscriminator().HasValue("Employee");
                 });
 
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+            modelBuilder.Entity("BTL_Platform.Models.Inventory", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.Unit", "unit")
+                        .WithOne()
+                        .HasForeignKey("BTL_Platform.Models.Inventory", "unit_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("unit");
+                });
+
+========
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
                 {
                     b.HasOne("BTL_Platform.Models.Employee", "Employee")
@@ -716,14 +760,26 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BTL_Platform.Models.Visit", "Visit")
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Employee");
 
                     b.Navigation("Request_type");
+
+                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
                 {
+<<<<<<<< HEAD:BTL Platform/Migrations/20240403223612_c2.Designer.cs
+                    b.HasOne("BTL_Platform.Models.Inventory", "Inventory")
+========
                     b.HasOne("BTL_Platform.Models.Inventory", "inventory")
+>>>>>>>> 1d873cb8037b5f28088959e5f5308fbdec262e21:BTL Platform/Migrations/20240405142842_d.Designer.cs
                         .WithMany()
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -734,6 +790,8 @@ namespace BTL_Platform.Migrations
                         .HasForeignKey("Unit_type_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Inventory");
 
                     b.Navigation("Unit_type");
 
@@ -754,7 +812,7 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_Platform.Models.Places", "request")
+                    b.HasOne("BTL_Platform.Models.Request", "request")
                         .WithMany()
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade)

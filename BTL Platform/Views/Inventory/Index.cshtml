@@ -1,0 +1,37 @@
+﻿@model List<Inventory>
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="Inventory" class="btn btn-success">New Inventory Item</a>
+</div>
+
+<div class="m-5">
+    <h1>Inventory Items</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Count</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ItemName</td>
+                    <td>@item.Description</td>
+                    <td>@item.count</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.InventoryId" class="btn btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.InventoryId" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

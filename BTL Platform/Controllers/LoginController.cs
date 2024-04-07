@@ -72,7 +72,7 @@ namespace BTL_Platform.Controllers
                 ApplicationUser user = new ApplicationUser()
                 {
                     Email = model.Email,
-                    
+                    Name=model.UserName,
                     UserName = model.UserName,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);

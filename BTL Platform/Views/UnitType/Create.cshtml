@@ -1,0 +1,33 @@
+﻿@model BTL_Platform.Models.UnitType
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+<div class="container mt-5">
+    <h1>Create Unit Type</h1>
+    <form asp-controller="UnitType" asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="UnitTypeName" class="form-label">Unit Type Name</label>
+                    <input asp-for="UnitTypeName" class="form-control" />
+                    <span asp-validation-for="UnitTypeName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IsDeleted" class="form-label">Is Deleted</label>
+                    <input asp-for="IsDeleted" class="form-control" />
+                    <span asp-validation-for="IsDeleted" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to UnitType List</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,18 +1,15 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
-}
-@model BTL_Platform.Models.Request
+﻿@model BTL_Platform.Models.Request
 @{
-    //SelectList RequestTypesList = new SelectList(Model, "RequestTypeID", "TypeName");
-    SelectList requesttypesList =
-          new SelectList(ViewBag.RequestTypesList, "RequestTypeID", "TypeName");
-}
-<h1>Create Request</h1>
 
-<form asp-controller="Request" asp-action="Create" method="post" class="needs-validation" novalidate>
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+
+}
+<h1>Edit Request</h1>
+
+<form asp-action="Edit" asp-route-id="@Model.RequestID" method="post">
     <div class="row">
         <div class="col-md-6">
-           @* @Html.HiddenFor(model => model.Employee_Id)*@
+            @Html.HiddenFor(model => model.Employee_Id)
             <div class="form-group">
                 <label asp-for="RequestDate" class="form-label">Request Date</label>
                 <input asp-for="RequestDate" class="form-control" />
@@ -61,11 +58,6 @@
                 <input asp-for="POSNumber" class="form-control" />
                 <span asp-validation-for="POSNumber" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="OnGroundTeams" class="form-label"> OnGroundTeams</label>
-                <input asp-for="OnGroundTeams" class="form-control" />
-                <span asp-validation-for="OnGroundTeams" class="text-danger"></span>
-            </div>
 
             <div class="form-group">
                 <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
@@ -84,21 +76,18 @@
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="RequestTypeID"></label>
-                <select class="form-control" asp-for="RequestTypeID" asp-items="requesttypesList">
-                    <option value="0">--Select Request--</option>
-                </select>
+            <div class="form-group">
+                <label asp-for="RequestTypeID">Request Type:</label>
+                @*  @Html.DropDownList("Request_type_Id", ViewBag.RequestTypesList as SelectList, "Select RequestTypes", new { @class = "form-control" }) *@
+                <select asp-for="RequestTypeID" class="form-control" asp-items="@ViewBag.RequestTypesList"></select>
                 <span asp-validation-for="RequestTypeID" class="text-danger"></span>
             </div>
-          
-            <input type="hidden" asp-for="Employee_Id" />
-            
-         @*   <div class="form-group form-check">
+            @*  <input type="hidden" asp-for="Employee_Id" />*@
+            @*   <div class="form-group form-check">
 
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
+            <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+            </label>
             </div>*@
         </div>
     </div>
@@ -112,6 +101,7 @@
         </div>
     </div>
 </form>
+
 
 
 
