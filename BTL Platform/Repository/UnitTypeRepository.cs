@@ -17,20 +17,21 @@ namespace BTL_Platform.Repository
             if (UnitTypeToDelete != null)
             {
                 UnitTypeToDelete.IsDeleted = true;
-                //Update(requestToDelete);
+                bTLContext.UnitTypes.Update(UnitTypeToDelete);
+                
                 Save(); // Save method should handle the changes
             }
         }
 
         public UnitType GetUnitType(long id)
         {
-            UnitType unitType = bTLContext.UnitTypes.FirstOrDefault(a => a.UnitTypeId == id);
+            UnitType unitType = bTLContext.UnitTypes.FirstOrDefault(a => a.UnitTypeId == id&& a.IsDeleted==false);
             return unitType;
         }
 
         public List<UnitType> GetUnitTypes()
         {
-            var unitType = bTLContext.UnitTypes.ToList();
+            var unitType = bTLContext.UnitTypes.Where(n => n.IsDeleted == false).ToList();
             return unitType;
         }
 

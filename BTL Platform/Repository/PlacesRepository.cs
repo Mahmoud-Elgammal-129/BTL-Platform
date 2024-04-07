@@ -18,6 +18,7 @@ namespace BTL_Platform.Repository
             if (PlacesToDelete != null)
             {
                 PlacesToDelete.IsDeleted = true;
+                bTLContext.Places.Update(PlacesToDelete);
                 //Update(requestToDelete);
                 Save(); // Save method should handle the changes
             }
@@ -25,13 +26,13 @@ namespace BTL_Platform.Repository
 
         public Places GetPlaces(long id)
         {
-            Places places = bTLContext.Places.FirstOrDefault(a => a.Id == id);
+            Places places = bTLContext.Places.FirstOrDefault(a => a.Id == id&&a.IsDeleted==false);
             return places;
         }
 
         public List<Places> GetPlacess()
         {
-            var places = bTLContext.Places.ToList();
+            var places = bTLContext.Places.Where(n=>n.IsDeleted==false).ToList();
             return places;
         }
 

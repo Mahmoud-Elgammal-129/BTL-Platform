@@ -21,8 +21,6 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
-
-
             return View();
 
         }

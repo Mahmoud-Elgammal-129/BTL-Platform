@@ -1,8 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> usermanager
 @model BTL_Platform.Models.Request
 @{
+    var user = await usermanager.GetUserAsync(User);
     //SelectList RequestTypesList = new SelectList(Model, "RequestTypeID", "TypeName");
     SelectList requesttypesList =
           new SelectList(ViewBag.RequestTypesList, "RequestTypeID", "TypeName");
@@ -12,7 +15,7 @@
 <form asp-controller="Request" asp-action="Create" method="post" class="needs-validation" novalidate>
     <div class="row">
         <div class="col-md-6">
-           @* @Html.HiddenFor(model => model.Employee_Id)*@
+            
             <div class="form-group">
                 <label asp-for="RequestDate" class="form-label">Request Date</label>
                 <input asp-for="RequestDate" class="form-control" />

@@ -25,13 +25,13 @@ namespace BTL_Platform.Repository
 
         public Inventory GetInventory(long id)
         {
-            Inventory inventory = bTLContext.Inventories.FirstOrDefault(a => a.InventoryId == id);
+            Inventory inventory = bTLContext.Inventories.FirstOrDefault(a => a.InventoryId == id &&a.IsDeleted==false);
             return inventory;
         }
 
         public List<Inventory> GetInventorys()
         {
-            var inventory = bTLContext.Inventories.ToList();
+            var inventory = bTLContext.Inventories.Where(m=>m.IsDeleted==false).ToList();
             return inventory;
         }
 

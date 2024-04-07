@@ -17,7 +17,7 @@ namespace BTL_Platform.Repository
         {
             var request = bTLContext.RequestTypes;
 
-            var result = request.ToList();
+            var result = request.Where(n=>n.IsDeleted==false).ToList();
             return result;
         }
 
