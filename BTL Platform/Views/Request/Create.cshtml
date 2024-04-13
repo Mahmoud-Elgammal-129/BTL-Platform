@@ -1,11 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<ApplicationUser> usermanager
 @model BTL_Platform.Models.Request
 @{
-    var user = await usermanager.GetUserAsync(User);
     //SelectList RequestTypesList = new SelectList(Model, "RequestTypeID", "TypeName");
     SelectList requesttypesList =
           new SelectList(ViewBag.RequestTypesList, "RequestTypeID", "TypeName");
@@ -15,40 +12,87 @@
 <form asp-controller="Request" asp-action="Create" method="post" class="needs-validation" novalidate>
     <div class="row">
         <div class="col-md-6">
-            
             <div class="form-group">
                 <label asp-for="RequestDate" class="form-label">Request Date</label>
-                <input asp-for="RequestDate" class="form-control" />
+                <input asp-for="RequestDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
                 <span asp-validation-for="RequestDate" class="text-danger"></span>
             </div>
 
+            @*<div class="form-group">
+            <label asp-for="RequestDate" class="form-label">Request Date</label>
+            <input asp-for="RequestDate" class="form-control" />
+            <span asp-validation-for="RequestDate" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Channel" class="form-label">Channel</label>
-                <input asp-for="Channel" class="form-control" />
+                <select asp-for="Channel" class="form-control">
+                    <option value="">Select Channel</option> <!-- Default empty option -->
+                    <option value="Option1">Option 1</option> <!-- Replace Option1 with your actual option value -->
+                    <option value="Option2">Option 2</option> <!-- Replace Option2 with your actual option value -->
+                    <!-- Add more <option> elements for each possible value -->
+                </select>
                 <span asp-validation-for="Channel" class="text-danger"></span>
             </div>
+            @*  <div class="form-group">
+            <label asp-for="Channel" class="form-label">Channel</label>
+            <input asp-for="Channel" class="form-control" />
+            <span asp-validation-for="Channel" class="text-danger"></span>
+            </div>*@
 
             <div class="form-group">
                 <label asp-for="Description" class="form-label">Description</label>
                 <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Assignee" class="form-label">Assignee</label>
-                <input asp-for="Assignee" class="form-control" />
+                <select asp-for="Assignee" class="form-control">
+                    <option value="">Select Assignee</option> <!-- Default empty option -->
+                    <option value="JohnDoe">John Doe</option> <!-- Replace JohnDoe with actual assignee's value -->
+                    <option value="JaneSmith">Jane Smith</option> <!-- Replace JaneSmith with actual assignee's value -->
+                    <!-- Add more <option> elements for each possible assignee -->
+                </select>
                 <span asp-validation-for="Assignee" class="text-danger"></span>
             </div>
+
+            @*    <div class="form-group">
+            <label asp-for="Assignee" class="form-label">Assignee</label>
+            <input asp-for="Assignee" class="form-control" />
+            <span asp-validation-for="Assignee" class="text-danger"></span>
+            </div>*@
+            @* <div class="form-group">
+            <label asp-for="WH_movements" class="form-label">WH Movements</label>
+            <input asp-for="WH_movements" class="form-control" />
+            <span asp-validation-for="WH_movements" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="WH_movements" class="form-label">WH Movements</label>
-                <input asp-for="WH_movements" class="form-control" />
+                <select asp-for="WH_movements" class="form-control">
+                    <option value="">Select Movement</option> <!-- Default empty option -->
+                    <option value="Inbound">Inbound</option>
+                    <option value="Outbound">Outbound</option>
+                    <!-- Add more <option> elements for each possible movement -->
+                </select>
                 <span asp-validation-for="WH_movements" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="form-label">Status</label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control">
+                    <option value="">Select Status</option> <!-- Default empty option -->
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <!-- Add more <option> elements for each possible status -->
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
+
+
+            @*<div class="form-group">
+            <label asp-for="Status" class="form-label">Status</label>
+            <input asp-for="Status" class="form-control" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+            </div>*@
         </div>
 
         <div class="col-md-6">
@@ -64,15 +108,37 @@
                 <input asp-for="POSNumber" class="form-control" />
                 <span asp-validation-for="POSNumber" class="text-danger"></span>
             </div>
-             <div class="form-group">
-                <label asp-for="OnGroundTeams" class="form-label"> OnGroundTeams</label>
-                <input asp-for="OnGroundTeams" class="form-control" />
+            <div class="form-group">
+                <label asp-for="OnGroundTeams" class="form-label">OnGround Teams</label>
+                <select asp-for="OnGroundTeams" class="form-control">
+                    <option value="">Select Team</option> <!-- Default empty option -->
+                    <option value="TeamA">Team A</option> <!-- Replace TeamA with the actual team name -->
+                    <option value="TeamB">Team B</option> <!-- Replace TeamB with the actual team name -->
+                    <!-- Add more <option> elements for each possible team -->
+                </select>
                 <span asp-validation-for="OnGroundTeams" class="text-danger"></span>
             </div>
 
+            @*  <div class="form-group">
+            <label asp-for="OnGroundTeams" class="form-label"> OnGroundTeams</label>
+            <input asp-for="OnGroundTeams" class="form-control" />
+            <span asp-validation-for="OnGroundTeams" class="text-danger"></span>
+            </div>*@
+
+            @* <div class="form-group">
+            <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
+            <input asp-for="TrucksNeeded" class="form-control" />
+            <span asp-validation-for="TrucksNeeded" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
-                <input asp-for="TrucksNeeded" class="form-control" />
+                <select asp-for="TrucksNeeded" class="form-control">
+                    <option value="">Select Number of Trucks Needed</option> <!-- Default empty option -->
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <!-- Add more <option> elements for each possible number of trucks needed -->
+                </select>
                 <span asp-validation-for="TrucksNeeded" class="text-danger"></span>
             </div>
 
@@ -94,14 +160,14 @@
                 </select>
                 <span asp-validation-for="RequestTypeID" class="text-danger"></span>
             </div>
-          
-            <input type="hidden" asp-for="Employee_Id" />
-            
-         @*   <div class="form-group form-check">
 
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
+            <input type="hidden" asp-for="Employee_Id" />
+
+            @*   <div class="form-group form-check">
+
+            <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+            </label>
             </div>*@
         </div>
     </div>

@@ -47,7 +47,7 @@
                     <div class="container-fluid pe-0">
                         @if (role == "employee")
                         {
-                            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " asp-action="Home" asp-controller="Home">
+                            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-6 " asp-action="Home" asp-controller="Home">
                                 Soft UI Dashboard
                             </a>
                         }
@@ -69,39 +69,39 @@
                                         </a>
                                     </li>
                                 }
-                                @if (role == "employee")
+                                @*    @if (role == "employee")
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link me-2">
-                                            <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                                            Profile
-                                        </a>
-                                    </li>
-                                }
                                 <li class="nav-item">
-                                    <a class="nav-link me-2" asp-action="RegisterEmployee" asp-controller="login">
-                                        <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                        Sign Up
-                                    </a>
+                                <a class="nav-link me-2">
+                                <i class="fa fa-user opacity-6 text-dark me-1"></i>
+                                Profile
+                                </a>
                                 </li>
-                                @if (role == "employee")
+                                }*@
+                                @*  <li class="nav-item">
+                                <a class="nav-link me-2" asp-action="RegisterEmployee" asp-controller="login">
+                                <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                                Sign Up
+                                </a>
+                                </li>*@
+                                @*    @if (role == "employee")
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link me-2" asp-action="Logout" asp-controller="login">
-                                            <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                            Sign Out
-                                        </a>
-                                    </li>
+                                <li class="nav-item">
+                                <a class="nav-link me-2" asp-action="Logout" asp-controller="login">
+                                <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                                Sign Out
+                                </a>
+                                </li>
                                 }
                                 else
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link me-2" asp-action="Login" asp-controller="login">
-                                            <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                            Log In
-                                        </a>
-                                    </li>
-                                }
+                                <li class="nav-item">
+                                <a class="nav-link me-2" asp-action="Login" asp-controller="login">
+                                <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                                Log In
+                                </a>
+                                </li>
+                                }*@
 
 
                         </div>
@@ -142,12 +142,12 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                    <p class="mb-4 text-sm mx-auto">
-                                        Don't have an account?
-                                        <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign up</a>
-                                    </p>
-                                </div>
+                                @* <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <p class="mb-4 text-sm mx-auto">
+                                Don't have an account?
+                                <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign up</a>
+                                </p>
+                                </div>*@
                             </div>
                         </div>
                         <div class="col-md-6">
