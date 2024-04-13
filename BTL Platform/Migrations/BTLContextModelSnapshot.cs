@@ -106,16 +106,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d2be72f-4463-4bfe-86eb-09b3f4a6df84",
+                            ConcurrencyStamp = "6c4ec3d7-17c8-4a9c-9c18-99f87a9d9779",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAzUYm4zF6e+LNghli30rIDeWrm1LalF3uGM0BZYY2aMw38FkLjVTvNtkqntwESZog==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDzvxUuIQNjPtjnouuDSWxC3kgRoLjULO80Hl1lQfT5EhPG0DmSzfkG4cEauIIuoSQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "66b16358-855f-4ca5-80ff-00ef1ebd10fc",
+                            SecurityStamp = "5c3ff075-bd53-4fbe-81d4-e40f1af4e358",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -398,7 +398,7 @@ namespace BTL_Platform.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.IVisitRepository", b =>
+            modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
                 {
                     b.Property<long>("VisitId")
                         .ValueGeneratedOnAdd()
@@ -740,7 +740,7 @@ namespace BTL_Platform.Migrations
                     b.Navigation("inventory");
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.IVisitRepository", b =>
+            modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
                 {
                     b.HasOne("BTL_Platform.Models.User", "User")
                         .WithMany()

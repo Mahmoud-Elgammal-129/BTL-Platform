@@ -2,24 +2,23 @@
 using BTL_Platform.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace BTL_Platform.Controllers
 {
-    public class UnitController : Controller
+    public class VisitController : Controller
     {
-        UnitRepository UnitRepository;
+        VisitRepository VisitRepository;
         BTLContext btlContext;
 
-        public UnitController(UnitRepository _UnitRepository, BTLContext btlContext)
+        public VisitController(VisitRepository _VisitRepository, BTLContext btlContext)
         {
-            UnitRepository = _UnitRepository;
+            VisitRepository = _VisitRepository;
             this.btlContext = btlContext;
         }
         public IActionResult Index()
         {
-            List<Unit> Units = UnitRepository.GetUnits();
-            return View(Units);
+            List<Visit> Visits = VisitRepository.GetVisits();
+            return View(Visits);
         }
         public IActionResult Create()
         {
@@ -29,10 +28,10 @@ namespace BTL_Platform.Controllers
                 Text = i.ItemName
             }).ToList();
 
-            ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
+            ViewBag.VisitTypeList = btlContext.VisitTypes.Select(u => new SelectListItem
             {
-                Value = u.UnitTypeId.ToString(),
-                Text = u.UnitTypeName
+                Value = u.VisitTypeId.ToString(),
+                Text = u.VisitTypeName
             }).ToList();
 
             return View();
@@ -40,21 +39,21 @@ namespace BTL_Platform.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Unit Units)
+        public IActionResult Create(Visit Visits)
         {
-            if (Units != null)
+            if (Visits != null)
             {
-                UnitRepository.Insert(Units);
-                UnitRepository.Save();
+                VisitRepository.Insert(Visits);
+                VisitRepository.Save();
                 return RedirectToAction("Index");
             }
-            return View("Create", Units);
+            return View("Create", Visits);
         }
 
         public IActionResult Details(long id)
         {
-            Unit Unitid = UnitRepository.GetUnit(id);
-            return View(Unitid);
+            Visit Visitid = VisitRepository.GetVisit(id);
+            return View(Visitid);
         }
         [HttpGet]
         public IActionResult Edit(long id)
@@ -65,34 +64,34 @@ namespace BTL_Platform.Controllers
                 Text = i.ItemName
             }).ToList();
 
-            ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
+            ViewBag.VisitTypeList = btlContext.VisitTypes.Select(u => new SelectListItem
             {
-                Value = u.UnitTypeId.ToString(),
-                Text = u.UnitTypeName
+                Value = u.VisitTypeId.ToString(),
+                Text = u.VisitTypeName
             }).ToList();
 
 
-            Unit Unitid = UnitRepository.GetUnit(id);
-            return View(Unitid);
+            Visit Visitid = VisitRepository.GetVisit(id);
+            return View(Visitid);
         }
         [HttpPost]
-        public IActionResult Edit(Unit Unit, long id)
+        public IActionResult Edit(Visit Visit, long id)
         {
-            if (Unit != null)
+            if (Visit != null)
             {
-                UnitRepository.Update(id, Unit);
-                UnitRepository.Save();
+                VisitRepository.Update(id, Visit);
+                VisitRepository.Save();
                 return RedirectToAction("Index");
             }
-            return View(Unit);
+            return View(Visit);
         }
 
         [HttpPost]
         public IActionResult Delete(long id)
         {
 
-            UnitRepository.Delete(id);
-            UnitRepository.Save();
+            VisitRepository.Delete(id);
+            VisitRepository.Save();
             return RedirectToAction("Index");
         }
     }

@@ -5,7 +5,7 @@ namespace BTL_Platform.Intrface
     public interface IVisitRepository
     {
         List<Visit> GetVisits();
-        Visit GetVisits(long id);
+        Visit GetVisit(long id);
 
         void Insert(Visit visit);
         void Update(long id, Visit visit);

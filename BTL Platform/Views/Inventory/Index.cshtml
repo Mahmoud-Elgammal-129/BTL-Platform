@@ -1,8 +1,5 @@
 ﻿@model List<Inventory>
 @{
-    int counter = 1;
-}
-@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
 <div class="mt-5">
@@ -14,20 +11,17 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Item Name</th>
                 <th>Description</th>
                 <th>Count</th>
                 <th>Status</th>
-                
-                <th>Action</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@(counter++)</td>
                     <td>@item.ItemName</td>
                     <td>@item.Description</td>
                     <td>@item.count</td>

@@ -16,26 +16,28 @@ namespace BTL_Platform.Repository
 
         public void Delete(long id)
         {
-            RequestType RequestTypeToDelete = GetRequestType(id);
-            if (RequestTypeToDelete != null)
+            RequestType requestTypeToDelete = GetRequestType(id);
+            if (requestTypeToDelete != null)
             {
-                RequestTypeToDelete.IsDeleted = true;
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                requestTypeToDelete.IsDeleted = true;
+                bTLContext.RequestTypes.Update(requestTypeToDelete);
+                Save(); 
             }
         }
 
         public RequestType GetRequestType(long id)
         {
-            RequestType requestType = bTLContext.RequestTypes.FirstOrDefault(a => a.RequestTypeID == id);
-            return requestType;
+            var request = bTLContext.RequestTypes;
+
+            var result = request.Where(n => n.RequestTypeID==id&&n.IsDeleted == false).FirstOrDefault();
+            return result;
         }
 
         public List<RequestType> GetRequestTypes()
         {
             var request = bTLContext.RequestTypes;
 
-            var result = request.ToList();
+            var result = request.Where(n=>n.IsDeleted==false).ToList();
             return result;
         }
 
@@ -52,10 +54,20 @@ namespace BTL_Platform.Repository
 
         public void Update(long id, RequestType requestType)
         {
-            RequestType OldrequestType = GetRequestType(id);
-            OldrequestType.TypeName = requestType.TypeName;
-            bTLContext.RequestTypes.Update(OldrequestType);
-            Save();
+            if (id != null)
+            {
+                RequestType oldRequestType = GetRequestType(id);
+                if(oldRequestType != null)
+                {
+                    oldRequestType.TypeName = requestType.TypeName;
+                    bTLContext.RequestTypes.Update(oldRequestType);
+                    Save();
+
+                }
+
+
+            }
+           
         }
     }
 }

@@ -1,14 +1,12 @@
-@model List<Request>
-@{
-    int counter = 1;
-}
-
-<a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
-
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
+@model List<Request>
 
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
+
+</div>
 
 
 <div class="m-5">
@@ -16,7 +14,6 @@
     <table class ="table table-border table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>RequestDate</th>
                 <th>Channel</th>
                 <th>Description</th>
@@ -30,16 +27,14 @@
                 <th>StartDate</th>
                 <th>EndDate</th>
                 <th>RequestType</th>
-                <th>Action</th>
+                <th></th>
                 
             </tr>
         </thead>
         <tbody>
             @foreach (var request in Model)
             {
-                
                 <tr>
-                   <td>@(counter++)</td> 
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
                     <td>@request.Channel</td>
@@ -53,7 +48,7 @@
                     <td>@request.TrucksNeeded</td>
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
-                    <td>@request.Request_type.TypeName</td>
+                    @*<td>@request.Request_type.TypeName</td>*@
                    <td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>

@@ -1,0 +1,42 @@
+﻿@model List<VisitStatus>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+
+<div class="mt-5">
+    <a asp-action="Create" asp-controller="VisitStatus" class="btn btn-success">New Visit Status </a>
+</div>
+
+<div class="m-5">
+    <h1>Visit Status</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Visit Status Name</th>
+                @*  <th>Request Type ID</th> *@
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visitStatus in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@visitStatus.VisitStatusName</td>
+                    @*   <td>@requestType.RequestTypeID</td> *@
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@visitStatus.VisitStatusId" class="btn btn-outline-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@visitStatus.VisitStatusId" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

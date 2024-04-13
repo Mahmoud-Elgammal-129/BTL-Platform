@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BTL_Platform.Migrations
 {
     /// <inheritdoc />
-    public partial class c2 : Migration
+    public partial class v : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,23 @@ namespace BTL_Platform.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Inventories",
+                columns: table => new
+                {
+                    InventoryId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    count = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventories", x => x.InventoryId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Places",
                 columns: table => new
                 {
@@ -90,7 +107,7 @@ namespace BTL_Platform.Migrations
                 {
                     RequestTypeID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TypeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -264,21 +281,42 @@ namespace BTL_Platform.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Inventories",
+                name: "Requests",
                 columns: table => new
                 {
-                    InventoryId = table.Column<long>(type: "bigint", nullable: false)
+                    RequestID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Channel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    count = table.Column<int>(type: "int", nullable: false),
+                    Assignee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WH_movements = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    POSNumber = table.Column<int>(type: "int", nullable: false),
+                    OnGroundTeams = table.Column<int>(type: "int", nullable: false),
+                    TrucksNeeded = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    unit_Id = table.Column<long>(type: "bigint", nullable: false)
+                    Employee_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RequestTypeID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inventories", x => x.InventoryId);
+                    table.PrimaryKey("PK_Requests", x => x.RequestID);
+                    table.ForeignKey(
+                        name: "FK_Requests_AspNetUsers_Employee_Id",
+                        column: x => x.Employee_Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Requests_RequestTypes_RequestTypeID",
+                        column: x => x.RequestTypeID,
+                        principalTable: "RequestTypes",
+                        principalColumn: "RequestTypeID",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -287,7 +325,7 @@ namespace BTL_Platform.Migrations
                 {
                     UnitId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UnitNumber = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Unit_type_Id = table.Column<long>(type: "bigint", nullable: false),
@@ -307,46 +345,6 @@ namespace BTL_Platform.Migrations
                         column: x => x.Unit_type_Id,
                         principalTable: "UnitTypes",
                         principalColumn: "UnitTypeId",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Requests",
-                columns: table => new
-                {
-                    RequestID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Channel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Assignee = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WH_movements = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    POSNumber = table.Column<int>(type: "int", nullable: false),
-                    OnGroundTeams = table.Column<int>(type: "int", nullable: false),
-                    TrucksNeeded = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    VisitId = table.Column<long>(type: "bigint", nullable: false),
-                    Employee_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Request_type_Id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requests", x => x.RequestID);
-                    table.ForeignKey(
-                        name: "FK_Requests_AspNetUsers_Employee_Id",
-                        column: x => x.Employee_Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Requests_RequestTypes_Request_type_Id",
-                        column: x => x.Request_type_Id,
-                        principalTable: "RequestTypes",
-                        principalColumn: "RequestTypeID",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -390,10 +388,10 @@ namespace BTL_Platform.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Visits_Requests_RequestID",
+                        name: "FK_Visits_Places_RequestID",
                         column: x => x.RequestID,
-                        principalTable: "Requests",
-                        principalColumn: "RequestID",
+                        principalTable: "Places",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Visits_Users_Id",
@@ -423,7 +421,7 @@ namespace BTL_Platform.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "address" },
-                values: new object[] { "1", 0, "c4eb72d4-f9a1-4328-a45a-1e04edafee79", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAED/X2DA+hn/Y/FdWFQBU9wsKGjuYmNNxwJ17vhxzRW/vRwhEHIH23rAkt9UYQIlqtA==", null, false, "0e280813-2b70-42f0-a569-9545b49ba9c8", false, "Zaghlol", null });
+                values: new object[] { "1", 0, "6c4ec3d7-17c8-4a9c-9c18-99f87a9d9779", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAEDzvxUuIQNjPtjnouuDSWxC3kgRoLjULO80Hl1lQfT5EhPG0DmSzfkG4cEauIIuoSQ==", null, false, "5c3ff075-bd53-4fbe-81d4-e40f1af4e358", false, "Zaghlol", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -470,25 +468,14 @@ namespace BTL_Platform.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inventories_unit_Id",
-                table: "Inventories",
-                column: "unit_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Requests_Employee_Id",
                 table: "Requests",
                 column: "Employee_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_Request_type_Id",
+                name: "IX_Requests_RequestTypeID",
                 table: "Requests",
-                column: "Request_type_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Requests_VisitId",
-                table: "Requests",
-                column: "VisitId");
+                column: "RequestTypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_InventoryId",
@@ -524,43 +511,11 @@ namespace BTL_Platform.Migrations
                 name: "IX_Visits_VisitTypeId",
                 table: "Visits",
                 column: "VisitTypeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Inventories_Units_unit_Id",
-                table: "Inventories",
-                column: "unit_Id",
-                principalTable: "Units",
-                principalColumn: "UnitId",
-                onDelete: ReferentialAction.NoAction);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Requests_Visits_VisitId",
-                table: "Requests",
-                column: "VisitId",
-                principalTable: "Visits",
-                principalColumn: "VisitId",
-                onDelete: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Requests_AspNetUsers_Employee_Id",
-                table: "Requests");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Inventories_Units_unit_Id",
-                table: "Inventories");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Requests_RequestTypes_Request_type_Id",
-                table: "Requests");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Requests_Visits_VisitId",
-                table: "Requests");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -577,13 +532,22 @@ namespace BTL_Platform.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Requests");
+
+            migrationBuilder.DropTable(
+                name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "Visits");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Units");
+                name: "RequestTypes");
 
             migrationBuilder.DropTable(
                 name: "Inventories");
@@ -592,16 +556,7 @@ namespace BTL_Platform.Migrations
                 name: "UnitTypes");
 
             migrationBuilder.DropTable(
-                name: "RequestTypes");
-
-            migrationBuilder.DropTable(
-                name: "Visits");
-
-            migrationBuilder.DropTable(
                 name: "Places");
-
-            migrationBuilder.DropTable(
-                name: "Requests");
 
             migrationBuilder.DropTable(
                 name: "Users");

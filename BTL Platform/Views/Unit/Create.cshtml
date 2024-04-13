@@ -1,53 +1,56 @@
-﻿@{
+﻿@model BTL_Platform.Models.Unit
+@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
-@model BTL_Platform.Models.Unit
-@{
-    SelectList UnitTypesList =
-          new SelectList(ViewBag.unitTypesList, "UnitTypeId", "UnitTypeName");
-}
-<h1>Create unit</h1>
 
-<form asp-controller="Unit" asp-action="Create" method="post" class="needs-validation" novalidate>
-    <div class="row">
-        <div class="col-md-6">
-           
-            <div class="form-group">
-                <label asp-for="UnitName" class="form-label">Unit Name</label>
-                <input asp-for="UnitName" class="form-control" />
-                <span asp-validation-for="UnitName" class="text-danger"></span>
+<div class="container mt-5">
+    <h1>Create Unit</h1>
+    <form asp-controller="Units" asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="UnitName" class="form-label">Unit Name</label>
+                    <input asp-for="UnitName" class="form-control" />
+                    <span asp-validation-for="UnitName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UnitNumber" class="form-label">Unit Number</label>
+                    <input asp-for="UnitNumber" class="form-control" />
+                    <span asp-validation-for="UnitNumber" class="text-danger"></span>
+                </div>
+
+                <!-- Add dropdown for InventoryId -->
+                <div class="form-group">
+                    <label asp-for="InventoryId"></label>
+                    <select class="form-control" asp-for="InventoryId" asp-items="ViewBag.InventoryList">
+                        <option value="0">--Select Inventory type --</option>
+                    </select>
+                    <span asp-validation-for="InventoryId" class="text-danger"></span>
+                </div>
+
+                <!-- Add dropdown for Unit_type_Id -->
+                <div class="form-group">
+                    <label asp-for="Unit_type_Id"></label>
+                    <select class="form-control" asp-for="Unit_type_Id" asp-items="ViewBag.UnitTypeList">
+                        <option value="0">--Select Inventory type --</option>
+                    </select>
+                    <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
+                </div>
+
+
+
             </div>
-
-            <div class="form-group">
-                <label asp-for="UnitNumber" class="form-label">Unit Number</label>
-                <input asp-for="UnitNumber" class="form-control" />
-                <span asp-validation-for="UnitNumber" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-
-            <div>
-                <label asp-for="Unit_type_Id">Unit Type</label>
-                <select class="form-control" asp-for="Unit_type_Id" asp-items="UnitTypesList">
-                    <option value="0">--Select Unit--</option>
-                </select>
-                <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to Units List</a>
             </div>
-            <input type="hidden" asp-for="InventoryId" />
-        
         </div>
-
-     
-    </div>
-    <br />
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <div class="col">
-            <a asp-action="Index" class="btn btn-outline-primary float-right">Back to Request List</a>
-        </div>
-    </div>
-</form>
-
-
-
+    </form>
+</div>
 

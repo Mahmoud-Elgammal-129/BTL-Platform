@@ -76,21 +76,11 @@
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="RequestTypeID"></label>
-         <select name="RequestTypeID" id="RequestTypeID" class="form-control">
-                    @foreach (Request RequestItem in ViewBag.RequestList)
-                    {
-                        if (Model.RequestTypeID == RequestItem.RequestTypeID)
-                        {
-                            <option value="@RequestItem.RequestTypeID" selected>@RequestItem.Request_type.TypeName</option>
-                        }
-                        else
-                        {
-                            <option value="@RequestItem.RequestTypeID">@RequestItem.Request_type.TypeName</option>
-                        }
-                    }
-                </select>
+            <div class="form-group">
+                <label asp-for="RequestTypeID">Request Type:</label>
+                @*  @Html.DropDownList("Request_type_Id", ViewBag.RequestTypesList as SelectList, "Select RequestTypes", new { @class = "form-control" }) *@
+                <select asp-for="RequestTypeID" class="form-control" asp-items="@ViewBag.RequestTypesList"></select>
+                <span asp-validation-for="RequestTypeID" class="text-danger"></span>
             </div>
             @*  <input type="hidden" asp-for="Employee_Id" />*@
             @*   <div class="form-group form-check">

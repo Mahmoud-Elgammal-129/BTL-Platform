@@ -19,20 +19,20 @@ namespace BTL_Platform.Repository
             if (UnitToDelete != null)
             {
                 UnitToDelete.IsDeleted = true;
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                bTLContext.Units.Update(UnitToDelete);
+                Save(); 
             }
         }
 
         public Unit GetUnit(long id)
         {
-            Unit unit = bTLContext.Units.FirstOrDefault(a => a.UnitId == id);
+            Unit unit = bTLContext.Units.Include(n => n.Unit_type).Include(n=>n.inventory).FirstOrDefault(a => a.UnitId == id && a.IsDeleted == false);
             return unit;
         }
 
         public List<Unit> GetUnits()
         {
-            var unit = bTLContext.Units.Include(r => r.Unit_type).Include(i=>i.inventory).ToList();
+            var unit = bTLContext.Units.Where(n => n.IsDeleted == false).Include(n => n.Unit_type).Include(n => n.inventory).ToList();
             return unit;
         }
 
@@ -41,7 +41,6 @@ namespace BTL_Platform.Repository
             bTLContext.Units.Add(unit);
             bTLContext.SaveChanges();
         }
-
         public void Save()
         {
             bTLContext.SaveChanges();

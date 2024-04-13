@@ -19,6 +19,7 @@ namespace BTL_Platform.Reposatiory
             if (requestToDelete != null)
             {
                 requestToDelete.IsDeleted = true;
+                bTLContext.Requests.Update(requestToDelete);
                 //Update(requestToDelete);
                 Save(); // Save method should handle the changes
             }
@@ -27,13 +28,13 @@ namespace BTL_Platform.Reposatiory
 
             public Request GetRequest(long id)
             {
-            Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id);
+            Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id && a.IsDeleted == false);
                 return request;
             }
 
             public List<Request> GetRequests()
             {
-           var request= bTLContext.Requests.Include(r=>r.Request_type).ToList();
+           var request= bTLContext.Requests.Where(n=>n.IsDeleted==false).ToList();
             return request;
             }
 

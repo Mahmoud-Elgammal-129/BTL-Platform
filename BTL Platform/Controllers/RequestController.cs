@@ -3,6 +3,7 @@ using BTL_Platform.Intrface;
 using BTL_Platform.Models;
 using BTL_Platform.Reposatiory;
 using BTL_Platform.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,13 @@ namespace BTL_Platform.Controllers
         RequestRepository RequestRepository;
         RequestTypeRepository RequestTypeRepository;
         EmployeeRepository employeeRepository;
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository )
+        UserManager<ApplicationUser> usermanager;
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
             employeeRepository = _employeeRepository;
+            this.usermanager = usermanager;
         }
         public IActionResult Index()
         {
@@ -28,18 +31,22 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
+            //List<RequestType> requestTypes = RequestTypeRepository.GetRequestTypes();
+            ////var requestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
+            ////ViewBag.RequestTypesList = requestTypesList;
+            //ViewBag.RequestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
             ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
             return View();
 
         }
         [HttpPost]
-        public IActionResult Create(Request requests)
+        public async Task<IActionResult> CreateAsync(Request requests)
         {
-
+            var user = await usermanager.GetUserAsync(User);
 
             if (requests != null)
             {
-                requests.Employee_Id = "1";
+                requests.Employee_Id = user.Id;
                 RequestRepository.Insert(requests);
                 RequestRepository.Save();
                 return RedirectToAction("Index");
@@ -57,11 +64,7 @@ namespace BTL_Platform.Controllers
         public IActionResult Edit(long id)
         {
             Request requestid = RequestRepository.GetRequest(id);
-            ViewData["requestList"] = RequestRepository.GetRequests();
             return View(requestid);
-      
-
-           
         }
         [HttpPost]
         public IActionResult Edit(Request request, long id)

@@ -7,9 +7,9 @@ namespace BTL_Platform.Models
     {
         [Key]
         public long VisitId { get; set; }
-        public int PlaceId { get; set; }
-        public int ReportId { get; set; }
-        public int UserId { get; set; }
+        //public int PlaceId { get; set; }
+        //public int ReportId { get; set; }
+        //public int UserId { get; set; }
         public DateTime UTCoffset { get; set; }
         public DateTime date { get; set; } = DateTime.Now;
         public string POSPhoto { get; set; } = string.Empty;
