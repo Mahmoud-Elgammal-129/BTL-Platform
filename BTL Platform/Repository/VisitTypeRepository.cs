@@ -25,13 +25,13 @@ namespace BTL_Platform.Repository
 
         public List<VisitType> GetVisitTypes()
         {
-            var visitType = bTLContext.VisitTypes.ToList();
+            var visitType = bTLContext.VisitTypes.Where(n=>n.IsDeleted==false).ToList();
             return visitType;
         }
 
         public VisitType GetVisitType(long id)
         {
-            VisitType visitType = bTLContext.VisitTypes.FirstOrDefault(a => a.VisitTypeId == id);
+            VisitType visitType = bTLContext.VisitTypes.FirstOrDefault(a => a.VisitTypeId == id && a.IsDeleted == false);
             return visitType;
         }
 

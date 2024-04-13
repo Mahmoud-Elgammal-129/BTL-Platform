@@ -1,0 +1,142 @@
+﻿@model BTL_Platform.Models.Visit
+
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+}
+
+<div class="container mt-5">
+    <h1>Create Visit</h1>
+    <form asp-controller="Visit" asp-action="Edit" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.HiddenFor(model => model.VisitId)
+
+                <div class="form-group">
+                    <label asp-for="UTCoffset" class="form-label">UTC Offset</label>
+                    <input asp-for="UTCoffset" class="form-control" />
+                    <span asp-validation-for="UTCoffset" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="date" class="form-label">Date</label>
+                    <input asp-for="date" class="form-control" />
+                    <span asp-validation-for="date" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="POSPhoto" class="form-label">POS Photo</label>
+                    <input asp-for="POSPhoto" class="form-control" />
+                    <span asp-validation-for="POSPhoto" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UnitsPhotobefore" class="form-label">Units Photo Before</label>
+                    <input asp-for="UnitsPhotobefore" class="form-control" />
+                    <span asp-validation-for="UnitsPhotobefore" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UnitsPhotoAfter" class="form-label">Units Photo After</label>
+                    <input asp-for="UnitsPhotoAfter" class="form-control" />
+                    <span asp-validation-for="UnitsPhotoAfter" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="placeName" class="form-label">Place Name</label>
+                    <input asp-for="placeName" class="form-control" />
+                    <span asp-validation-for="placeName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="placeChain" class="form-label">Place Chain</label>
+                    <input asp-for="placeChain" class="form-control" />
+                    <span asp-validation-for="placeChain" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Status" class="form-label">Status</label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Notes" class="form-control"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserName" class="form-label">User Name</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PlannedDate" class="form-label">Planned Date</label>
+                    <input asp-for="PlannedDate" class="form-control" />
+                    <span asp-validation-for="PlannedDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TaskId" class="form-label">Task ID</label>
+                    <input asp-for="TaskId" class="form-control" />
+                    <span asp-validation-for="TaskId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TaskName" class="form-label">Task Name</label>
+                    <input asp-for="TaskName" class="form-control" />
+                    <span asp-validation-for="TaskName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UnitsNumbers" class="form-label">Units Numbers</label>
+                    <input asp-for="UnitsNumbers" class="form-control" />
+                    <span asp-validation-for="UnitsNumbers" class="text-danger"></span>
+                </div>
+
+
+
+                <!-- Add dropdowns for related entities -->
+                <!-- You can add dropdowns for related entities such as Request, User, VisitStatus, VisitType, Place, etc. similar to how you added dropdowns for related entities in the unit creation page -->
+                <div class="form-group">
+                    <label asp-for="Id"></label>
+                    <select class="form-control" asp-for="Id" asp-items="ViewBag.User">
+                        <option value="0">--Select User --</option>
+                    </select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VisitStatusId"></label>
+                    <select class="form-control" asp-for="VisitStatusId" asp-items="ViewBag.VisitStatus">
+                        <option value="0">--Select Visit Status --</option>
+                    </select>
+                    <span asp-validation-for="VisitStatusId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VisitTypeId"></label>
+                    <select class="form-control" asp-for="VisitTypeId" asp-items="ViewBag.VisitTypes">
+                        <option value="0">--Select Visit Type --</option>
+                    </select>
+                    <span asp-validation-for="VisitTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Place_Id"></label>
+                    <select class="form-control" asp-for="Place_Id" asp-items="ViewBag.Places">
+                        <option value="0">--Select Place --</option>
+                    </select>
+                    <span asp-validation-for="Place_Id" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to Visits List</a>
+            </div>
+        </div>
+    </form>
+</div>

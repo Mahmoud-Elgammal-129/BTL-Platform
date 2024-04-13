@@ -8,12 +8,19 @@ namespace BTL_Platform.Controllers
     public class VisitController : Controller
     {
         VisitRepository VisitRepository;
-        BTLContext btlContext;
+        UserRepository UserRepository;
+        VisitTypeRepository VisitTypeRepository;
+        VisitStatusRepository VisitStatusRepository;
+        PlacesRepository PlacesRepository;
+        
 
-        public VisitController(VisitRepository _VisitRepository, BTLContext btlContext)
+        public VisitController(VisitRepository _VisitRepository, VisitTypeRepository visitTypeRepository, UserRepository userRepository, PlacesRepository placesRepository, VisitStatusRepository visitStatusRepository)
         {
             VisitRepository = _VisitRepository;
-            this.btlContext = btlContext;
+            VisitTypeRepository = visitTypeRepository;
+            UserRepository = userRepository;
+            PlacesRepository = placesRepository;
+            VisitStatusRepository = visitStatusRepository;
         }
         public IActionResult Index()
         {
@@ -22,17 +29,13 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            {
-                Value = i.InventoryId.ToString(),
-                Text = i.ItemName
-            }).ToList();
+            ViewBag.User = UserRepository.GetUsers().Select(u => new SelectListItem { Value = u.Id.ToString(), Text = u.UserName }).ToList();
+            ViewBag.VisitTypes = VisitTypeRepository.GetVisitTypes().Select(vt => new SelectListItem { Value = vt.VisitTypeId.ToString(), Text = vt.VisitTypeName }).ToList();
+            ViewBag.VisitStatus = VisitStatusRepository.GetVisitStatuss().Select(vs => new SelectListItem { Value = vs.VisitStatusId.ToString(), Text = vs.VisitStatusName }).ToList();
+            ViewBag.Places = PlacesRepository.GetPlacess().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.DisplayName }).ToList();
 
-            ViewBag.VisitTypeList = btlContext.VisitTypes.Select(u => new SelectListItem
-            {
-                Value = u.VisitTypeId.ToString(),
-                Text = u.VisitTypeName
-            }).ToList();
+
+
 
             return View();
         }
@@ -58,19 +61,10 @@ namespace BTL_Platform.Controllers
         [HttpGet]
         public IActionResult Edit(long id)
         {
-            ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            {
-                Value = i.InventoryId.ToString(),
-                Text = i.ItemName
-            }).ToList();
-
-            ViewBag.VisitTypeList = btlContext.VisitTypes.Select(u => new SelectListItem
-            {
-                Value = u.VisitTypeId.ToString(),
-                Text = u.VisitTypeName
-            }).ToList();
-
-
+            ViewBag.Users = UserRepository.GetUsers();
+            ViewBag.VisitTypes = VisitTypeRepository.GetVisitTypes();
+            ViewBag.VisitStatus = VisitStatusRepository.GetVisitStatuss();
+            ViewBag.Places = PlacesRepository.GetPlacess();
             Visit Visitid = VisitRepository.GetVisit(id);
             return View(Visitid);
         }

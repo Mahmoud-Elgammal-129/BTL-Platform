@@ -29,7 +29,7 @@ namespace BTL_Platform.Models
         public bool IsDeleted { get; set; } = false;
         [ForeignKey(nameof(request))]
         public long RequestID { get; set; }
-        public virtual Places? request { get; set; }
+        public virtual Request? request { get; set; }
 
         [ForeignKey(nameof(User))]
         public long Id { get; set; }

@@ -18,20 +18,20 @@ namespace BTL_Platform.Repository
             if (VisitStatusToDelete != null)
             {
                 VisitStatusToDelete.IsDeleted = true;
-                //Update(requestToDelete);
+                bTLContext.VisitStatuses.Update(VisitStatusToDelete);
                 Save(); // Save method should handle the changes
             }
         }
 
         public VisitStatus GetVisitStatus(long id)
         {
-            VisitStatus visitStatus = bTLContext.VisitStatuses.FirstOrDefault(a => a.VisitStatusId == id);
+            VisitStatus visitStatus = bTLContext.VisitStatuses.FirstOrDefault(a => a.VisitStatusId == id &&a.IsDeleted==false);
             return visitStatus;
         }
 
         public List<VisitStatus> GetVisitStatuss()
         {
-            var visitStatus = bTLContext.VisitStatuses.ToList();
+            var visitStatus = bTLContext.VisitStatuses.Where(a=> a.IsDeleted == false).ToList();
             return visitStatus;
         }
 
