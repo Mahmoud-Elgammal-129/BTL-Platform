@@ -2,6 +2,12 @@
 using BTL_Platform.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.IO.Packaging;
+using System.Xml.Linq;
+using System.Data;
+using ExcelDataReader;
 
 namespace BTL_Platform.Controllers
 {
@@ -12,7 +18,7 @@ namespace BTL_Platform.Controllers
         VisitTypeRepository VisitTypeRepository;
         VisitStatusRepository VisitStatusRepository;
         PlacesRepository PlacesRepository;
-        
+
 
         public VisitController(VisitRepository _VisitRepository, VisitTypeRepository visitTypeRepository, UserRepository userRepository, PlacesRepository placesRepository, VisitStatusRepository visitStatusRepository)
         {
@@ -88,5 +94,173 @@ namespace BTL_Platform.Controllers
             VisitRepository.Save();
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public IActionResult Upload(IFormFile excelFile)
+        {
+            if (excelFile != null && excelFile.Length > 0)
+            {
+                // Read data from Excel using ReadExcel
+                string sheetName = "Reports"; // Replace with your sheet name
+                var dataTable = ReadExcel(excelFile, sheetName);
+                
+                // Convert data to List<Visit> (assuming mapping logic exists)
+                var visits = ConvertDataTableToVisitList(dataTable);
+
+                VisitRepository.Insert(visits);
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Handle case where no file is uploaded
+                return View("Upload");
+            }
+        }
+
+        public static DataTable ReadExcel(IFormFile excelFile, string sheetName)
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            using (var stream = excelFile.OpenReadStream())
+            {
+                DataTable excelDataTable;
+                DataTable filteredDataTable;
+
+                using (var reader = ExcelReaderFactory.CreateOpenXmlReader(stream))
+                {
+                    var conf = new ExcelDataSetConfiguration
+                    {
+                        ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                        {
+                            UseHeaderRow = true
+                        }
+                    };
+
+                    // Get the DataSet from the Excel file
+                    var dataSet = reader.AsDataSet(conf);
+
+                    // Check if the specified sheet name exists in the DataSet
+                    if (!dataSet.Tables.Contains(sheetName))
+                    {
+                        throw new ArgumentException("Invalid sheet name");
+                    }
+
+                    // Retrieve the DataTable corresponding to the specified sheet name
+                    excelDataTable = dataSet.Tables[sheetName];
+
+                    for (int i = 0; i < excelDataTable.Columns.Count; i++)
+                    {
+                        excelDataTable.Columns[i].ColumnName = excelDataTable.Columns[i].ColumnName.Trim();
+                    }
+
+                    // Create a new DataTable to store non-empty rows
+                    //filteredDataTable = excelDataTable.Clone();
+
+                    //// Iterate through rows and copy non-empty rows to the new DataTable
+                    //foreach (DataRow row in excelDataTable.Rows)
+                    //{
+                    //    bool isRowEmpty = string.IsNullOrWhiteSpace(row["DC"].ToString());
+                    //    if (!isRowEmpty)
+                    //    {
+                    //        filteredDataTable.Rows.Add(row.ItemArray); // Copy the non-empty row to the new DataTable
+                    //    }
+                    //}
+                }
+
+                return excelDataTable;
+            }
+        }
+
+        private List<Visit> ConvertDataTableToVisitList(DataTable dataTable)
+        {
+            List<Visit> visits = new List<Visit>();
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Visit visit = new Visit();
+                
+                if (row["Request_ID"] != null && long.TryParse(row["Request_ID"].ToString(), out long requestId))
+                {
+                    visit.RequestID = requestId;
+                }
+                if (row["date"] != null && DateTime.TryParse(row["date"].ToString(), out DateTime date))
+                {
+                    visit.date = date;
+                }
+                if (row["UTC offset"] != null && DateTime.TryParse(row["UTC offset"].ToString(), out DateTime utcOffset))
+                {
+                    visit.UTCoffset = utcOffset;
+                }
+                if (row["place_id"] != null)
+                {
+                    visit.Place_Id = 2;//long.Parse(row["place_id"].ToString());
+                }
+                if (row["User_id"] != null)
+                {
+                    visit.Id = 1;// long.Parse(row["User_id"].ToString());
+                }
+                if (row["place_name"] != null)
+                {
+                    visit.placeName = row["place_name"].ToString();
+                }
+                if (row["place_chain"] != null)
+                {
+                    visit.placeChain = row["place_chain"].ToString();
+                }
+                if (row["report_id"] != null)
+                {
+                    //visit.RequestID = long.Parse(row["report_id"].ToString());
+                }
+                if (row["POS Photo"] != null)
+                {
+                    visit.POSPhoto = row["POS Photo"].ToString();
+                }
+                if (row["Units Photo before"] != null)
+                {
+                    visit.UnitsPhotobefore = row["Units Photo before"].ToString();
+                }
+                if (row["Units Numbers"] != null)
+                {
+                    if (!string.IsNullOrEmpty(row["Units Numbers"].ToString()))
+                    visit.UnitsNumbers = int.Parse(row["Units Numbers"].ToString());
+                }
+
+                if (row["Units Photo After"] != null)
+                {
+                    visit.UnitsPhotoAfter = row["Units Photo After"].ToString();
+                }
+                if (row["Status"] != null)
+                {
+                    visit.Status = row["Status"].ToString();
+                }
+                if (row["Notes"] != null)
+                {
+                    visit.Notes = row["Notes"].ToString();
+                }
+                if (row["User_name"] != null)
+                {
+                    visit.UserName = row["User_name"].ToString();
+                }
+                if (row["Task_id"] != null)
+                {
+                    visit.TaskId = row["Task_id"].ToString();
+                }
+                if (row["Task_name"] != null)
+                {
+                    visit.TaskName = row["Task_name"].ToString();
+                }
+
+                // Continue setting other properties similarly
+
+                visits.Add(visit);
+            }
+
+            return visits;
+        }
+
+
+
     }
 }

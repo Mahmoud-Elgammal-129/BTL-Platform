@@ -6,6 +6,7 @@ namespace BTL_Platform.Intrface
     {
         List<Visit> GetVisits();
         Visit GetVisit(long id);
+        void Insert(List<Visit> visits);
 
         void Insert(Visit visit);
         void Update(long id, Visit visit);

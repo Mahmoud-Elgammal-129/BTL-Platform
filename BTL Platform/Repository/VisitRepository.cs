@@ -1,5 +1,6 @@
 ﻿using BTL_Platform.Intrface;
 using BTL_Platform.Models;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 
 namespace BTL_Platform.Repository
@@ -40,6 +41,13 @@ namespace BTL_Platform.Repository
             bTLContext.Visits.Add(Visit);
             bTLContext.SaveChanges();
         }
+
+        public void Insert(List<Visit> visits)
+        {
+            bTLContext.Visits.AddRange(visits);
+            bTLContext.SaveChanges();
+        }
+
         public void Save()
         {
             bTLContext.SaveChanges();
