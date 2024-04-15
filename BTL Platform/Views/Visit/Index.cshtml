@@ -3,7 +3,18 @@
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
-
+<h2>Upload Excel File</h2>
+<form asp-action="Upload" method="post" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="ExcelFile" class="col-sm-2 col-form-label">Select Excel File:</label>
+        <div class="col-6">
+            <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" />
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </div>
+</form>
 <div class="mt-5">
     <a asp-action="Create" asp-controller="Visit" class="btn btn-success">New Visit Item</a>
 </div>
