@@ -55,19 +55,19 @@ namespace BTL_Platform.Controllers
             return View("Create", requests);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             Request requestid = RequestRepository.GetRequest(id);
             return View(requestid);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             Request requestid = RequestRepository.GetRequest(id);
             return View(requestid);
         }
         [HttpPost]
-        public IActionResult Edit(Request request, long id)
+        public IActionResult Edit(Request request, string id)
         {
             if (request != null)
             {
@@ -79,7 +79,7 @@ namespace BTL_Platform.Controllers
         }
      
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             RequestRepository.Delete(id);

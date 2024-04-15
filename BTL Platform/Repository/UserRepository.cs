@@ -11,7 +11,7 @@ namespace BTL_Platform.Repository
 
             bTLContext = _bTLContext;
         }
-        public void Delete(long id)
+        public void Delete(string id)
         {
             User UserToDelete = GetUser(id);
             if (UserToDelete != null)
@@ -22,7 +22,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public User GetUser(long id)
+        public User GetUser(string id)
         {
             User user = bTLContext.Users.FirstOrDefault(a => a.Id == id);
             return user;
@@ -45,7 +45,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, User user)
+        public void Update(string id, User user)
         {
             User OldUser = GetUser(id);
             OldUser.UserId = user.UserId;

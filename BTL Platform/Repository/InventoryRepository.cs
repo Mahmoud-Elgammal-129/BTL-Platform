@@ -12,7 +12,7 @@ namespace BTL_Platform.Repository
 
             bTLContext = _bTLContext;
         }
-        public void Delete(long id)
+        public void Delete(string id)
         {
             Inventory inventoryToDelete = GetInventory(id);
             if (inventoryToDelete != null)
@@ -23,7 +23,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public Inventory GetInventory(long id)
+        public Inventory GetInventory(string id)
         {
             Inventory inventory = bTLContext.Inventories.FirstOrDefault(a => a.InventoryId == id &&a.IsDeleted==false);
             return inventory;
@@ -46,7 +46,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, Inventory inventory)
+        public void Update(string id, Inventory inventory)
         {
             Inventory Oldinventory = GetInventory(id);
 

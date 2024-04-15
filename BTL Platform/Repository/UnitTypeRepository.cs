@@ -11,7 +11,7 @@ namespace BTL_Platform.Repository
 
             bTLContext = _bTLContext;
         }
-        public void Delete(long id)
+        public void Delete(string id)
         {
              UnitType UnitTypeToDelete = GetUnitType(id);
             if (UnitTypeToDelete != null)
@@ -23,7 +23,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public UnitType GetUnitType(long id)
+        public UnitType GetUnitType(string id)
         {
             UnitType unitType = bTLContext.UnitTypes.FirstOrDefault(a => a.UnitTypeId == id&& a.IsDeleted==false);
             return unitType;
@@ -46,7 +46,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, UnitType unittype)
+        public void Update(string id, UnitType unittype)
         {
             UnitType OldUnitType = GetUnitType(id);
             OldUnitType.UnitTypeName = unittype.UnitTypeName;

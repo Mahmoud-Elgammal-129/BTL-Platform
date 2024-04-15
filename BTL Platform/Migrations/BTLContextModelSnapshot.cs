@@ -106,16 +106,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6c4ec3d7-17c8-4a9c-9c18-99f87a9d9779",
+                            ConcurrencyStamp = "f5f8e4d0-c076-4756-a6cf-5561ff40bbdd",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDzvxUuIQNjPtjnouuDSWxC3kgRoLjULO80Hl1lQfT5EhPG0DmSzfkG4cEauIIuoSQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDFLDukh38AsbIdHbeWWDMtuZnBNh4uFstF+UltMPRvdEQDf66nQid0YBpDUNua7Og==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c3ff075-bd53-4fbe-81d4-e40f1af4e358",
+                            SecurityStamp = "f8829150-2663-4d31-a199-812f9cd3db46",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -123,11 +123,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Inventory", b =>
                 {
-                    b.Property<long>("InventoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("InventoryId"));
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -154,11 +151,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Places", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Chain")
                         .IsRequired()
@@ -231,11 +225,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
                 {
-                    b.Property<long>("RequestID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("RequestID"));
+                    b.Property<string>("RequestID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Assignee")
                         .IsRequired()
@@ -272,8 +263,9 @@ namespace BTL_Platform.Migrations
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("RequestTypeID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("RequestTypeID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -300,11 +292,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.RequestType", b =>
                 {
-                    b.Property<long>("RequestTypeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("RequestTypeID"));
+                    b.Property<string>("RequestTypeID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -320,14 +309,12 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
                 {
-                    b.Property<long>("UnitId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                    b.Property<string>("UnitId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UnitId"));
-
-                    b.Property<long>("InventoryId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("InventoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -338,8 +325,9 @@ namespace BTL_Platform.Migrations
                     b.Property<int>("UnitNumber")
                         .HasColumnType("int");
 
-                    b.Property<long>("Unit_type_Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Unit_type_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UnitId");
 
@@ -352,11 +340,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.UnitType", b =>
                 {
-                    b.Property<long>("UnitTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UnitTypeId"));
+                    b.Property<string>("UnitTypeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -372,11 +357,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.User", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -387,8 +369,9 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("Team")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -400,14 +383,12 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
                 {
-                    b.Property<long>("VisitId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                    b.Property<string>("VisitId")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("VisitId"));
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -420,20 +401,24 @@ namespace BTL_Platform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("int");
+                    b.Property<string>("PlaceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Place_Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Place_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("PlannedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReportId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RequestID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("RequestID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -461,18 +446,25 @@ namespace BTL_Platform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UnitsType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("VisitStatusId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("VisitStatusId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("VisitTypeId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("VisitTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
@@ -502,11 +494,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.VisitStatus", b =>
                 {
-                    b.Property<long>("VisitStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("VisitStatusId"));
+                    b.Property<string>("VisitStatusId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -522,11 +511,8 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.VisitType", b =>
                 {
-                    b.Property<long>("VisitTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("VisitTypeId"));
+                    b.Property<string>("VisitTypeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -754,7 +740,7 @@ namespace BTL_Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BTL_Platform.Models.Places", "request")
+                    b.HasOne("BTL_Platform.Models.Request", "request")
                         .WithMany()
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -51,13 +51,13 @@ namespace BTL_Platform.Controllers
             return View("Create", Units);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             Unit Unitid = UnitRepository.GetUnit(id);
             return View(Unitid);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
             {
@@ -76,7 +76,7 @@ namespace BTL_Platform.Controllers
             return View(Unitid);
         }
         [HttpPost]
-        public IActionResult Edit(Unit Unit, long id)
+        public IActionResult Edit(Unit Unit, string id)
         {
             if (Unit != null)
             {
@@ -88,7 +88,7 @@ namespace BTL_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             UnitRepository.Delete(id);

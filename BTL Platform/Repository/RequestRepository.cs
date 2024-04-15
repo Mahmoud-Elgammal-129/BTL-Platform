@@ -13,7 +13,7 @@ namespace BTL_Platform.Reposatiory
 
                 bTLContext = _bTLContext;
             }
-            public void Delete(long id)
+            public void Delete(string id)
             {
             Request requestToDelete = GetRequest(id);
             if (requestToDelete != null)
@@ -26,7 +26,7 @@ namespace BTL_Platform.Reposatiory
             
             }
 
-            public Request GetRequest(long id)
+            public Request GetRequest(string id)
             {
             Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id && a.IsDeleted == false);
                 return request;
@@ -49,7 +49,7 @@ namespace BTL_Platform.Reposatiory
                 bTLContext.SaveChanges();
             }
 
-            public void Update(long id, Request request)
+            public void Update(string id, Request request)
             {
             //get old
                  Request oldRequest = GetRequest(id);

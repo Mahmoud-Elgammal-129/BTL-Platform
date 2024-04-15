@@ -5,11 +5,11 @@ namespace BTL_Platform.Intrface
     public interface IVisitStatusRepository
     {
         List<VisitStatus> GetVisitStatuss();
-        VisitStatus GetVisitStatus(long id);
+        VisitStatus GetVisitStatus(string id);
 
         void Insert(VisitStatus visitstatus);
-        void Update(long id, VisitStatus visitstatus);
-        void Delete(long id);
+        void Update(string id, VisitStatus visitstatus);
+        void Delete(string id);
         void Save();
     }
 }

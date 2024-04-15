@@ -12,7 +12,7 @@ namespace BTL_Platform.Repository
 
             bTLContext = _bTLContext;
         }
-        public void Delete(long id)
+        public void Delete(string id)
         {
             Places PlacesToDelete = GetPlaces(id);
             if (PlacesToDelete != null)
@@ -24,7 +24,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public Places GetPlaces(long id)
+        public Places GetPlaces(string id)
         {
             Places places = bTLContext.Places.FirstOrDefault(a => a.Id == id&&a.IsDeleted==false);
             return places;
@@ -47,7 +47,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, Places places)
+        public void Update(string id, Places places)
         {
             Places OldPlaces = GetPlaces(id);
 

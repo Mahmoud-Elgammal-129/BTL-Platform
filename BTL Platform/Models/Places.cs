@@ -5,8 +5,17 @@ namespace BTL_Platform.Models
 {
     public class Places
     {
+        private string GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+        public Places()
+        {
+            Id = GenerateUniqueId();
+        }
         [Key]
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string DisplayName { get; set; }
         public string PlaceId { get; set; }
         public string Chain { get; set; }

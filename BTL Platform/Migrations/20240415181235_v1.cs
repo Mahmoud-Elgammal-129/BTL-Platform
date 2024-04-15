@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BTL_Platform.Migrations
 {
     /// <inheritdoc />
-    public partial class v : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,8 +59,7 @@ namespace BTL_Platform.Migrations
                 name: "Inventories",
                 columns: table => new
                 {
-                    InventoryId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InventoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     count = table.Column<int>(type: "int", nullable: false),
@@ -76,8 +75,7 @@ namespace BTL_Platform.Migrations
                 name: "Places",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Chain = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -105,8 +103,7 @@ namespace BTL_Platform.Migrations
                 name: "RequestTypes",
                 columns: table => new
                 {
-                    RequestTypeID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RequestTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -119,8 +116,7 @@ namespace BTL_Platform.Migrations
                 name: "UnitTypes",
                 columns: table => new
                 {
-                    UnitTypeId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UnitTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -133,9 +129,8 @@ namespace BTL_Platform.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Team = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -150,8 +145,7 @@ namespace BTL_Platform.Migrations
                 name: "VisitStatuses",
                 columns: table => new
                 {
-                    VisitStatusId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VisitStatusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     VisitStatusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -164,8 +158,7 @@ namespace BTL_Platform.Migrations
                 name: "VisitTypes",
                 columns: table => new
                 {
-                    VisitTypeId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VisitTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     VisitTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -192,7 +185,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,7 +206,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,7 +226,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,13 +244,13 @@ namespace BTL_Platform.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,15 +270,14 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Requests",
                 columns: table => new
                 {
-                    RequestID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RequestID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Channel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -300,7 +292,7 @@ namespace BTL_Platform.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Employee_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RequestTypeID = table.Column<long>(type: "bigint", nullable: false)
+                    RequestTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -310,26 +302,25 @@ namespace BTL_Platform.Migrations
                         column: x => x.Employee_Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Requests_RequestTypes_RequestTypeID",
                         column: x => x.RequestTypeID,
                         principalTable: "RequestTypes",
                         principalColumn: "RequestTypeID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Units",
                 columns: table => new
                 {
-                    UnitId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UnitName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UnitNumber = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Unit_type_Id = table.Column<long>(type: "bigint", nullable: false),
-                    InventoryId = table.Column<long>(type: "bigint", nullable: false)
+                    Unit_type_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    InventoryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -339,28 +330,29 @@ namespace BTL_Platform.Migrations
                         column: x => x.InventoryId,
                         principalTable: "Inventories",
                         principalColumn: "InventoryId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Units_UnitTypes_Unit_type_Id",
                         column: x => x.Unit_type_Id,
                         principalTable: "UnitTypes",
                         principalColumn: "UnitTypeId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Visits",
                 columns: table => new
                 {
-                    VisitId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PlaceId = table.Column<int>(type: "int", nullable: false),
-                    ReportId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    VisitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PlaceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UTCoffset = table.Column<DateTime>(type: "datetime2", nullable: false),
                     date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     POSPhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitsPhotobefore = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitsNumbers = table.Column<int>(type: "int", nullable: false),
+                    UnitsType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitsPhotoAfter = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     placeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     placeChain = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -370,13 +362,12 @@ namespace BTL_Platform.Migrations
                     PlannedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TaskId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitsNumbers = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    RequestID = table.Column<long>(type: "bigint", nullable: false),
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    VisitStatusId = table.Column<long>(type: "bigint", nullable: false),
-                    VisitTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    Place_Id = table.Column<long>(type: "bigint", nullable: false)
+                    RequestID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VisitStatusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VisitTypeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Place_Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -386,31 +377,31 @@ namespace BTL_Platform.Migrations
                         column: x => x.Place_Id,
                         principalTable: "Places",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Visits_Places_RequestID",
+                        name: "FK_Visits_Requests_RequestID",
                         column: x => x.RequestID,
-                        principalTable: "Places",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalTable: "Requests",
+                        principalColumn: "RequestID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Visits_Users_Id",
                         column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Visits_VisitStatuses_VisitStatusId",
                         column: x => x.VisitStatusId,
                         principalTable: "VisitStatuses",
                         principalColumn: "VisitStatusId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Visits_VisitTypes_VisitTypeId",
                         column: x => x.VisitTypeId,
                         principalTable: "VisitTypes",
                         principalColumn: "VisitTypeId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -421,7 +412,7 @@ namespace BTL_Platform.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "address" },
-                values: new object[] { "1", 0, "6c4ec3d7-17c8-4a9c-9c18-99f87a9d9779", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAEDzvxUuIQNjPtjnouuDSWxC3kgRoLjULO80Hl1lQfT5EhPG0DmSzfkG4cEauIIuoSQ==", null, false, "5c3ff075-bd53-4fbe-81d4-e40f1af4e358", false, "Zaghlol", null });
+                values: new object[] { "1", 0, "f5f8e4d0-c076-4756-a6cf-5561ff40bbdd", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAEDFLDukh38AsbIdHbeWWDMtuZnBNh4uFstF+UltMPRvdEQDf66nQid0YBpDUNua7Og==", null, false, "f8829150-2663-4d31-a199-812f9cd3db46", false, "Zaghlol", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -532,9 +523,6 @@ namespace BTL_Platform.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Requests");
-
-            migrationBuilder.DropTable(
                 name: "Units");
 
             migrationBuilder.DropTable(
@@ -542,12 +530,6 @@ namespace BTL_Platform.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "RequestTypes");
 
             migrationBuilder.DropTable(
                 name: "Inventories");
@@ -559,6 +541,9 @@ namespace BTL_Platform.Migrations
                 name: "Places");
 
             migrationBuilder.DropTable(
+                name: "Requests");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -566,6 +551,12 @@ namespace BTL_Platform.Migrations
 
             migrationBuilder.DropTable(
                 name: "VisitTypes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "RequestTypes");
         }
     }
 }

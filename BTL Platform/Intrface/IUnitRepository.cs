@@ -5,11 +5,11 @@ namespace BTL_Platform.Intrface
     public interface IUnitRepository
     {
         List<Unit> GetUnits();
-        Unit GetUnit(long id);
+        Unit GetUnit(string id);
 
         void Insert(Unit unit);
-        void Update(long id, Unit unit);
-        void Delete(long id);
+        void Update(string id, Unit unit);
+        void Delete(string id);
         void Save();
     }
 }

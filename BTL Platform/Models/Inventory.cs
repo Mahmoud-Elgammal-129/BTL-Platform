@@ -6,8 +6,17 @@ namespace BTL_Platform.Models
 {
     public class Inventory
     {
+        private string GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+        public Inventory()
+        {
+            InventoryId = GenerateUniqueId();
+        }
         [Key]
-        public long InventoryId { get; set; }
+        public string InventoryId { get; set; }
         public string ItemName { get; set; }
         public string Description { get; set; }
         public int count { get; set; }

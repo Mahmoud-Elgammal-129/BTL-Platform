@@ -5,8 +5,17 @@ namespace BTL_Platform.Models
 {
     public class VisitType
     {
+        private string GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+        public VisitType()
+        {
+            VisitTypeId = GenerateUniqueId();
+        }
         [Key]
-        public long VisitTypeId { get; set; }
+        public string VisitTypeId { get; set; }
         public string VisitTypeName { get; set; }
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; }

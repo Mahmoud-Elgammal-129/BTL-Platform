@@ -42,19 +42,19 @@ namespace BTL_Platform.Controllers
             return View("Create", Inventorys);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             Inventory Inventoryid = InventoryRepository.GetInventory(id);
             return View(Inventoryid);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             Inventory Inventoryid = InventoryRepository.GetInventory(id);
             return View(Inventoryid);
         }
         [HttpPost]
-        public IActionResult Edit(Inventory Inventory, long id)
+        public IActionResult Edit(Inventory Inventory, string id)
         {
             if (Inventory != null)
             {
@@ -66,7 +66,7 @@ namespace BTL_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             InventoryRepository.Delete(id);

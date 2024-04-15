@@ -5,9 +5,18 @@ namespace BTL_Platform.Models
 {
     public class Request
     {
-            
+        private string GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+        public Request()
+        {
+            RequestID = GenerateUniqueId();
+        }
+
         [Key]
-        public long RequestID { get; set; }
+        public string RequestID { get; set; }
         public DateTime RequestDate { get; set; } = DateTime.Now;
         public string Channel { get; set; }
         public string Description { get; set; }
@@ -28,7 +37,7 @@ namespace BTL_Platform.Models
         public virtual Employee? Employee { get; set; }
 
         [ForeignKey(nameof(Request_type))]
-        public long RequestTypeID { get; set; }
+        public string RequestTypeID { get; set; }
         public virtual RequestType Request_type { get; set; }
     }
 }

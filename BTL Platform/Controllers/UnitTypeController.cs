@@ -40,19 +40,19 @@ namespace BTL_Platform.Controllers
             return View("Create", UnitTypes);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             UnitType UnitTypeid = UnitTypeRepository.GetUnitType(id);
             return View(UnitTypeid);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             UnitType UnitTypeid = UnitTypeRepository.GetUnitType(id);
             return View(UnitTypeid);
         }
         [HttpPost]
-        public IActionResult Edit(UnitType UnitType, long id)
+        public IActionResult Edit(UnitType UnitType, string id)
         {
             if (UnitType != null)
             {
@@ -64,7 +64,7 @@ namespace BTL_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             UnitTypeRepository.Delete(id);

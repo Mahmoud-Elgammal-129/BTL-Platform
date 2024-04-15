@@ -12,7 +12,7 @@ namespace BTL_Platform.Repository
 
             bTLContext = _bTLContext;
         }
-        public void Delete(long id)
+        public void Delete(string id)
         {
             VisitStatus VisitStatusToDelete = GetVisitStatus(id);
             if (VisitStatusToDelete != null)
@@ -23,7 +23,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public VisitStatus GetVisitStatus(long id)
+        public VisitStatus GetVisitStatus(string id)
         {
             VisitStatus visitStatus = bTLContext.VisitStatuses.FirstOrDefault(a => a.VisitStatusId == id &&a.IsDeleted==false);
             return visitStatus;
@@ -46,7 +46,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, VisitStatus visitstatus)
+        public void Update(string id, VisitStatus visitstatus)
         {
             VisitStatus OldVisitStatus = GetVisitStatus(id);
             OldVisitStatus.VisitStatusName = visitstatus.VisitStatusName;

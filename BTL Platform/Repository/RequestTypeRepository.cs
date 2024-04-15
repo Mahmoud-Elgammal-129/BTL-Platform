@@ -14,7 +14,7 @@ namespace BTL_Platform.Repository
             bTLContext = _bTLContext;
         }
 
-        public void Delete(long id)
+        public void Delete(string id)
         {
             RequestType requestTypeToDelete = GetRequestType(id);
             if (requestTypeToDelete != null)
@@ -25,7 +25,7 @@ namespace BTL_Platform.Repository
             }
         }
 
-        public RequestType GetRequestType(long id)
+        public RequestType GetRequestType(string id)
         {
             var request = bTLContext.RequestTypes;
 
@@ -52,7 +52,7 @@ namespace BTL_Platform.Repository
             bTLContext.SaveChanges();
         }
 
-        public void Update(long id, RequestType requestType)
+        public void Update(string id, RequestType requestType)
         {
             if (id != null)
             {

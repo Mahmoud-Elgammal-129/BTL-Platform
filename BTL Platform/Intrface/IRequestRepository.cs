@@ -6,11 +6,11 @@ namespace BTL_Platform.Intrface
     public interface IRequestRepository
     {
         List<Request> GetRequests();
-        Request GetRequest(long id);
+        Request GetRequest(string id);
 
         void Insert(Request request);
-        void Update(long id, Request request);
-        void Delete(long id);
+        void Update(string id, Request request);
+        void Delete(string id);
         void Save();
     }
 }

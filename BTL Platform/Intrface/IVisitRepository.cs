@@ -5,11 +5,11 @@ namespace BTL_Platform.Intrface
     public interface IVisitRepository
     {
         List<Visit> GetVisits();
-        Visit GetVisit(long id);
+        Visit GetVisit(string id);
 
         void Insert(Visit visit);
-        void Update(long id, Visit visit);
-        void Delete(long id);
+        void Update(string id, Visit visit);
+        void Delete(string id);
         void Save();
     }
 }

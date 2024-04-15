@@ -42,19 +42,19 @@ namespace BTL_Platform.Controllers
             return View("Create", visitStatus);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             VisitStatus visitStatus = visitStatusRepository.GetVisitStatus(id);
             return View(visitStatus);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             VisitStatus visitTypeid = visitStatusRepository.GetVisitStatus(id);
             return View(visitTypeid);
         }
         [HttpPost]
-        public IActionResult Edit(VisitStatus visitStatus, long id)
+        public IActionResult Edit(VisitStatus visitStatus, string id)
         {
             if (visitStatus != null)
             {
@@ -66,7 +66,7 @@ namespace BTL_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             visitStatusRepository.Delete(id);

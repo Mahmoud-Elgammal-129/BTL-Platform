@@ -43,19 +43,19 @@ namespace BTL_Platform.Controllers
             return View("Create", Placess);
         }
 
-        public IActionResult Details(long id)
+        public IActionResult Details(string id)
         {
             Places Placesid = PlacesRepository.GetPlaces(id);
             return View(Placesid);
         }
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult Edit(string id)
         {
             Places Placesid = PlacesRepository.GetPlaces(id);
             return View(Placesid);
         }
         [HttpPost]
-        public IActionResult Edit(Places Places, long id)
+        public IActionResult Edit(Places Places, string id)
         {
             if (Places != null)
             {
@@ -67,7 +67,7 @@ namespace BTL_Platform.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(string id)
         {
 
             PlacesRepository.Delete(id);
