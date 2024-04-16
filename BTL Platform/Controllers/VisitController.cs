@@ -181,10 +181,10 @@ namespace BTL_Platform.Controllers
             {
                 Visit visit = new Visit();
                 
-                if (row["Request_ID"] != null && long.TryParse(row["Request_ID"].ToString(), out long requestId))
-                {
-                    visit.RequestID = requestId;
-                }
+                //if (row["Request_ID"] != null )
+                //{
+                //    visit.RequestID = row["Request_ID"].ToString();
+                //}
                 if (row["date"] != null && DateTime.TryParse(row["date"].ToString(), out DateTime date))
                 {
                     visit.date = date;
@@ -195,11 +195,11 @@ namespace BTL_Platform.Controllers
                 }
                 if (row["place_id"] != null)
                 {
-                    visit.Place_Id = 2;//long.Parse(row["place_id"].ToString());
+                    visit.Place_Id = row["place_id"].ToString();
                 }
                 if (row["User_id"] != null)
                 {
-                    visit.Id = 1;// long.Parse(row["User_id"].ToString());
+                    visit.Id = row["User_id"].ToString();
                 }
                 if (row["place_name"] != null)
                 {
@@ -211,7 +211,7 @@ namespace BTL_Platform.Controllers
                 }
                 if (row["report_id"] != null)
                 {
-                    //visit.RequestID = long.Parse(row["report_id"].ToString());
+                    visit.RequestID = row["report_id"].ToString();
                 }
                 if (row["POS Photo"] != null)
                 {

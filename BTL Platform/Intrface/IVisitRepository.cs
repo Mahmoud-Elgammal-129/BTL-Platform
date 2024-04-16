@@ -8,7 +8,7 @@ namespace BTL_Platform.Intrface
 
         Visit GetVisit(string id);
 
-        Visit GetVisit(long id);
+        
         void Insert(List<Visit> visits);
 
 
