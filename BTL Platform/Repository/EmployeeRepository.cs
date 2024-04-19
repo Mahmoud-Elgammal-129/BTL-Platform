@@ -18,7 +18,7 @@ namespace BTL_Platform.Repository
 
         public Employee GetEmployee(string id)
         {
-            Employee employee = bTLContext.Employees.FirstOrDefault(a => a.Id == id);
+            Employee employee = bTLContext.Employees.FirstOrDefault(a => a.Id == id&& a.IsDeleted==false);
             return employee;
         }
 

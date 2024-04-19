@@ -18,8 +18,8 @@ namespace BTL_Platform.Repository
             if (inventoryToDelete != null)
             {
                 inventoryToDelete.IsDeleted = true;
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                bTLContext.Inventories.Update(inventoryToDelete);
+                Save(); 
             }
         }
 
@@ -51,7 +51,7 @@ namespace BTL_Platform.Repository
             Inventory Oldinventory = GetInventory(id);
 
             Oldinventory.ItemName = inventory.ItemName;
-            Oldinventory.count = inventory.count;
+            Oldinventory.Count = inventory.Count;
             Oldinventory.Description = inventory.Description;
             Oldinventory.Status = inventory.Status;
             bTLContext.Inventories.Update(Oldinventory);

@@ -19,8 +19,7 @@ namespace BTL_Platform.Repository
             {
                 PlacesToDelete.IsDeleted = true;
                 bTLContext.Places.Update(PlacesToDelete);
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                Save();
             }
         }
 

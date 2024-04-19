@@ -16,9 +16,11 @@ namespace BTL_Platform.Models
         }
         [Key]
         public string VisitTypeId { get; set; }
+        [Required(ErrorMessage = "Visit type name is required")]
+
         public string VisitTypeName { get; set; }
         // Other properties SOFT DELETE
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
     
     }
 }

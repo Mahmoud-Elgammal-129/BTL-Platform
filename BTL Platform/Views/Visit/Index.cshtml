@@ -2,13 +2,15 @@
 
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int index = 1; 
+
 }
 <h2>Upload Excel File</h2>
 <form asp-action="Upload" method="post" enctype="multipart/form-data">
     <div class="form-group row">
         <label for="ExcelFile" class="col-sm-2 col-form-label">Select Excel File:</label>
         <div class="col-6">
-            <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" />
+            <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required/>
         </div>
         <div class="col-2">
             <button type="submit" class="btn btn-primary">Upload</button>
@@ -53,7 +55,7 @@
             @foreach (var visit in Model)
             {
                 <tr>
-                    
+                    <td>@(index++)</td>
                     <td>@visit.UTCoffset</td>
                     <td>@visit.date</td>
                     <td>@visit.POSPhoto</td>
@@ -69,10 +71,14 @@
                     <td>@visit.TaskName</td>
                     <td>@visit.UnitsNumbers</td>
                     <td>@visit.RequestID</td>
-                    <td>@visit.User.UserName</td>
-                    <td>@visit.VisitStatus.VisitStatusName</td>
-                    <td>@visit.VisitType.VisitTypeName</td>
-                    <td>@visit.Place.DisplayName</td>
+
+                    <td> @(visit.User != null ? visit.User.UserName : " ")</td>
+                    <td>@(visit.visitStatus != null ? visit.visitStatus.VisitStatusName : " ")</td>
+
+                    <td>@(visit.visitType != null ? visit.visitType.VisitTypeName : " ")</td>
+                    <td>@(visit.Place != null ? visit.Place.DisplayName : " ")</td>
+                    
+
                     <td>
                         <a asp-action="Edit" asp-route-id="@visit.VisitId" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@visit.VisitId" class="btn btn-outline-danger">Delete</a>

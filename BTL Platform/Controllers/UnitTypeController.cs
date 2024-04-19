@@ -28,10 +28,8 @@ namespace BTL_Platform.Controllers
         public IActionResult Create(UnitType UnitTypes)
         {
 
-
             if (UnitTypes != null)
             {
-
                 UnitTypeRepository.Insert(UnitTypes);
                 UnitTypeRepository.Save();
                 return RedirectToAction("Index");
@@ -63,7 +61,7 @@ namespace BTL_Platform.Controllers
             return View(UnitType);
         }
 
-        [HttpPost]
+        
         public IActionResult Delete(string id)
         {
 

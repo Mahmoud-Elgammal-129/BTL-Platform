@@ -17,9 +17,14 @@ namespace BTL_Platform.Models
         }
         [Key]
         public string Id { get; set; }
-        public string UserId { get; set; }
-        public string? UserName { get; set; }
-        public string? Email { get; set; }
+        [Required(ErrorMessage = "User ID is required")]
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "User name is required")]
+        public string UserName { get; set; }
+
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        public string Email { get; set; }
         public string? Team { get; set; }
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; }=false;

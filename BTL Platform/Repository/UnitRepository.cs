@@ -32,6 +32,7 @@ namespace BTL_Platform.Repository
 
         public List<Unit> GetUnits()
         {
+            //var units = bTLContext.Units.Where(n => n.IsDeleted == false).ToList();
             var unit = bTLContext.Units.Where(n => n.IsDeleted == false).Include(n => n.Unit_type).Include(n => n.inventory).ToList();
             return unit;
         }

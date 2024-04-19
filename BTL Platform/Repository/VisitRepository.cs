@@ -26,13 +26,13 @@ namespace BTL_Platform.Repository
 
         public Visit GetVisit(string id)
         {
-            Visit Visit = bTLContext.Visits.Include(n=>n.User).Include(n => n.VisitType).Include(n => n.VisitStatus).Include(n => n.Place).FirstOrDefault(a => a.VisitId == id && a.IsDeleted == false);
+            Visit Visit = bTLContext.Visits.Include(n=>n.User).Include(n => n.visitType).Include(n => n.visitStatus).Include(n => n.Place).FirstOrDefault(a => a.VisitId == id && a.IsDeleted == false);
             return Visit;
         }
 
         public List<Visit> GetVisits()
         {
-            var Visit = bTLContext.Visits.Where(n => n.IsDeleted == false).Include(n => n.User).Include(n => n.VisitStatus).Include(n => n.Place).Include(n => n.VisitType).ToList();
+            var Visit = bTLContext.Visits.Where(n => n.IsDeleted == false).Include(n => n.User).Include(n => n.visitStatus).Include(n => n.Place).Include(n => n.visitType).ToList();
             return Visit;
         }
 

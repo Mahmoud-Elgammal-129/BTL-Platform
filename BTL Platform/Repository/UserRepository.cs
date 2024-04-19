@@ -17,20 +17,20 @@ namespace BTL_Platform.Repository
             if (UserToDelete != null)
             {
                 UserToDelete.IsDeleted = true;
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                bTLContext.Users.Update(UserToDelete);
+                Save(); 
             }
         }
 
         public User GetUser(string id)
         {
-            User user = bTLContext.Users.FirstOrDefault(a => a.Id == id);
+            User user = bTLContext.Users.FirstOrDefault(a => a.Id == id&&a.IsDeleted==false);
             return user;
         }
 
         public List<User> GetUsers()
         {
-            var user = bTLContext.Users.ToList();
+            var user = bTLContext.Users.Where(a => a.IsDeleted == false).ToList();
             return user;
         }
 

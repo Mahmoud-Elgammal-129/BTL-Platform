@@ -18,8 +18,8 @@ namespace BTL_Platform.Repository
             if (OldvisitType != null)
             {
                 OldvisitType.IsDeleted = true;
-                //Update(requestToDelete);
-                Save(); // Save method should handle the changes
+                bTLContext.VisitTypes.Update(OldvisitType);
+                Save(); 
             }
         }
 

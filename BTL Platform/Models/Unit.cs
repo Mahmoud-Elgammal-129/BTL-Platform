@@ -17,15 +17,26 @@ namespace BTL_Platform.Models
         }
         [Key]
         public string UnitId { get; set; }
+        [Required(ErrorMessage = "UnitName is required")]
+
         public string? UnitName { get; set; }
+        [Required(ErrorMessage = "UnitNumber is required")]
+
         public int UnitNumber { get; set; }
-        // Other properties SOFT DELETE
+        
         public bool IsDeleted { get; set; }=false;
         [ForeignKey(nameof(Unit_type))]
-        public string Unit_type_Id { get; set; }
+
+        //[Required(ErrorMessage = "Unit_type_Id is required")]
+
+        public string? Unit_type_Id { get; set; }
+
         public virtual UnitType? Unit_type { get; set; }
+        
         [ForeignKey(nameof(inventory))]
-        public string InventoryId { get; set; }
+        //[Required(ErrorMessage = "InventoryId is required")]
+
+        public string? InventoryId { get; set; }
         public virtual Inventory? inventory { get; set; }
 
 

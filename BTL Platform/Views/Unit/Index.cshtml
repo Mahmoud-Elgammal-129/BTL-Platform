@@ -29,7 +29,7 @@
                     <td>@(counter++)</td>
                     <td>@unit.UnitName</td>
                     <td>@unit.UnitNumber</td>
-                    <td>@unit.Unit_type.UnitTypeName</td>
+                    <td>@(unit.Unit_type != null ? unit.Unit_type.UnitTypeName : " ")</td>
 
                     <td>
                         <a asp-action="Edit" asp-route-id="@unit.UnitId" class="btn btn-outline-warning">Edit</a>

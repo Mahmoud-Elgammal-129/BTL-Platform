@@ -18,8 +18,6 @@ namespace BTL_Platform.Controllers
         VisitTypeRepository VisitTypeRepository;
         VisitStatusRepository VisitStatusRepository;
         PlacesRepository PlacesRepository;
-
-
         public VisitController(VisitRepository _VisitRepository, VisitTypeRepository visitTypeRepository, UserRepository userRepository, PlacesRepository placesRepository, VisitStatusRepository visitStatusRepository)
         {
             VisitRepository = _VisitRepository;
@@ -39,14 +37,8 @@ namespace BTL_Platform.Controllers
             ViewBag.VisitTypes = VisitTypeRepository.GetVisitTypes().Select(vt => new SelectListItem { Value = vt.VisitTypeId.ToString(), Text = vt.VisitTypeName }).ToList();
             ViewBag.VisitStatus = VisitStatusRepository.GetVisitStatuss().Select(vs => new SelectListItem { Value = vs.VisitStatusId.ToString(), Text = vs.VisitStatusName }).ToList();
             ViewBag.Places = PlacesRepository.GetPlacess().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.DisplayName }).ToList();
-
-
-
-
             return View();
         }
-
-
         [HttpPost]
         public IActionResult Create(Visit Visits)
         {
@@ -58,7 +50,6 @@ namespace BTL_Platform.Controllers
             }
             return View("Create", Visits);
         }
-
         public IActionResult Details(string id)
         {
             Visit Visitid = VisitRepository.GetVisit(id);
@@ -85,8 +76,7 @@ namespace BTL_Platform.Controllers
             }
             return View(Visit);
         }
-
-        [HttpPost]
+        
         public IActionResult Delete(string id)
         {
 
@@ -94,19 +84,24 @@ namespace BTL_Platform.Controllers
             VisitRepository.Save();
             return RedirectToAction("Index");
         }
-
-
         [HttpPost]
         public IActionResult Upload(IFormFile excelFile)
         {
             if (excelFile != null && excelFile.Length > 0)
             {
-                // Read data from Excel using ReadExcel
-                string sheetName = "Reports"; // Replace with your sheet name
+                string sheetName = "Reports"; 
                 var dataTable = ReadExcel(excelFile, sheetName);
                 
-                // Convert data to List<Visit> (assuming mapping logic exists)
                 var visits = ConvertDataTableToVisitList(dataTable);
+                //**************************** we should remove that bf  ********************************************************
+                foreach (var item in visits)
+                {
+                    item.Place_Id = null;
+                    item.RequestID = null;
+                    item.Id = null;
+                    item.VisitStatusId = null;
+                    item.VisitTypeId = null;
+                }
 
                 VisitRepository.Insert(visits);
 
@@ -114,7 +109,6 @@ namespace BTL_Platform.Controllers
             }
             else
             {
-                // Handle case where no file is uploaded
                 return View("Upload");
             }
         }

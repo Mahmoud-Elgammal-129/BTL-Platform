@@ -16,6 +16,8 @@ namespace BTL_Platform.Models
         }
         [Key]
         public string UnitTypeId { get; set; }
+        [Required(ErrorMessage = "Unit type name is required")]
+
         public string UnitTypeName { get; set; }
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; } = false;

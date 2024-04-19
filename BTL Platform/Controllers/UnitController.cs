@@ -37,8 +37,6 @@ namespace BTL_Platform.Controllers
 
             return View();
         }
-
-
         [HttpPost]
         public IActionResult Create(Unit Units)
         {
@@ -87,7 +85,7 @@ namespace BTL_Platform.Controllers
             return View(Unit);
         }
 
-        [HttpPost]
+       
         public IActionResult Delete(string id)
         {
 

@@ -65,7 +65,7 @@ namespace BTL_Platform.Controllers
             return View(visitStatus);
         }
 
-        [HttpPost]
+        
         public IActionResult Delete(string id)
         {
 

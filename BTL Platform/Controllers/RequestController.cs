@@ -31,10 +31,6 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
-            //List<RequestType> requestTypes = RequestTypeRepository.GetRequestTypes();
-            ////var requestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
-            ////ViewBag.RequestTypesList = requestTypesList;
-            //ViewBag.RequestTypesList = new SelectList(requestTypes, "RequestTypeId", "TypeName");
             ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
             return View();
 
@@ -64,6 +60,8 @@ namespace BTL_Platform.Controllers
         public IActionResult Edit(string id)
         {
             Request requestid = RequestRepository.GetRequest(id);
+            ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
+
             return View(requestid);
         }
         [HttpPost]
@@ -78,7 +76,7 @@ namespace BTL_Platform.Controllers
             return View(request);
         }
      
-        [HttpPost]
+        
         public IActionResult Delete(string id)
         {
 

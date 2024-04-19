@@ -25,15 +25,41 @@
             <div>
                 <label asp-for="UnitId">UnitTypeName</label>
                 <select name="UnitId" id="UnitId" class="form-control">
-                    @foreach (Unit UnitItem in ViewBag.unitList)
+                    @if (ViewBag.unitList != null && ViewBag.unitList.Count > 0)
                     {
-                        if (Model.UnitId == UnitItem.UnitId)
+
+
+                        @foreach (Unit UnitItem in ViewBag.unitList)
                         {
-                            <option value="@UnitItem.UnitId" selected>@UnitItem.Unit_type.UnitTypeName</option>
+                            if (Model.UnitId == UnitItem.UnitId)
+                            {
+                                <option value="@UnitItem.UnitId" selected>@UnitItem.Unit_type.UnitTypeName</option>
+                            }
+                            else
+                            {
+                                <option value="@UnitItem.UnitId">@UnitItem.Unit_type.UnitTypeName</option>
+                            }
                         }
-                        else
+                    }
+                </select>
+            </div>
+            <div>
+                <label asp-for="UnitId">Inventory Name</label>
+                <select name="UnitId" id="UnitId" class="form-control">
+                    @if (ViewBag.InventoryList != null && ViewBag.InventoryList.Count > 0)
+                    {
+
+
+                        @foreach (Unit UnitItem in ViewBag.InventoryList)
                         {
-                            <option value="@UnitItem.UnitId">@UnitItem.Unit_type.UnitTypeName</option>
+                            if (Model.InventoryId == UnitItem.InventoryId)
+                            {
+                                <option value="@UnitItem.InventoryId" selected>@UnitItem.inventory.ItemName</option>
+                            }
+                            else
+                            {
+                                <option value="@UnitItem.InventoryId">@UnitItem.inventory.ItemName</option>
+                            }
                         }
                     }
                 </select>
@@ -52,7 +78,12 @@
         </div>
     </div>
 </form>
+@section scripts{
 
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
 
 
 
