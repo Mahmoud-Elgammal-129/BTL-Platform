@@ -2,6 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
+@{
+    
+    SelectList unitTypeList =
+          new SelectList(ViewBag.UnitTypeList, "UnitTypeId", "UnitTypeName");
+    SelectList inventoryList =
+        new SelectList(ViewBag.InventoryList, "InventoryId", "ItemName");
+          
+}
 
 <div class="container mt-5">
     <h1>Create Unit</h1>
@@ -19,24 +27,37 @@
                     <input asp-for="UnitNumber" class="form-control" />
                     <span asp-validation-for="UnitNumber" class="text-danger"></span>
                 </div>
-
+                <div>
+                    <label asp-for="InventoryId">InventoryName</label>
+                    <select class="form-control" asp-for="InventoryId" asp-items="inventoryList">
+                        <option value="0">--Select Inventory--</option>
+                    </select>
+                    <span asp-validation-for="InventoryId" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Unit_type_Id">UnitType</label>
+                    <select class="form-control" asp-for="Unit_type_Id" asp-items="unitTypeList">
+                        <option value="0">--Select UnitType--</option>
+                    </select>
+                    <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
+                </div>
                 <!-- Add dropdown for InventoryId -->
-                <div class="form-group">
+              @*  <div class="form-group">
                     <label asp-for="InventoryId"></label>
                     <select class="form-control" asp-for="InventoryId" asp-items="ViewBag.InventoryList">
                         
                     </select>
                     <span asp-validation-for="InventoryId" class="text-danger"></span>
-                </div>
+                </div>*@
 
-                <!-- Add dropdown for Unit_type_Id -->
+             @*   <!-- Add dropdown for Unit_type_Id -->
                 <div class="form-group">
                     <label asp-for="Unit_type_Id"></label>
                     <select class="form-control" asp-for="Unit_type_Id" asp-items="ViewBag.UnitTypeList">
                         
                     </select>
                     <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
-                </div>
+                </div>*@
 
 
 

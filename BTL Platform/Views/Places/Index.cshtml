@@ -1,6 +1,7 @@
 ﻿@model List<Places>
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int counter = 1;
 }
 <div class="mt-5">
     <a asp-action="Create" asp-controller="Places" class="btn btn-success">New Place</a>
@@ -11,6 +12,7 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Display Name</th>
                 <th>Place ID</th>
                 <th>Chain</th>
@@ -27,13 +29,14 @@
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Last Updated</th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var place in Model)
             {
                 <tr>
+                    <td>@(counter++)</td>
                     <td>@place.DisplayName</td>
                     <td>@place.PlaceId</td>
                     <td>@place.Chain</td>

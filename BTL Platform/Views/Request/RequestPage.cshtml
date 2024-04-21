@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int counter = 1;
 }
 @model List<Request>
 
@@ -14,6 +15,7 @@
     <table class ="table table-border table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>RequestDate</th>
                 <th>Channel</th>
                 <th>Description</th>
@@ -26,8 +28,8 @@
                 <th>TrucksNeeded</th>
                 <th>StartDate</th>
                 <th>EndDate</th>
-                <th>RequestType</th>
-                <th></th>
+               @* <th>RequestType</th>*@
+                <th>Action</th>
                 
             </tr>
         </thead>
@@ -35,6 +37,7 @@
             @foreach (var request in Model)
             {
                 <tr>
+                    <td>@(counter++)</td>
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
                     <td>@request.Channel</td>
@@ -49,19 +52,12 @@
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
                     @*<td>@request.Request_type.TypeName</td>*@
-                   <td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>
                          
                     </td>
-                   </td>
-                   @* <td>
-                        <form asp-controller="Request" asp-action="Delete" method="post">
-                            <input type="hidden" name="id" value="@request.RequestID" />
-                            <button type="submit">Soft Delete</button>
-                        </form>
-                    </td>*@
+
                 </tr>
             }
         </tbody>
