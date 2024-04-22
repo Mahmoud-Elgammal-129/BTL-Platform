@@ -2,6 +2,8 @@
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
     int counter = 1;
+    ViewBag.Title = "Inventory Items";
+    ViewBag.Nav = "Inventory_Management";
 }
 <div class="mt-5">
     <a asp-action="Create" asp-controller="Inventory" class="btn btn-success">New Inventory Item</a>

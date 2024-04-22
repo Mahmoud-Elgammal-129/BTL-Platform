@@ -5,6 +5,7 @@
     Layout = null;
 }
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +15,14 @@
     <link rel="apple-touch-icon" sizes="76x76" href="~/img/apple-icon.png">
     <link rel="icon" type="image/png" href="~/img/favicon.png">
     <title>
-        BTL Dashboard
+        BTL / @ViewBag.Title
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="~/css/nucleo-icons.css" rel="stylesheet" />
     <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="~/css/nucleo-svg.css" rel="stylesheet" />
@@ -43,8 +45,8 @@
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link  active" asp-action="Home" asp-controller="Home">
+                <li class="nav-item " >
+                    <a class="nav-link " id="Home" asp-action="Home" asp-controller="Home">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>shop </title>
@@ -63,8 +65,8 @@
                         <span class="nav-link-text ms-1">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link  " asp-controller="Request" asp-action="Index">
+                <li class="nav-item" >
+                    <a class="nav-link " id="Request" asp-controller="Request" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>office</title>
@@ -85,7 +87,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-controller="RequestType" asp-action="Index">
+                    <a class="nav-link  " id="Request_Type" asp-controller="RequestType" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
@@ -105,7 +107,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-controller="Unit" asp-action="Index">
+                    <a class="nav-link  " id="Units" asp-controller="Unit" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
@@ -125,7 +127,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-controller="UnitType" asp-action="Index">
+                    <a class="nav-link  " id="Units_Type" asp-controller="UnitType" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
@@ -145,7 +147,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-controller="Places" asp-action="Index">
+                    <a class="nav-link  " id="Places" asp-controller="Places" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
@@ -165,7 +167,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-controller="User" asp-action="Index">
+                    <a class="nav-link  " id="Users" asp-controller="User" asp-action="Index">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
@@ -185,7 +187,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-action="Index" asp-controller="Inventory">
+                    <a class="nav-link  " id="Inventory_Management" asp-action="Index" asp-controller="Inventory">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>box-3d-50</title>
@@ -206,7 +208,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-action="Index" asp-controller="Visit">
+                    <a class="nav-link  " id="Visits" asp-action="Index" asp-controller="Visit">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>box-3d-50</title>
@@ -227,7 +229,7 @@
                     </a>
                 </li>
                                 <li class="nav-item">
-                    <a class="nav-link  " asp-action="Index" asp-controller="VisitStatus">
+                    <a class="nav-link  " id="Visit_Status" asp-action="Index" asp-controller="VisitStatus">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>box-3d-50</title>
@@ -248,7 +250,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " asp-action="Index" asp-controller="VisitType">
+                    <a class="nav-link  " id="Visit_Types" asp-action="Index" asp-controller="VisitType">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>box-3d-50</title>
@@ -268,6 +270,8 @@
                         <span class="nav-link-text ms-1">Visit Type</span>
                     </a>
                 </li>
+                
+              
                 @*  <li class="nav-item">
                 <a class="nav-link  " href="../pages/rtl.html">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -491,6 +495,7 @@
                 </div>
             </div>
         </nav>
+
         <!-- End Navbar -->
         @RenderBody();
         
@@ -569,6 +574,9 @@
     <script src="~/js/plugins/chartjs.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
+        
+        var rt = document.getElementById("@ViewBag.Nav");
+        rt.classList = "nav-link active";
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         new Chart(ctx, {

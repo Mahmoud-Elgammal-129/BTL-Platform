@@ -94,14 +94,15 @@ namespace BTL_Platform.Controllers
                 
                 var visits = ConvertDataTableToVisitList(dataTable);
                 //**************************** we should remove that bf  ********************************************************
-                foreach (var item in visits)
-                {
-                    item.Place_Id = null;
-                    item.RequestID = null;
-                    item.Id = null;
-                    item.VisitStatusId = null;
-                    item.VisitTypeId = null;
-                }
+                //foreach (var item in visits)
+                //{
+                //    item.Place_Id = null;
+                //    item.RequestID = null;
+                //    item.Id = null;
+                //    item.VisitStatusId = null;
+                //    item.VisitTypeId = null;
+                //}
+                
 
                 VisitRepository.Insert(visits);
 
