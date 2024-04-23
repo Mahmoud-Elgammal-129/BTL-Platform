@@ -12,5 +12,6 @@ namespace BTL_Platform.Intrface
         void Update(string id, Request request);
         void Delete(string id);
         void Save();
+        List<Request> SearchRequest(string searchValue);
     }
 }
