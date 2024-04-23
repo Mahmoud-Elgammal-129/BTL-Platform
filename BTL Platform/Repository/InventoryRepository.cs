@@ -14,48 +14,99 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            Inventory inventoryToDelete = GetInventory(id);
-            if (inventoryToDelete != null)
+            try
             {
-                inventoryToDelete.IsDeleted = true;
-                bTLContext.Inventories.Update(inventoryToDelete);
-                Save(); 
+                Inventory inventoryToDelete = GetInventory(id);
+                if (inventoryToDelete != null)
+                {
+                    inventoryToDelete.IsDeleted = true;
+                    bTLContext.Inventories.Update(inventoryToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error deleting inventory: {ex.Message}");
             }
         }
 
         public Inventory GetInventory(string id)
         {
-            Inventory inventory = bTLContext.Inventories.FirstOrDefault(a => a.InventoryId == id &&a.IsDeleted==false);
-            return inventory;
+            try
+            {
+                Inventory inventory = bTLContext.Inventories.FirstOrDefault(a => a.InventoryId == id && a.IsDeleted == false);
+                return inventory;
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error getting inventory: {ex.Message}");
+                return null;
+            }
         }
 
         public List<Inventory> GetInventorys()
         {
-            var inventory = bTLContext.Inventories.Where(m=>m.IsDeleted==false).ToList();
-            return inventory;
+            try
+            {
+                var inventory = bTLContext.Inventories.Where(m => m.IsDeleted == false).ToList();
+                return inventory;
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error getting inventories: {ex.Message}");
+                return null;
+            }
         }
 
         public void Insert(Inventory inventory)
         {
-            bTLContext.Inventories.Add(inventory);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Inventories.Add(inventory);
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error inserting inventory: {ex.Message}");
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error saving changes: {ex.Message}");
+            }
         }
 
         public void Update(string id, Inventory inventory)
         {
-            Inventory Oldinventory = GetInventory(id);
+            try
+            {
+                Inventory Oldinventory = GetInventory(id);
 
-            Oldinventory.ItemName = inventory.ItemName;
-            Oldinventory.Count = inventory.Count;
-            Oldinventory.Description = inventory.Description;
-            Oldinventory.Status = inventory.Status;
-            bTLContext.Inventories.Update(Oldinventory);
-            Save();
+                Oldinventory.ItemName = inventory.ItemName;
+                Oldinventory.Count = inventory.Count;
+                Oldinventory.Description = inventory.Description;
+                Oldinventory.Status = inventory.Status;
+                bTLContext.Inventories.Update(Oldinventory);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                Console.WriteLine($"Error updating inventory: {ex.Message}");
+            }
         }
+
     }
 }

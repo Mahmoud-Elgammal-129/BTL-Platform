@@ -16,56 +16,96 @@ namespace BTL_Platform.Repository
 
         public void Delete(string id)
         {
-            RequestType requestTypeToDelete = GetRequestType(id);
-            if (requestTypeToDelete != null)
+            try
             {
-                requestTypeToDelete.IsDeleted = true;
-                bTLContext.RequestTypes.Update(requestTypeToDelete);
-                Save(); 
+                RequestType requestTypeToDelete = GetRequestType(id);
+                if (requestTypeToDelete != null)
+                {
+                    requestTypeToDelete.IsDeleted = true;
+                    bTLContext.RequestTypes.Update(requestTypeToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the request type: {ex.Message}");
+                throw;
             }
         }
 
         public RequestType GetRequestType(string id)
         {
-            var request = bTLContext.RequestTypes;
+            try
+            {
+                return bTLContext.RequestTypes.FirstOrDefault(n => n.RequestTypeID == id && !n.IsDeleted);
+            }
 
-            var result = request.Where(n => n.RequestTypeID==id&&n.IsDeleted == false).FirstOrDefault();
-            return result;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the request type: {ex.Message}");
+                throw;
+            }
         }
 
         public List<RequestType> GetRequestTypes()
         {
-            var request = bTLContext.RequestTypes;
-
-            var result = request.Where(n=>n.IsDeleted==false).ToList();
-            return result;
+            try
+            {
+                return bTLContext.RequestTypes.Where(n => !n.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving request types: {ex.Message}");
+                throw;
+            }
         }
 
         public void Insert(RequestType requesttype)
         {
-            bTLContext.RequestTypes.Add(requesttype);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.RequestTypes.Add(requesttype);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the request type: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
         public void Update(string id, RequestType requestType)
         {
-            if (id != null)
+            try
             {
-                RequestType oldRequestType = GetRequestType(id);
-                if(oldRequestType != null)
+                if (id != null)
                 {
-                    oldRequestType.TypeName = requestType.TypeName;
-                    bTLContext.RequestTypes.Update(oldRequestType);
-                    Save();
-
+                    RequestType oldRequestType = GetRequestType(id);
+                    if (oldRequestType != null)
+                    {
+                        oldRequestType.TypeName = requestType.TypeName;
+                        bTLContext.RequestTypes.Update(oldRequestType);
+                        Save();
+                    }
                 }
-
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the request type: {ex.Message}");
+                throw;
             }
            
         }

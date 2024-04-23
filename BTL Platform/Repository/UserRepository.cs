@@ -13,48 +13,97 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            User UserToDelete = GetUser(id);
-            if (UserToDelete != null)
+            try
             {
-                UserToDelete.IsDeleted = true;
-                bTLContext.Users.Update(UserToDelete);
-                Save(); 
+                User userToDelete = GetUser(id);
+                if (userToDelete != null)
+                {
+                    userToDelete.IsDeleted = true;
+                    bTLContext.Users.Update(userToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the user: {ex.Message}");
+                throw;
             }
         }
 
         public User GetUser(string id)
         {
-            User user = bTLContext.Users.FirstOrDefault(a => a.Id == id&&a.IsDeleted==false);
-            return user;
+            try
+            {
+                return bTLContext.Users.FirstOrDefault(a => a.Id == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the user: {ex.Message}");
+                throw;
+            }
         }
 
         public List<User> GetUsers()
         {
-            var user = bTLContext.Users.Where(a => a.IsDeleted == false).ToList();
-            return user;
+            try
+            {
+                return bTLContext.Users.Where(a => !a.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
+                throw;
+            }
         }
 
         public void Insert(User user)
         {
-            bTLContext.Users.Add(user);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Users.Add(user);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the user: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
         public void Update(string id, User user)
         {
-            User OldUser = GetUser(id);
-            OldUser.UserId = user.UserId;
-            OldUser.UserName = user.UserName;
-            OldUser.Email = user.Email;
-            OldUser.Team = user.Team;
+            try
+            {
+                User oldUser = GetUser(id);
+                if (oldUser != null)
+                {
+                    oldUser.UserId = user.UserId;
+                    oldUser.UserName = user.UserName;
+                    oldUser.Email = user.Email;
+                    oldUser.Team = user.Team;
 
-            bTLContext.Users.Update(OldUser);
-            Save();
+                    bTLContext.Users.Update(oldUser);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the user: {ex.Message}");
+                throw;
+            }
         }
     }
 }

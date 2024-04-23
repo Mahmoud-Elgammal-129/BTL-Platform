@@ -15,28 +15,50 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            List<Inventory> Inventorys = InventoryRepository.GetInventorys();
-            return View(Inventorys);
+            try
+            {
+                ViewData["IsInventoryActive"] = true;
+                List<Inventory> Inventorys = InventoryRepository.GetInventorys();
+                return View(Inventorys);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving inventory data.");
+            }
         }
 
         public IActionResult Create()
         {
-
-
-            return View();
-
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while loading the create view.");
+            }
         }
         [HttpPost]
         public IActionResult Create(Inventory Inventorys)
         {
-
-
-            if (Inventorys != null)
+            try
             {
-
-                InventoryRepository.Insert(Inventorys);
-                InventoryRepository.Save();
-                return RedirectToAction("Index");
+                if (Inventorys != null)
+                {
+                    InventoryRepository.Insert(Inventorys);
+                    InventoryRepository.Save();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while creating the inventory.");
             }
 
             return View("Create", Inventorys);
@@ -44,34 +66,70 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Details(string id)
         {
-            Inventory Inventoryid = InventoryRepository.GetInventory(id);
-            return View(Inventoryid);
+            try
+            {
+                Inventory Inventoryid = InventoryRepository.GetInventory(id);
+                return View(Inventoryid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving inventory details.");
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            Inventory Inventoryid = InventoryRepository.GetInventory(id);
-            return View(Inventoryid);
+            try
+            {
+                Inventory Inventoryid = InventoryRepository.GetInventory(id);
+                return View(Inventoryid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while loading the edit view.");
+            }
         }
         [HttpPost]
         public IActionResult Edit(Inventory Inventory, string id)
         {
-            if (Inventory != null)
+            try
             {
-                InventoryRepository.Update(id, Inventory);
-                InventoryRepository.Save();
-                return RedirectToAction("Index");
+                if (Inventory != null)
+                {
+                    InventoryRepository.Update(id, Inventory);
+                    InventoryRepository.Save();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while updating the inventory.");
+            }
+
             return View(Inventory);
         }
 
         
         public IActionResult Delete(string id)
         {
-
-            InventoryRepository.Delete(id);
-            InventoryRepository.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                InventoryRepository.Delete(id);
+                InventoryRepository.Save();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while deleting the inventory.");
+            }
         }
     }
 }

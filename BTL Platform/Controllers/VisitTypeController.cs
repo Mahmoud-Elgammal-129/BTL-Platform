@@ -1,4 +1,5 @@
-﻿using BTL_Platform.Models;
+﻿using BTL_Platform.Intrface;
+using BTL_Platform.Models;
 using BTL_Platform.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,18 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            List<VisitType> visitType = visitTypeRepository.GetVisitTypes();
-            return View(visitType);
+            try
+            {
+               
+                List<VisitType> visitTypes = visitTypeRepository.GetVisitTypes();
+                return View(visitTypes);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                ModelState.AddModelError("", "An error occurred while retrieving visit types.");
+                return View(new List<VisitType>());
+            }
         }
 
         public IActionResult Create()
@@ -29,38 +40,77 @@ namespace BTL_Platform.Controllers
         [HttpPost]
         public IActionResult Create(VisitType visitType)
         {
-
-
-            if (visitType != null)
+            try
             {
-
-                visitTypeRepository.Insert(visitType);
-                visitTypeRepository.Save();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    visitTypeRepository.Insert(visitType);
+                    visitTypeRepository.Save();
+                    return RedirectToAction("Index");
+                }
+                return View(visitType);
             }
-
-            return View("Create", visitType);
+            catch (Exception ex)
+            {
+                // Log the exception
+                ModelState.AddModelError("", "An error occurred while creating the visit type.");
+                return View(visitType);
+            }
         }
 
         public IActionResult Details(string id)
         {
-            VisitType visitType = visitTypeRepository.GetVisitType(id);
-            return View(visitType);
+            try
+            {
+                VisitType visitType = visitTypeRepository.GetVisitType(id);
+                if (visitType == null)
+                {
+                    return NotFound(); // VisitType not found
+                }
+                return View(visitType);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                ModelState.AddModelError("", "An error occurred while retrieving the visit type details.");
+                return RedirectToAction("Index");
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            VisitType visitTypeid = visitTypeRepository.GetVisitType(id);
-            return View(visitTypeid);
+            try
+            {
+                VisitType visitType = visitTypeRepository.GetVisitType(id);
+                if (visitType == null)
+                {
+                    return NotFound(); // VisitType not found
+                }
+                return View(visitType);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                ModelState.AddModelError("", "An error occurred while retrieving the visit type for editing.");
+                return RedirectToAction("Index");
+            }
         }
         [HttpPost]
         public IActionResult Edit(VisitType visitType, string id)
         {
-            if (visitType != null)
+            if (ModelState.IsValid)
             {
-                visitTypeRepository.Update(id, visitType);
-                visitTypeRepository.Save();
-                return RedirectToAction("Index");
+                try
+                {
+                    visitTypeRepository.Update(id, visitType);
+                    visitTypeRepository.Save();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception
+                    ModelState.AddModelError("", "An error occurred while updating the visit type.");
+                }
             }
             return View(visitType);
         }
@@ -68,10 +118,18 @@ namespace BTL_Platform.Controllers
         
         public IActionResult Delete(string id)
         {
-
-            visitTypeRepository.Delete(id);
-            visitTypeRepository.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                visitTypeRepository.Delete(id);
+                visitTypeRepository.Save();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                ModelState.AddModelError("", "An error occurred while deleting the visit type.");
+                return RedirectToAction("Index");
+            }
         }
     }
 }

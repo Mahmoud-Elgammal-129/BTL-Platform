@@ -15,46 +15,100 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            Unit UnitToDelete = GetUnit(id);
-            if (UnitToDelete != null)
+            try
             {
-                UnitToDelete.IsDeleted = true;
-                bTLContext.Units.Update(UnitToDelete);
-                Save(); 
+                Unit unitToDelete = GetUnit(id);
+                if (unitToDelete != null)
+                {
+                    unitToDelete.IsDeleted = true;
+                    bTLContext.Units.Update(unitToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the unit: {ex.Message}");
+                throw;
             }
         }
 
         public Unit GetUnit(string id)
         {
-            Unit unit = bTLContext.Units.Include(n => n.Unit_type).Include(n=>n.inventory).FirstOrDefault(a => a.UnitId == id && a.IsDeleted == false);
-            return unit;
+            try
+            {
+                return bTLContext.Units
+                    .Include(n => n.Unit_type)
+                    .Include(n => n.inventory)
+                    .FirstOrDefault(a => a.UnitId == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the unit: {ex.Message}");
+                throw;
+            }
         }
 
         public List<Unit> GetUnits()
         {
-            //var units = bTLContext.Units.Where(n => n.IsDeleted == false).ToList();
-            var unit = bTLContext.Units.Where(n => n.IsDeleted == false).Include(n => n.Unit_type).Include(n => n.inventory).ToList();
-            return unit;
+            try
+            {
+                return bTLContext.Units
+                    .Where(n => !n.IsDeleted)
+                    .Include(n => n.Unit_type)
+                    .Include(n => n.inventory)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving units: {ex.Message}");
+                throw;
+            }
         }
 
         public void Insert(Unit unit)
         {
-            bTLContext.Units.Add(unit);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Units.Add(unit);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the unit: {ex.Message}");
+                throw;
+            }
         }
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
         public void Update(string id, Unit unit)
         {
-            Unit OldUnit = GetUnit(id);
-            OldUnit.UnitName = unit.UnitName;
-            OldUnit.UnitNumber = unit.UnitNumber;
-          
-            bTLContext.Units.Update(OldUnit);
-            Save();
+            try
+            {
+                Unit oldUnit = GetUnit(id);
+                if (oldUnit != null)
+                {
+                    oldUnit.UnitName = unit.UnitName;
+                    oldUnit.UnitNumber = unit.UnitNumber;
+                    bTLContext.Units.Update(oldUnit);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the unit: {ex.Message}");
+                throw;
+            }
         }
     }
 }

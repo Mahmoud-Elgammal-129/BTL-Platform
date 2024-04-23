@@ -34,22 +34,40 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            
-            List<Request> requests = RequestRepository.GetRequests();
-            return View("RequestPage", requests); ;
+            try
+            {
+                ViewData["IsRequestActive"] = true;
+                List<Request> requests = RequestRepository.GetRequests();
+                return View("RequestPage", requests);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Index action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
 
         public IActionResult Create()
         {
-            
-            ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
-            return View();
-
+            try
+            {
+                ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Create action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Request requests)
         {
-            var user = await usermanager.GetUserAsync(User);
+            try
+            {
+                var user = await usermanager.GetUserAsync(User);
 
             if (requests != null)
             {
@@ -59,99 +77,135 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("Create", requests);
+                return View("Create", requests);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in CreateAsync action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
 
         public IActionResult Details(string id)
         {
-            Request requestid = RequestRepository.GetRequest(id);
-            return View(requestid);
+            try
+            {
+                Request requestid = RequestRepository.GetRequest(id);
+                return View(requestid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Details action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            Request requestid = RequestRepository.GetRequest(id);
-            ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
+            try
+            {
+                Request requestid = RequestRepository.GetRequest(id);
+                ViewData["RequestTypesList"] = RequestTypeRepository.GetRequestTypes();
 
-            return View(requestid);
+                return View(requestid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Edit action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
         [HttpPost]
         public IActionResult Edit(Request request, string id)
         {
-            if (request != null)
+            try
             {
-                RequestRepository.Update(id, request);
-                RequestRepository.Save();
-                return RedirectToAction("Index");
+                if (request != null)
+                {
+                    RequestRepository.Update(id, request);
+                    RequestRepository.Save();
+                    return RedirectToAction("Index");
+                }
+                return View(request);
             }
-            return View(request);
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Edit action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
 
         [HttpPost]
         public IActionResult Upload(IFormFile excelFile, string id)
         {
-            if (excelFile != null && excelFile.Length > 0)
+            try
             {
-                string sheetName = "Reports";
-                var dataTable = ReadExcel(excelFile, sheetName);
+                if (excelFile != null && excelFile.Length > 0)
+                {
+                    string sheetName = "Reports";
+                    var dataTable = ReadExcel(excelFile, sheetName);
 
                 var visits = ConvertDataTableToVisitList(dataTable);
 
                 var RequestData = RequestRepository.GetRequest(id);
 
-                #region passing Values to Table visit
-                foreach (var item in visits)
-                {
-                    item.Id = null; // you will rememove it 
-                    //item.Place_Id = RequestData.
-                    item.Place_Id = null;    // you will remove it and add taht after adding placeid to requet  ;// you will add place id after adding it to request 
-                    
-                    
-                    item.RequestID = RequestData.RequestID;
-                    
+                    #region passing Values to Table visit
+                    foreach (var item in visits)
+                    {
+                        //item.Id = null; // you will rememove it 
+                        //item.Place_Id = RequestData.
+                        //item.Place_Id = null;    // you will remove it and add taht after adding placeid to requet  ;// you will add place id after adding it to request 
 
-                    item.date = RequestData.RequestDate;// ensure from the data specific 
+
+                        item.RequestID = RequestData.RequestID;
+
+
+                        //item.date = RequestData.RequestDate;// ensure from the data specific 
 
                 }
                 #endregion
 
                 VisitRepository.Insert(visits);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View("Upload");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View("Upload");
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Upload action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
+
         public IActionResult Delete(string id)
         {
-
-            RequestRepository.Delete(id);
-            RequestRepository.Save();
-            return RedirectToAction("RequestPage");
-        }
-
-      
-        public IActionResult Search(string searchValue)
-        {
-            var filteredUsers = RequestRepository.SearchRequest(searchValue);
-
-
-            return View("RequestPage", filteredUsers); // Assuming you have a partial view for the table body
-        }
-
-        //GET: /User/ResetSearch
-        public IActionResult ResetSearch()
-        {
-            var allUsers = RequestRepository.GetRequests();
-
-        
-            return PartialView("_CatogriesTablePartial", allUsers); // Assuming you have a partial view for the table body
+            try
+            {
+                RequestRepository.Delete(id);
+                RequestRepository.Save();
+                return RedirectToAction("RequestPage");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Delete action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
         }
         public static DataTable ReadExcel(IFormFile excelFile, string sheetName)
         {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            try
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             using (var stream = excelFile.OpenReadStream())
             {
@@ -199,7 +253,14 @@ namespace BTL_Platform.Controllers
                     //}
                 }
 
-                return excelDataTable;
+                    return excelDataTable;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in ReadExcel method: {ex.Message}");
+                throw; // Re-throw the exception to propagate it to the caller
             }
         }
 
@@ -207,9 +268,11 @@ namespace BTL_Platform.Controllers
         {
             List<Visit> visits = new List<Visit>();
 
-            foreach (DataRow row in dataTable.Rows)
+            try
             {
-                Visit visit = new Visit();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Visit visit = new Visit();
 
                 //if (row["Request_ID"] != null )
                 //{
@@ -284,11 +347,52 @@ namespace BTL_Platform.Controllers
 
                 // Continue setting other properties similarly
 
-                visits.Add(visit);
+                    visits.Add(visit);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in ConvertDataTableToVisitList method: {ex.Message}");
+                throw; // Re-throw the exception to propagate it to the caller
             }
 
             return visits;
         }
+
+
+
+        public IActionResult Search(string searchValue)
+        {
+            try
+            {
+                var filteredRequests = RequestRepository.SearchRequest(searchValue);
+                return View("RequestPage", filteredRequests); // Assuming you have a partial view for the table body
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Search method: {ex.Message}");
+                throw; // Re-throw the exception to propagate it to the caller
+            }
+        }
+
+        //GET: /User/ResetSearch
+        public IActionResult ResetSearch()
+        {
+            try
+            {
+                var allRequests = RequestRepository.GetRequests();
+                return View("RequestPage", allRequests); // Assuming you have a partial view for the table body
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in ResetSearch method: {ex.Message}");
+                throw; // Re-throw the exception to propagate it to the caller
+            }
+        }
+
     }
 }
 

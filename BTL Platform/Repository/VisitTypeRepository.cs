@@ -14,44 +14,93 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            VisitType OldvisitType = GetVisitType(id);
-            if (OldvisitType != null)
+            try
             {
-                OldvisitType.IsDeleted = true;
-                bTLContext.VisitTypes.Update(OldvisitType);
-                Save(); 
+                VisitType oldVisitType = GetVisitType(id);
+                if (oldVisitType != null)
+                {
+                    oldVisitType.IsDeleted = true;
+                    bTLContext.VisitTypes.Update(oldVisitType);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the visit type: {ex.Message}");
+                throw;
             }
         }
 
         public List<VisitType> GetVisitTypes()
         {
-            var visitType = bTLContext.VisitTypes.Where(n=>n.IsDeleted==false).ToList();
-            return visitType;
+            try
+            {
+                return bTLContext.VisitTypes.Where(n => !n.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving visit types: {ex.Message}");
+                throw;
+            }
         }
 
         public VisitType GetVisitType(string id)
         {
-            VisitType visitType = bTLContext.VisitTypes.FirstOrDefault(a => a.VisitTypeId == id && a.IsDeleted == false);
-            return visitType;
+            try
+            {
+                return bTLContext.VisitTypes.FirstOrDefault(a => a.VisitTypeId == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the visit type: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Insert(VisitType visittype)
+        public void Insert(VisitType visitType)
         {
-            bTLContext.VisitTypes.Add(visittype);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.VisitTypes.Add(visitType);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the visit type: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Update(string id, VisitType visittype)
+        public void Update(string id, VisitType visitType)
         {
-            VisitType OldvisitType = GetVisitType(id);
-            OldvisitType.VisitTypeName = visittype.VisitTypeName;
-            bTLContext.VisitTypes.Update(OldvisitType);
-            Save();
+            try
+            {
+                VisitType oldVisitType = GetVisitType(id);
+                if (oldVisitType != null)
+                {
+                    oldVisitType.VisitTypeName = visitType.VisitTypeName;
+                    bTLContext.VisitTypes.Update(oldVisitType);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the visit type: {ex.Message}");
+                throw;
+            }
         }
     }
 }

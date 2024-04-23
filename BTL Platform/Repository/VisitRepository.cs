@@ -15,67 +15,133 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            Visit VisitToDelete = GetVisit(id);
-            if (VisitToDelete != null)
+            try
             {
-                VisitToDelete.IsDeleted = true;
-                bTLContext.Visits.Update(VisitToDelete);
-                Save();
+                Visit visitToDelete = GetVisit(id);
+                if (visitToDelete != null)
+                {
+                    visitToDelete.IsDeleted = true;
+                    bTLContext.Visits.Update(visitToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the visit: {ex.Message}");
+                throw;
             }
         }
 
         public Visit GetVisit(string id)
         {
-            Visit Visit = bTLContext.Visits.Include(n=>n.User).Include(n => n.visitType).Include(n => n.visitStatus).Include(n => n.Place).FirstOrDefault(a => a.VisitId == id && a.IsDeleted == false);
-            return Visit;
+            try
+            {
+                return bTLContext.Visits.Include(n => n.User)
+                                          .Include(n => n.visitType)
+                                          .Include(n => n.visitStatus)
+                                          .Include(n => n.Place)
+                                          .FirstOrDefault(a => a.VisitId == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the visit: {ex.Message}");
+                throw;
+            }
         }
 
         public List<Visit> GetVisits()
         {
-            var Visit = bTLContext.Visits.Where(n => n.IsDeleted == false).Include(n => n.User).Include(n => n.visitStatus).Include(n => n.Place).Include(n => n.visitType).ToList();
-            return Visit;
+            try
+            {
+                return bTLContext.Visits.Where(n => !n.IsDeleted)
+                                          .Include(n => n.User)
+                                          .Include(n => n.visitStatus)
+                                          .Include(n => n.Place)
+                                          .Include(n => n.visitType)
+                                          .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving visits: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Insert(Visit Visit)
+        public void Insert(Visit visit)
         {
-            bTLContext.Visits.Add(Visit);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Visits.Add(visit);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the visit: {ex.Message}");
+                throw;
+            }
         }
 
         public void Insert(List<Visit> visits)
         {
-            bTLContext.Visits.AddRange(visits);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Visits.AddRange(visits);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the visits: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Update(string id, Visit Visit)
+        public void Update(string id, Visit visit)
         {
-            Visit OldVisit = GetVisit(id);
-            OldVisit.UTCoffset = Visit.UTCoffset;
-            OldVisit.POSPhoto = Visit.POSPhoto;
-            OldVisit.UnitsPhotobefore = Visit.UnitsPhotobefore;
-            OldVisit.UnitsPhotoAfter = Visit.UnitsPhotoAfter;
-            OldVisit.placeName = Visit.placeName;
-            OldVisit.placeChain = Visit.placeChain;
-            OldVisit.Status = Visit.Status;
-            OldVisit.Notes = Visit.Notes;
-            OldVisit.UserName = Visit.UserName;
-            OldVisit.PlannedDate = Visit.PlannedDate;
-            OldVisit.TaskId = Visit.TaskId;
-            OldVisit.TaskName = Visit.TaskName;
-            OldVisit.UnitsNumbers = Visit.UnitsNumbers;
-            OldVisit.RequestID = Visit.RequestID;
-            OldVisit.Id = Visit.Id;
-            OldVisit.VisitStatusId = Visit.VisitStatusId;
-            OldVisit.VisitTypeId = Visit.VisitTypeId;
-            OldVisit.Place_Id = Visit.Place_Id;
-            bTLContext.Visits.Update(OldVisit);
-            Save();
+            try
+            {
+                Visit oldVisit = GetVisit(id);
+                if (oldVisit != null)
+                {
+                    oldVisit.UTCoffset = visit.UTCoffset;
+                    oldVisit.POSPhoto = visit.POSPhoto;
+                    oldVisit.UnitsPhotobefore = visit.UnitsPhotobefore;
+                    oldVisit.UnitsPhotoAfter = visit.UnitsPhotoAfter;
+                    oldVisit.placeName = visit.placeName;
+                    oldVisit.placeChain = visit.placeChain;
+                    oldVisit.Status = visit.Status;
+                    oldVisit.Notes = visit.Notes;
+                    oldVisit.UserName = visit.UserName;
+                    oldVisit.PlannedDate = visit.PlannedDate;
+                    oldVisit.TaskId = visit.TaskId;
+                    oldVisit.TaskName = visit.TaskName;
+                    oldVisit.UnitsNumbers = visit.UnitsNumbers;
+                    oldVisit.RequestID = visit.RequestID;
+                    oldVisit.Id = visit.Id;
+                    oldVisit.VisitStatusId = visit.VisitStatusId;
+                    oldVisit.VisitTypeId = visit.VisitTypeId;
+                    oldVisit.Place_Id = visit.Place_Id;
+                    bTLContext.Visits.Update(oldVisit);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the visit: {ex.Message}");
+                throw;
+            }
         }
     }
 }

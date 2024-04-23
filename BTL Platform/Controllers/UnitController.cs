@@ -24,83 +24,124 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            List<Unit> Units = UnitRepository.GetUnits();
-            return View(Units);
+            try
+            {
+                
+                List<Unit> units = UnitRepository.GetUnits();
+                return View(units);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving units.");
+            }
         }
         public IActionResult Create()
         {
-            //ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            //{
-            //    Value = i.InventoryId.ToString(),
-            //    Text = i.ItemName
-            //}).ToList();
-            ViewData["InventoryList"] = InventoryRepository.GetInventorys();
-            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
-
-            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
-            //{
-            //    Value = u.UnitTypeId.ToString(),
-            //    Text = u.UnitTypeName
-            //}).ToList();
-
-            return View();
+            try
+            {
+                ViewData["InventoryList"] = InventoryRepository.GetInventorys();
+                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving inventory or unit types for creating unit.");
+            }
         }
         [HttpPost]
-        public IActionResult Create(Unit Units)
+        public IActionResult Create(Unit unit)
         {
-            if (Units != null)
+            try
             {
-                UnitRepository.Insert(Units);
-                UnitRepository.Save();
-                return RedirectToAction("Index");
+                if (unit != null)
+                {
+                    UnitRepository.Insert(unit);
+                    UnitRepository.Save();
+                    return RedirectToAction("Index");
+                }
             }
-            return View("Create", Units);
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while creating the unit.");
+            }
+
+            return View("Create", unit);
         }
 
         public IActionResult Details(string id)
         {
-            Unit Unitid = UnitRepository.GetUnit(id);
-            return View(Unitid);
+            try
+            {
+                Unit unit = UnitRepository.GetUnit(id);
+                return View(unit);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving unit details.");
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            //ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            //{
-            //    Value = i.InventoryId.ToString(),
-            //    Text = i.ItemName
-            //}).ToList();
-
-            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
-            //{
-            //    Value = u.UnitTypeId.ToString(),
-            //    Text = u.UnitTypeName
-            //}).ToList();
-
-            ViewData["InventoryList"] = InventoryRepository.GetInventorys();
-            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
-            Unit Unitid = UnitRepository.GetUnit(id);
-            return View(Unitid);
+            try
+            {
+                ViewData["InventoryList"] = InventoryRepository.GetInventorys();
+                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
+                Unit unit = UnitRepository.GetUnit(id);
+                return View(unit);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving unit details for editing.");
+            }
         }
         [HttpPost]
-        public IActionResult Edit(Unit Unit, string id)
+        public IActionResult Edit(Unit unit, string id)
         {
-            if (Unit != null)
+            try
             {
-                UnitRepository.Update(id, Unit);
-                UnitRepository.Save();
-                return RedirectToAction("Index");
+                if (unit != null)
+                {
+                    UnitRepository.Update(id, unit);
+                    UnitRepository.Save();
+                    return RedirectToAction("Index");
+                }
             }
-            return View(Unit);
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while updating the unit.");
+            }
+
+            return View(unit);
         }
 
        
         public IActionResult Delete(string id)
         {
-
-            UnitRepository.Delete(id);
-            UnitRepository.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                UnitRepository.Delete(id);
+                UnitRepository.Save();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while deleting the unit.");
+            }
         }
     }
 }

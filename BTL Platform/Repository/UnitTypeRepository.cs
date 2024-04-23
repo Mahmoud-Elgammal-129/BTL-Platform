@@ -13,45 +13,93 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-             UnitType UnitTypeToDelete = GetUnitType(id);
-            if (UnitTypeToDelete != null)
+            try
             {
-                UnitTypeToDelete.IsDeleted = true;
-                bTLContext.UnitTypes.Update(UnitTypeToDelete);
-                
-                Save(); // Save method should handle the changes
+                UnitType unitTypeToDelete = GetUnitType(id);
+                if (unitTypeToDelete != null)
+                {
+                    unitTypeToDelete.IsDeleted = true;
+                    bTLContext.UnitTypes.Update(unitTypeToDelete);
+                    Save(); // Save method should handle the changes
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the unit type: {ex.Message}");
+                throw;
             }
         }
 
         public UnitType GetUnitType(string id)
         {
-            UnitType unitType = bTLContext.UnitTypes.FirstOrDefault(a => a.UnitTypeId == id&& a.IsDeleted==false);
-            return unitType;
+            try
+            {
+                return bTLContext.UnitTypes.FirstOrDefault(a => a.UnitTypeId == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the unit type: {ex.Message}");
+                throw;
+            }
         }
 
         public List<UnitType> GetUnitTypes()
         {
-            var unitType = bTLContext.UnitTypes.Where(n => n.IsDeleted == false).ToList();
-            return unitType;
+            try
+            {
+                return bTLContext.UnitTypes.Where(n => !n.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving unit types: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Insert(UnitType unittype)
+        public void Insert(UnitType unitType)
         {
-            bTLContext.UnitTypes.Add(unittype);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.UnitTypes.Add(unitType);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the unit type: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Update(string id, UnitType unittype)
+        public void Update(string id, UnitType unitType)
         {
-            UnitType OldUnitType = GetUnitType(id);
-            OldUnitType.UnitTypeName = unittype.UnitTypeName;
-            bTLContext.UnitTypes.Update(OldUnitType);
-            Save();
+            try
+            {
+                UnitType oldUnitType = GetUnitType(id);
+                if (oldUnitType != null)
+                {
+                    oldUnitType.UnitTypeName = unitType.UnitTypeName;
+                    bTLContext.UnitTypes.Update(oldUnitType);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the unit type: {ex.Message}");
+                throw;
+            }
         }
     }
 }

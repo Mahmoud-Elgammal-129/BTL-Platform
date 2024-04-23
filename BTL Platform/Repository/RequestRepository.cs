@@ -15,79 +15,125 @@ namespace BTL_Platform.Reposatiory
         }
         public void Delete(string id)
         {
-            Request requestToDelete = GetRequest(id);
-            if (requestToDelete != null)
+            try
             {
-                requestToDelete.IsDeleted = true;
-                bTLContext.Requests.Update(requestToDelete);
-                Save();
+                Request requestToDelete = GetRequest(id);
+                if (requestToDelete != null)
+                {
+                    requestToDelete.IsDeleted = true;
+                    bTLContext.Requests.Update(requestToDelete);
+                    Save();
+                }
             }
-
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                Console.WriteLine($"An error occurred while deleting the request: {ex.Message}");
+                throw; // Rethrow the exception to propagate it
+            }
         }
 
         public Request GetRequest(string id)
         {
-            Request request = bTLContext.Requests.FirstOrDefault(a => a.RequestID == id && a.IsDeleted == false);
-            if (request != null)
+            try
             {
-                return request;
-
+                return bTLContext.Requests.FirstOrDefault(a => a.RequestID == id && !a.IsDeleted);
             }
-            return null;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the request: {ex.Message}");
+                throw;
+            }
         }
 
         public List<Request> GetRequests()
         {
-            var request = bTLContext.Requests.Where(n => n.IsDeleted == false).ToList();
-            return request;
+            try
+            {
+                return bTLContext.Requests.Where(n => !n.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving requests: {ex.Message}");
+                throw;
+            }
         }
 
         public void Insert(Request request)
         {
-            bTLContext.Requests.Add(request);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.Requests.Add(request);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the request: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
         public List<Request> SearchRequest(string searchValue)
         {
-            var filteredCategories = bTLContext.Requests
-                 .Where(c =>
-                 c.CompanyName.Contains(searchValue) ||
-                 //c.RequestDate.ToString().Contains(searchValue) ||
-                 c.ClientEmail.Contains(searchValue) ||
-                 c.ClientMobile.ToString().Contains(searchValue))
-                 .ToList();
-
-            return filteredCategories;
+            try
+            {
+                return bTLContext.Requests
+                    .Where(c =>
+                        c.CompanyName.Contains(searchValue) ||
+                        c.ClientEmail.Contains(searchValue) ||
+                        c.ClientMobile.ToString().Contains(searchValue))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while searching requests: {ex.Message}");
+                throw;
+            }
         }
 
         public void Update(string id, Request request)
         {
-            //get old
-            Request oldRequest = GetRequest(id);
-            //oldRequest.RequestDate = request.RequestDate;
-            oldRequest.CompanyName = request.CompanyName;
-            oldRequest.ClientMobile = request.ClientMobile;
-            oldRequest.ClientEmail = request.ClientEmail;
-            oldRequest.Channel = request.Channel;
-            oldRequest.Description = request.Description;
-            oldRequest.Assignee = request.Assignee;
-            oldRequest.WH_movements = request.WH_movements;
-            oldRequest.Status = request.Status;
-            oldRequest.Priority = request.Priority;
-            oldRequest.POSNumber = request.POSNumber;
-            oldRequest.OnGroundTeams = request.OnGroundTeams;
-            oldRequest.TrucksNeeded = request.TrucksNeeded;
-            oldRequest.StartDate = request.StartDate;
-            oldRequest.EndDate = request.EndDate;
-            bTLContext.Requests.Update(oldRequest);
-            Save();
-
+            try
+            {
+                Request oldRequest = GetRequest(id);
+                if (oldRequest != null)
+                {
+                    oldRequest.CompanyName = request.CompanyName;
+                    oldRequest.ClientMobile = request.ClientMobile;
+                    oldRequest.ClientEmail = request.ClientEmail;
+                    oldRequest.Channel = request.Channel;
+                    oldRequest.Description = request.Description;
+                    oldRequest.Assignee = request.Assignee;
+                    oldRequest.WH_movements = request.WH_movements;
+                    oldRequest.Status = request.Status;
+                    oldRequest.Priority = request.Priority;
+                    oldRequest.POSNumber = request.POSNumber;
+                    oldRequest.OnGroundTeams = request.OnGroundTeams;
+                    oldRequest.TrucksNeeded = request.TrucksNeeded;
+                    oldRequest.StartDate = request.StartDate;
+                    oldRequest.EndDate = request.EndDate;
+                    bTLContext.Requests.Update(oldRequest);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the request: {ex.Message}");
+                throw;
+            }
         }
     }
 }

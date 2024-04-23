@@ -14,44 +14,95 @@ namespace BTL_Platform.Repository
         }
         public void Delete(string id)
         {
-            VisitStatus VisitStatusToDelete = GetVisitStatus(id);
-            if (VisitStatusToDelete != null)
+            try
             {
-                VisitStatusToDelete.IsDeleted = true;
-                bTLContext.VisitStatuses.Update(VisitStatusToDelete);
-                Save(); // Save method should handle the changes
+                VisitStatus visitStatusToDelete = GetVisitStatus(id);
+                if (visitStatusToDelete != null)
+                {
+                    visitStatusToDelete.IsDeleted = true;
+                    bTLContext.VisitStatuses.Update(visitStatusToDelete);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the visit status: {ex.Message}");
+                throw;
             }
         }
 
         public VisitStatus GetVisitStatus(string id)
         {
-            VisitStatus visitStatus = bTLContext.VisitStatuses.FirstOrDefault(a => a.VisitStatusId == id &&a.IsDeleted==false);
-            return visitStatus;
+            try
+            {
+                return bTLContext.VisitStatuses.FirstOrDefault(a => a.VisitStatusId == id && !a.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the visit status: {ex.Message}");
+                throw;
+            }
         }
 
         public List<VisitStatus> GetVisitStatuss()
         {
-            var visitStatus = bTLContext.VisitStatuses.Where(a=> a.IsDeleted == false).ToList();
-            return visitStatus;
+            try
+            {
+                return bTLContext.VisitStatuses.Where(a => !a.IsDeleted).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving visit statuses: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Insert(VisitStatus visitstatus)
+       
+
+        public void Insert(VisitStatus visitStatus)
         {
-            bTLContext.VisitStatuses.Add(visitstatus);
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.VisitStatuses.Add(visitStatus);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while inserting the visit status: {ex.Message}");
+                throw;
+            }
         }
 
         public void Save()
         {
-            bTLContext.SaveChanges();
+            try
+            {
+                bTLContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving changes: {ex.Message}");
+                throw;
+            }
         }
 
-        public void Update(string id, VisitStatus visitstatus)
+        public void Update(string id, VisitStatus visitStatus)
         {
-            VisitStatus OldVisitStatus = GetVisitStatus(id);
-            OldVisitStatus.VisitStatusName = visitstatus.VisitStatusName;
-            bTLContext.VisitStatuses.Update(OldVisitStatus);
-            Save();
+            try
+            {
+                VisitStatus oldVisitStatus = GetVisitStatus(id);
+                if (oldVisitStatus != null)
+                {
+                    oldVisitStatus.VisitStatusName = visitStatus.VisitStatusName;
+                    bTLContext.VisitStatuses.Update(oldVisitStatus);
+                    Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating the visit status: {ex.Message}");
+                throw;
+            }
         }
     }
 }

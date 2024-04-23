@@ -19,32 +19,51 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            List<Places> Placess = PlacesRepository.GetPlacess();
-            return View( Placess); 
+            try
+            {
+                
+                List<Places> Placess = PlacesRepository.GetPlacess();
+                return View(Placess);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving places.");
+            }
         }
 
         public IActionResult Create()
         {
-            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
-            //{
-            //    Value = u.UnitTypeId.ToString(),
-            //    Text = u.UnitTypeName
-            //}).ToList();
-            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
-            return View();
-
+            try
+            {
+                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while loading the create view.");
+            }
         }
         [HttpPost]
         public IActionResult Create(Places Placess)
         {
-
-
-            if (Placess != null)
+            try
             {
-
-                PlacesRepository.Insert(Placess);
-                PlacesRepository.Save();
-                return RedirectToAction("Index");
+                if (Placess != null)
+                {
+                    PlacesRepository.Insert(Placess);
+                    PlacesRepository.Save();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while creating the place.");
             }
 
             return View("Create", Placess);
@@ -52,35 +71,71 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Details(string id)
         {
-            Places Placesid = PlacesRepository.GetPlaces(id);
-            return View(Placesid);
+            try
+            {
+                Places Placesid = PlacesRepository.GetPlaces(id);
+                return View(Placesid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving place details.");
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
-            Places Placesid = PlacesRepository.GetPlaces(id);
-            return View(Placesid);
+            try
+            {
+                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
+                Places Placesid = PlacesRepository.GetPlaces(id);
+                return View(Placesid);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while loading the edit view.");
+            }
         }
         [HttpPost]
         public IActionResult Edit(Places Places, string id)
         {
-            if (Places != null)
+            try
             {
-                PlacesRepository.Update(id, Places);
-                PlacesRepository.Save();
-                return RedirectToAction("Index");
+                if (Places != null)
+                {
+                    PlacesRepository.Update(id, Places);
+                    PlacesRepository.Save();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while updating the place.");
+            }
+
             return View(Places);
         }
 
         
         public IActionResult Delete(string id)
         {
-
-            PlacesRepository.Delete(id);
-            PlacesRepository.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                PlacesRepository.Delete(id);
+                PlacesRepository.Save();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while deleting the place.");
+            }
         }
     }
 }

@@ -15,8 +15,18 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Index()
         {
-            List<User> user = userRepository.GetUsers();
-            return View(user);
+            try
+            {
+                
+                List<User> users = userRepository.GetUsers();
+                return View(users);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving user data.");
+            }
         }
 
         public IActionResult Create()
@@ -29,14 +39,20 @@ namespace BTL_Platform.Controllers
         [HttpPost]
         public IActionResult Create(User user)
         {
-
-
-            if (user != null)
+            try
             {
-
-                userRepository.Insert(user);
-                userRepository.Save();
-                return RedirectToAction("Index");
+                if (user != null)
+                {
+                    userRepository.Insert(user);
+                    userRepository.Save();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while creating the user.");
             }
 
             return View("Create", user);
@@ -44,34 +60,70 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Details(string id)
         {
-            User userid = userRepository.GetUser(id);
-            return View(userid);
+            try
+            {
+                User user = userRepository.GetUser(id);
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving user details.");
+            }
         }
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            User userid = userRepository.GetUser(id);
-            return View(userid);
+            try
+            {
+                User user = userRepository.GetUser(id);
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while retrieving user details for editing.");
+            }
         }
         [HttpPost]
         public IActionResult Edit(User user, string id)
         {
-            if (user != null)
+            try
             {
-                userRepository.Update(id, user);
-                userRepository.Save();
-                return RedirectToAction("Index");
+                if (user != null)
+                {
+                    userRepository.Update(id, user);
+                    userRepository.Save();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while updating the user.");
+            }
+
             return View(user);
         }
 
         
         public IActionResult Delete(string id)
         {
-
-            userRepository.Delete(id);
-            userRepository.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                userRepository.Delete(id);
+                userRepository.Save();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // Optionally, you can return an error view or redirect to an error page
+                return StatusCode(500, "An error occurred while deleting the user.");
+            }
         }
     }
 }
