@@ -34,15 +34,23 @@
     <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
 
 </div>
+<form asp-controller="Request" asp-action="Search" method="get">
+    <label for="searchValue class="form-label">Search</label>
+    <input type="text" name="searchValue" placeholder="Search..." value="@ViewBag.SearchValue" />
+    <button type="submit">Search</button>
+    <a asp-action="Index">Reset</a>
+</form>
 
-
-<div class="m-5">
+<div class="m-5" id="allUsersContainer">
     <h1>Requests</h1>
-    <table class ="table table-border table-hover">
+    <table class="table table-border table-hover" id="allUsersTable">
         <thead>
             <tr>
                 <th>#</th>
                 <th>RequestDate</th>
+                <th>CompanyName</th>
+                <th>ClientMobile</th>
+                <th>ClientEmail</th>
                 <th>Channel</th>
                 <th>Description</th>
                 <th>Assignee</th>
@@ -67,6 +75,10 @@
                     <td>@(counter++)</td>
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
+                    
+                    @* <td>@request.CompanyName</td>
+                    <td>@request.ClientMobile</td>
+                    <td>@request.ClientEmail</td> *@
                     <td>@request.Channel</td>
                     <td>@request.Description</td>
                     <td>@request.Assignee</td>
@@ -93,6 +105,78 @@
         </tbody>
     </table>
 </div>
+@* <div id="searchResultsContainer" class="hide">
+    <h2>Search Results</h2>
+    <table id="searchUsersTable" class="table table-striped">
+        <tbody>
+        </tbody>
+    </table>
+</div> *@
+@* @section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().trim();
+                if (searchValue !== '') {
+                    searchUsers(searchValue);
+                } else {
+                    resetSearch();
+                }
+            });
+        });
+        function searchUsers(searchValue) {
+            $.ajax({
+                url: '/Request/Search',
+                type: 'GET',
+                data: { searchValue: searchValue },
+                success: function (result) {
+                    if (result.trim() !== '') {
+                        $('#allUsersContainer').hide();
+                        $('#searchResultsContainer').show().find('tbody').html(result);
+                        $('#notFoundMessage').addClass('hide');
+
+                    } else {
+                        $('#allUsersContainer').hide();
+                        $('#searchResultsContainer').hide();
+                        $('#notFoundMessage').removeClass('hide');
+
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while searching users.');
+                }
+            });
+        }
+
+
+        function resetSearch() {
+            $.ajax({
+                url: '/Request/ResetSearch',
+                type: 'GET',
+                success: function (result) {
+                    if (result.trim() !== '') {
+                        $('#allUsersContainer').show();
+                        $('#searchResultsContainer').hide();
+                        $('#searchResultsContainer').addClass('hide');
+
+
+                    } else {
+                        $('#allUsersContainer').show();
+                        $('#searchResultsContainer').hide();
+
+                    }
+                    $('#searchUsersTable tbody').empty(); // Clear search results table
+                },
+                error: function () {
+                    alert('Error occurred while resetting the search.');
+                }
+            });
+        }
+    </script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 
 @section scripts {
@@ -134,4 +218,4 @@
         });
     </script>
 
-}
+}*@

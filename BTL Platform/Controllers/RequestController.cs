@@ -21,6 +21,7 @@ namespace BTL_Platform.Controllers
 
         VisitTypeRepository VisitTypeRepository;
         EmployeeRepository employeeRepository;
+        VisitRepository visitRepository;
         UserManager<ApplicationUser> usermanager;
         public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository)
         {
@@ -130,22 +131,24 @@ namespace BTL_Platform.Controllers
             RequestRepository.Save();
             return RedirectToAction("RequestPage");
         }
-        //public IActionResult Search(string searchValue)
-        //{
-        //    var filteredUsers = RequestRepository.SearchCategories(searchValue);
+
+      
+        public IActionResult Search(string searchValue)
+        {
+            var filteredUsers = RequestRepository.SearchRequest(searchValue);
 
 
-        //    return PartialView("_CatogriesTablePartial", filteredUsers); // Assuming you have a partial view for the table body
-        //}
+            return View("RequestPage", filteredUsers); // Assuming you have a partial view for the table body
+        }
 
-        // GET: /User/ResetSearch
-        //public IActionResult ResetSearch()
-        //{
-        //    var allUsers = caterepo.GetCategories();
+        //GET: /User/ResetSearch
+        public IActionResult ResetSearch()
+        {
+            var allUsers = RequestRepository.GetRequests();
 
-
-        //    return PartialView("_CatogriesTablePartial", allUsers); // Assuming you have a partial view for the table body
-        //}
+        
+            return PartialView("_CatogriesTablePartial", allUsers); // Assuming you have a partial view for the table body
+        }
         public static DataTable ReadExcel(IFormFile excelFile, string sheetName)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
