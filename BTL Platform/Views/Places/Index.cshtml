@@ -5,11 +5,13 @@
     ViewBag.Title = "Places";
     ViewBag.Nav = "Places";
 }
-<div class="mt-5">
-    <a asp-action="Create" asp-controller="Places" class="btn btn-success">New Place</a>
-</div>
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="Places" class="btn btn-success m-0">New Place</a>
 
-<div class="m-5">
+    </div>
+</nav>
+<div class="">
     <h1>Places</h1>
     <table class="table table-bordered table-hover">
         <thead>

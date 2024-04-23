@@ -15,23 +15,32 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RequestDate" class="form-label">Request Date</label>
-                <input asp-for="RequestDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                <span asp-validation-for="RequestDate" class="text-danger"></span>
+                <label asp-for="CompanyName" class="form-label">Company Name</label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
             </div>
 
-            @*<div class="form-group">
+            <div class="form-group">
+                <label asp-for="ClientEmail" class="form-label">Client Email</label>
+                <input asp-for="ClientEmail" class="form-control" type="email" />
+                <span asp-validation-for="ClientEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientMobile" class="form-label">Client Mobile</label>
+                <input asp-for="ClientMobile" class="form-control" type="text" />
+                <span asp-validation-for="ClientMobile" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
             <label asp-for="RequestDate" class="form-label">Request Date</label>
-            <input asp-for="RequestDate" class="form-control" />
+            <input asp-for="RequestDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
             <span asp-validation-for="RequestDate" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <label asp-for="Channel" class="form-label">Channel</label>
                 <select asp-for="Channel" class="form-control">
                     <option value="">Select Channel</option> <!-- Default empty option -->
-                    <option value="Option1">Option 1</option> <!-- Replace Option1 with your actual option value -->
-                    <option value="Option2">Option 2</option> <!-- Replace Option2 with your actual option value -->
-                    <option value="mahmoud">mahmoud</option> <!-- Replace Option2 with your actual option value -->
+                    <option value="Option1">OTR Airport</option> <!-- Replace Option1 with your actual option value -->
+                    
                     <!-- Add more <option> elements for each possible value -->
                 </select>
                 <span asp-validation-for="Channel" class="text-danger"></span>
@@ -69,11 +78,11 @@
                 </select>
                 <span asp-validation-for="WH_movements" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Status" class="form-label">Status</label>
                 <select asp-for="Status" class="form-control">
                     <option value="">Select Status</option> <!-- Default empty option -->
-                    <option value="Pending">Pending</option>
+                    <option value="Pending" selected>Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Rejected</option>
                     <!-- Add more <option> elements for each possible status -->
@@ -118,13 +127,7 @@
            
             <div class="form-group">
                 <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
-                <select asp-for="TrucksNeeded" class="form-control">
-                    <option value="">Select Number of Trucks Needed</option> <!-- Default empty option -->
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <!-- Add more <option> elements for each possible number of trucks needed -->
-                </select>
+                <input asp-for="TrucksNeeded" class="form-control" type="number" />
                 <span asp-validation-for="TrucksNeeded" class="text-danger"></span>
             </div>
 

@@ -9,8 +9,10 @@ namespace BTL_Platform.Models
             var routeData = htmlHelper.ViewContext.RouteData;
             
             var pageRoute = routeData.Values["page"];
-
+            
+          
             return route == pageRoute ? "active" : "";
+            
         }
     }
 }

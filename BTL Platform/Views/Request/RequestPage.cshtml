@@ -30,18 +30,31 @@
         </div>
     </div>
 </div>
-<div class="mt-5">
-    <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="Request" class="btn btn-success m-0">New Request</a>
+        <form asp-controller="Request" class="d-flex " asp-action="Search" method="get" role="search">
 
+            <input type="text" name="searchValue" class="form-control me-2" placeholder="Search..." value="@ViewBag.SearchValue" />
+            <button type="submit" class="btn btn-outline-success m-0 me-2">Search</button>
+            <a asp-action="Index" class="btn btn-outline-dark m-0">Reset</a>
+        </form>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-6">
+        <div class="">
+            
+
+        </div>
+    </div>
+    <div class="col-6">
+        
+    </div>
 </div>
-<form asp-controller="Request" asp-action="Search" method="get">
-    <label for="searchValue class="form-label">Search</label>
-    <input type="text" name="searchValue" placeholder="Search..." value="@ViewBag.SearchValue" />
-    <button type="submit">Search</button>
-    <a asp-action="Index">Reset</a>
-</form>
 
-<div class="m-5" id="allUsersContainer">
+
+<div class="" id="allUsersContainer">
     <h1>Requests</h1>
     <table class="table table-border table-hover" id="allUsersTable">
         <thead>
@@ -76,9 +89,9 @@
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
                     
-                    @* <td>@request.CompanyName</td>
+                    <td>@request.CompanyName</td>
                     <td>@request.ClientMobile</td>
-                    <td>@request.ClientEmail</td> *@
+                    <td>@request.ClientEmail</td>
                     <td>@request.Channel</td>
                     <td>@request.Description</td>
                     <td>@request.Assignee</td>

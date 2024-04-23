@@ -7,12 +7,13 @@
     ViewBag.Title = "Visit Types";
     ViewBag.Nav = "Visit_Types";
 }
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="VisitType" class="btn btn-success m-0sc">New Visit Type </a>
 
-<div class="mt-5">
-    <a asp-action="Create" asp-controller="VisitType" class="btn btn-success">New Visit Type </a>
-</div>
-
-<div class="m-5">
+    </div>
+</nav>
+<div class="">
     <h1>Visit Types</h1>
     <table class="table table-bordered table-hover">
         <thead>
