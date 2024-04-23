@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="ExcelFile">Select Excel File : </label>
                         <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required />
-                        <input type="hidden" name="id" id="requestId" value="" />
+                        <input type="" name="id" id="requestId" value="" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -60,6 +60,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>ID</th>
                 <th>RequestDate</th>
                 <th>CompanyName</th>
                 <th>ClientMobile</th>
@@ -86,7 +87,7 @@
             {
                 <tr>
                     <td>@(counter++)</td>
-                   @* <td>@request.RequestID</td>*@
+                   <td>@request.RequestID</td>
                     <td>@request.RequestDate</td>
                     
                     <td>@request.CompanyName</td>
@@ -110,7 +111,7 @@
 
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary uploadExcelBtn" data-request-id="@request.RequestID">Upload Excel</button>
+                        <button type="button" class="btn btn-primary uploadExcelBtn" data-bs-toggle="modal" data-bs-target="#uploadModal" data-request-id="@request.RequestID">Upload Excel</button>
                     </td>
 
                 </tr>

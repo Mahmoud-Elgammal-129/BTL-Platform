@@ -3,6 +3,7 @@ using BTL_Platform.Intrface;
 using BTL_Platform.Models;
 using BTL_Platform.Reposatiory;
 using BTL_Platform.Repository;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office.CustomUI;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,8 @@ namespace BTL_Platform.Controllers
         EmployeeRepository employeeRepository;
         VisitRepository visitRepository;
         UserManager<ApplicationUser> usermanager;
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository)
+        BTLContext context;
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
@@ -31,6 +33,7 @@ namespace BTL_Platform.Controllers
             this.usermanager = usermanager;
             VisitTypeRepository = visitTypeRepository;
             VisitRepository = visitRepository;
+            this.context = context;
         }
         public IActionResult Index()
         {
@@ -161,15 +164,15 @@ namespace BTL_Platform.Controllers
                         //item.Place_Id = null;    // you will remove it and add taht after adding placeid to requet  ;// you will add place id after adding it to request 
 
 
-                        item.RequestID = RequestData.RequestID;
+                        item.RequestID = id;
 
 
                         //item.date = RequestData.RequestDate;// ensure from the data specific 
 
-                }
-                #endregion
+                    }
+                    #endregion
 
-                VisitRepository.Insert(visits);
+                    VisitRepository.Insert(visits);
 
                     return RedirectToAction("Index");
                 }
@@ -288,11 +291,13 @@ namespace BTL_Platform.Controllers
                 }
                 if (row["place_id"] != null)
                 {
-                    visit.Place_Id = row["place_id"].ToString();
+                        Places? places = GetPlaceByID(row["place_id"].ToString());
+                        visit.Place_Id = places.Id;
                 }
                 if (row["User_id"] != null)
                 {
-                    visit.Id = row["User_id"].ToString();
+                        User? user = GetUserByID(Convert.ToInt32(row["User_id"].ToString()));
+                    visit.Id = user.Id;
                 }
                 if (row["place_name"] != null)
                 {
@@ -391,6 +396,22 @@ namespace BTL_Platform.Controllers
                 Console.WriteLine($"Error in ResetSearch method: {ex.Message}");
                 throw; // Re-throw the exception to propagate it to the caller
             }
+        }
+        public User? GetUserByID(int User_ID)
+        {
+
+
+            User? user = context.Users.Where(x=>x.UserId==User_ID).FirstOrDefault();
+            return user;
+
+        }
+        public Places? GetPlaceByID(string Place_ID)
+        {
+
+
+            Places? places = context.Places.Where(x => x.PlaceId == Place_ID).FirstOrDefault();
+            return places;
+
         }
 
     }
