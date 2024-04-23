@@ -33,7 +33,7 @@ namespace BTL_Platform.Models
        
 
         [Required(ErrorMessage = "Description is required")]
-        public string Description { get; set; }
+        public string Description { get; set; }= string.Empty;
 
         [Required(ErrorMessage = "Assignee is required")]
         public string Assignee { get; set; }

@@ -4,6 +4,30 @@
 }
 @model List<Request>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="uploadForm" asp-action="Upload" asp-controller="Request" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload Excel File</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ExcelFile">Select Excel File : </label>
+                        <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required />
+                        <input type="hidden" name="id" id="requestId" value="" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="mt-5">
     <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
 
@@ -36,8 +60,8 @@
                 <th>TrucksNeeded</th>
                 <th>StartDate</th>
                 <th>EndDate</th>
-               @* <th>RequestType</th>*@
-                <th>Action</th>
+                <th>RequestType</th>
+                <th></th>
                 
             </tr>
         </thead>
@@ -67,9 +91,15 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>
-                         
-                    </td>
 
+                    </td>
+                   </td>
+                   @* <td>
+                        <form asp-controller="Request" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@request.RequestID" />
+                            <button type="submit">Soft Delete</button>
+                        </form>
+                    </td>*@
                 </tr>
             }
         </tbody>
@@ -148,5 +178,5 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-} *@
 
+}
