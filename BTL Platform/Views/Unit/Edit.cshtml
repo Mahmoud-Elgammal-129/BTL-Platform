@@ -13,53 +13,53 @@
         new SelectList(ViewBag.InventoryList, "InventoryId", "ItemName");
 
 }
-<h1>Edit Unit</h1>
+<div>
+    <h1>Edit Unit</h1>
 
-<form asp-action="Edit" asp-route-id="@Model.UnitId" method="post">
-    <div class="row">
-        <div class="col-md-6">
-           
-            <div class="form-group">
-                <label asp-for="UnitName" class="form-label">UnitName</label>
-                <input asp-for="UnitName" class="form-control" />
-                <span asp-validation-for="UnitName" class="text-danger"></span>
-            </div>
+    <form asp-action="Edit" asp-route-id="@Model.UnitId" method="post">
+        <div class="row">
+            <div class="col-md-6">
 
-            <div class="form-group">
-                <label asp-for="UnitNumber" class="form-label">UnitNumber</label>
-                <input asp-for="UnitNumber" class="form-control" />
-                <span asp-validation-for="UnitNumber" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="InventoryId">InventoryName</label>
-                <select class="form-control" asp-for="InventoryId" asp-items="inventoryList">
-                    
-                </select>
-                <span asp-validation-for="InventoryId" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="Unit_type_Id">UnitType</label>
-                <select class="form-control" asp-for="Unit_type_Id" asp-items="unitTypeList">
-                    
-                </select>
-                <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
-            </div>
-          
-           
+                <div class="form-group">
+                    <label asp-for="UnitName" class="form-label">UnitName</label>
+                    <input asp-for="UnitName" class="form-control" />
+                    <span asp-validation-for="UnitName" class="text-danger"></span>
+                </div>
 
-        
-    </div>
-    <br />
-        <br />
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <div class="col">
-                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to unit List</a>
-        </div>
-    </div>
-</form>
+                <div class="form-group">
+                    <label asp-for="UnitNumber" class="form-label">UnitNumber</label>
+                    <input asp-for="UnitNumber" class="form-control" />
+                    <span asp-validation-for="UnitNumber" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="InventoryId">InventoryName</label>
+                    <select class="form-control" asp-for="InventoryId" asp-items="inventoryList">
+                    </select>
+                    <span asp-validation-for="InventoryId" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Unit_type_Id">UnitType</label>
+                    <select class="form-control" asp-for="Unit_type_Id" asp-items="unitTypeList">
+                    </select>
+                    <span asp-validation-for="Unit_type_Id" class="text-danger"></span>
+                </div>
+
+
+
+
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-outline-primary float-right">Back to unit List</a>
+                </div>
+            </div>
+    </form>
+</div>
 @section scripts{
 
     <script src="~/lib/jquery/dist/jquery.js"></script>

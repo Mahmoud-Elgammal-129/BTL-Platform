@@ -6,39 +6,41 @@
     ViewBag.Nav = "Visit_Status";
 }
 
-<h1>Create Visit Status</h1>
+<div>
+    <h1>Create Visit Status</h1>
 
-<form asp-controller="VisitStatus" asp-action="Create" method="post" class="needs-validation" novalidate>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="VisitStatusName" class="form-label">Visit Status Name</label>
-                <input asp-for="VisitStatusName" class="form-control" />
-                <span asp-validation-for="VisitStatusName" class="text-danger"></span>
+    <form asp-controller="VisitStatus" asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="VisitStatusName" class="form-label">Visit Status Name</label>
+                    <input asp-for="VisitStatusName" class="form-control" />
+                    <span asp-validation-for="VisitStatusName" class="text-danger"></span>
+                </div>
+
+                @* <div class="form-group">
+                <label asp-for="IsDeleted" class="form-label">Is Deleted</label>
+                <input asp-for="IsDeleted" class="form-control" />
+                <span asp-validation-for="IsDeleted" class="text-danger"></span>
+                </div>*@
             </div>
 
-            @* <div class="form-group">
-            <label asp-for="IsDeleted" class="form-label">Is Deleted</label>
-            <input asp-for="IsDeleted" class="form-control" />
-            <span asp-validation-for="IsDeleted" class="text-danger"></span>
-            </div>*@
+            <div class="col-md-6">
+                <!-- Add the remaining form fields for the UnitType model here -->
+                <!-- Make sure to adjust the labels and input names accordingly -->
+            </div>
         </div>
-
-        <div class="col-md-6">
-            <!-- Add the remaining form fields for the UnitType model here -->
-            <!-- Make sure to adjust the labels and input names accordingly -->
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-outline-primary float-right">Back to VisitStatus List</a>
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <div class="col">
-            <a asp-action="Index" class="btn btn-outline-primary float-right">Back to VisitStatus List</a>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 
 
