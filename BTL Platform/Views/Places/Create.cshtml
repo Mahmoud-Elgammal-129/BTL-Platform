@@ -2,6 +2,13 @@
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
 }
+@{
+
+    SelectList unitTypeList =
+          new SelectList(ViewBag.UnitTypeList, "UnitTypeId", "UnitTypeName");
+   
+
+}
 <div class="container mt-5">
     <h1>Create Place</h1>
     <form asp-controller="Places" asp-action="Create" method="post" class="needs-validation" novalidate>
@@ -48,14 +55,15 @@
                     <input asp-for="County" class="form-control" />
                     <span asp-validation-for="County" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="State" class="form-label">State</label>
                     <input asp-for="State" class="form-control" />
                     <span asp-validation-for="State" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="col-md-6">
+             
 
                 <div class="form-group">
                     <label asp-for="Country" class="form-label">Country</label>
@@ -81,9 +89,13 @@
                     <span asp-validation-for="UnitNumber" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="UnitType" class="form-label">Unit Type</label>
-                    <input asp-for="UnitType" class="form-control" />
+              
+                <!-- Add dropdown for Unit_type_Id -->
+                <div>
+                    <label asp-for="UnitType">UnitType</label>
+                    <select class="form-control" asp-for="UnitType" asp-items="unitTypeList">
+                        <option value="0">--Select UnitType--</option>
+                    </select>
                     <span asp-validation-for="UnitType" class="text-danger"></span>
                 </div>
 

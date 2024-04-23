@@ -3,10 +3,12 @@ using BTL_Platform.Intrface;
 using BTL_Platform.Models;
 using BTL_Platform.Reposatiory;
 using BTL_Platform.Repository;
+using ExcelDataReader;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BTL_Platform.Controllers
 {
@@ -15,13 +17,16 @@ namespace BTL_Platform.Controllers
         RequestRepository RequestRepository;
         RequestTypeRepository RequestTypeRepository;
         EmployeeRepository employeeRepository;
+        VisitRepository visitRepository;
         UserManager<ApplicationUser> usermanager;
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager)
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository,
+            EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitRepository _visitRepository)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
             employeeRepository = _employeeRepository;
             this.usermanager = usermanager;
+            this.visitRepository = _visitRepository;
         }
         public IActionResult Index()
         {
@@ -84,22 +89,24 @@ namespace BTL_Platform.Controllers
             RequestRepository.Save();
             return RedirectToAction("RequestPage");
         }
-        //public IActionResult Search(string searchValue)
-        //{
-        //    var filteredUsers = RequestRepository.SearchCategories(searchValue);
+
+      
+        public IActionResult Search(string searchValue)
+        {
+            var filteredUsers = RequestRepository.SearchRequest(searchValue);
 
 
-        //    return PartialView("_CatogriesTablePartial", filteredUsers); // Assuming you have a partial view for the table body
-        //}
+            return View("RequestPage", filteredUsers); // Assuming you have a partial view for the table body
+        }
 
-        // GET: /User/ResetSearch
-        //public IActionResult ResetSearch()
-        //{
-        //    var allUsers = caterepo.GetCategories();
+        //GET: /User/ResetSearch
+        public IActionResult ResetSearch()
+        {
+            var allUsers = RequestRepository.GetRequests();
 
 
-        //    return PartialView("_CatogriesTablePartial", allUsers); // Assuming you have a partial view for the table body
-        //}
+            return View("RequestPage", allUsers); // Assuming you have a partial view for the table body
+        }
     }
 }
 

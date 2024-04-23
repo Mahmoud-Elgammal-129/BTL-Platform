@@ -9,12 +9,18 @@ namespace BTL_Platform.Controllers
     public class UnitController : Controller
     {
         UnitRepository UnitRepository;
+        InventoryRepository InventoryRepository;
+        UnitTypeRepository UnitTypeRepository;
         BTLContext btlContext;
 
-        public UnitController(UnitRepository _UnitRepository, BTLContext btlContext)
+        public UnitController(UnitRepository _UnitRepository, BTLContext btlContext
+            , InventoryRepository _InventoryRepository, UnitTypeRepository _UnitTypeRepository
+            )
         {
             UnitRepository = _UnitRepository;
             this.btlContext = btlContext;
+            this.InventoryRepository = _InventoryRepository;
+            UnitTypeRepository = _UnitTypeRepository;
         }
         public IActionResult Index()
         {
@@ -23,17 +29,19 @@ namespace BTL_Platform.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            {
-                Value = i.InventoryId.ToString(),
-                Text = i.ItemName
-            }).ToList();
+            //ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
+            //{
+            //    Value = i.InventoryId.ToString(),
+            //    Text = i.ItemName
+            //}).ToList();
+            ViewData["InventoryList"] = InventoryRepository.GetInventorys();
+            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
 
-            ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
-            {
-                Value = u.UnitTypeId.ToString(),
-                Text = u.UnitTypeName
-            }).ToList();
+            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
+            //{
+            //    Value = u.UnitTypeId.ToString(),
+            //    Text = u.UnitTypeName
+            //}).ToList();
 
             return View();
         }
@@ -57,19 +65,20 @@ namespace BTL_Platform.Controllers
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
-            {
-                Value = i.InventoryId.ToString(),
-                Text = i.ItemName
-            }).ToList();
+            //ViewBag.InventoryList = btlContext.Inventories.Select(i => new SelectListItem
+            //{
+            //    Value = i.InventoryId.ToString(),
+            //    Text = i.ItemName
+            //}).ToList();
 
-            ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
-            {
-                Value = u.UnitTypeId.ToString(),
-                Text = u.UnitTypeName
-            }).ToList();
+            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
+            //{
+            //    Value = u.UnitTypeId.ToString(),
+            //    Text = u.UnitTypeName
+            //}).ToList();
 
-
+            ViewData["InventoryList"] = InventoryRepository.GetInventorys();
+            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
             Unit Unitid = UnitRepository.GetUnit(id);
             return View(Unitid);
         }

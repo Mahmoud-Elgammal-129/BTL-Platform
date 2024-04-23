@@ -12,38 +12,42 @@
 <form asp-controller="Request" asp-action="Create" method="post" class="needs-validation" novalidate>
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="RequestDate" class="form-label">Request Date</label>
-                <input asp-for="RequestDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                <span asp-validation-for="RequestDate" class="text-danger"></span>
-            </div>
 
-            @*<div class="form-group">
-            <label asp-for="RequestDate" class="form-label">Request Date</label>
-            <input asp-for="RequestDate" class="form-control" />
-            <span asp-validation-for="RequestDate" class="text-danger"></span>
-            </div>*@
+            <div>
+                <label asp-for="CompanyName" class="form-label">Company Name:</label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName"></span>
+            </div>
+            <div>
+                <label asp-for="ClientEmail" class="form-label">Client Email:</label>
+                <input asp-for="ClientEmail" class="form-control" />
+                <span asp-validation-for="ClientEmail"></span>
+            </div>
+            <div>
+                <label asp-for="ClientMobile" class="form-label">Client Mobile:</label>
+                <input asp-for="ClientMobile" class="form-control" />
+                <span asp-validation-for="ClientMobile"></span>
+            </div>
+          
             <div class="form-group">
                 <label asp-for="Channel" class="form-label">Channel</label>
                 <select asp-for="Channel" class="form-control">
                     <option value="">Select Channel</option> <!-- Default empty option -->
                     <option value="Option1">Option 1</option> <!-- Replace Option1 with your actual option value -->
                     <option value="Option2">Option 2</option> <!-- Replace Option2 with your actual option value -->
+                    <option value="mahmoud">mahmoud</option> <!-- Replace Option2 with your actual option value -->
                     <!-- Add more <option> elements for each possible value -->
                 </select>
                 <span asp-validation-for="Channel" class="text-danger"></span>
             </div>
-            @*  <div class="form-group">
-            <label asp-for="Channel" class="form-label">Channel</label>
-            <input asp-for="Channel" class="form-control" />
-            <span asp-validation-for="Channel" class="text-danger"></span>
-            </div>*@
+
 
             <div class="form-group">
-                <label asp-for="Description" class="form-label">Description</label>
-                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+             </div>
+            
             <div class="form-group">
                 <label asp-for="Assignee" class="form-label">Assignee</label>
                 <select asp-for="Assignee" class="form-control">
@@ -55,16 +59,7 @@
                 <span asp-validation-for="Assignee" class="text-danger"></span>
             </div>
 
-            @*    <div class="form-group">
-            <label asp-for="Assignee" class="form-label">Assignee</label>
-            <input asp-for="Assignee" class="form-control" />
-            <span asp-validation-for="Assignee" class="text-danger"></span>
-            </div>*@
-            @* <div class="form-group">
-            <label asp-for="WH_movements" class="form-label">WH Movements</label>
-            <input asp-for="WH_movements" class="form-control" />
-            <span asp-validation-for="WH_movements" class="text-danger"></span>
-            </div>*@
+          
             <div class="form-group">
                 <label asp-for="WH_movements" class="form-label">WH Movements</label>
                 <select asp-for="WH_movements" class="form-control">
@@ -87,12 +82,8 @@
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
 
-
-            @*<div class="form-group">
-            <label asp-for="Status" class="form-label">Status</label>
-            <input asp-for="Status" class="form-control" />
-            <span asp-validation-for="Status" class="text-danger"></span>
-            </div>*@
+          
+            
         </div>
 
         <div class="col-md-6">
@@ -119,17 +110,9 @@
                 <span asp-validation-for="OnGroundTeams" class="text-danger"></span>
             </div>
 
-            @*  <div class="form-group">
-            <label asp-for="OnGroundTeams" class="form-label"> OnGroundTeams</label>
-            <input asp-for="OnGroundTeams" class="form-control" />
-            <span asp-validation-for="OnGroundTeams" class="text-danger"></span>
-            </div>*@
+          
 
-            @* <div class="form-group">
-            <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
-            <input asp-for="TrucksNeeded" class="form-control" />
-            <span asp-validation-for="TrucksNeeded" class="text-danger"></span>
-            </div>*@
+           
             <div class="form-group">
                 <label asp-for="TrucksNeeded" class="form-label">Trucks Needed</label>
                 <select asp-for="TrucksNeeded" class="form-control">
@@ -163,12 +146,7 @@
 
             <input type="hidden" asp-for="Employee_Id" />
 
-            @*   <div class="form-group form-check">
-
-            <label class="form-check-label">
-            <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-            </label>
-            </div>*@
+          
         </div>
     </div>
     <br />

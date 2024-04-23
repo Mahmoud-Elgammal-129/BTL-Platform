@@ -53,11 +53,27 @@ namespace BTL_Platform.Reposatiory
             bTLContext.SaveChanges();
         }
 
+        public List<Request> SearchRequest(string searchValue)
+        {
+            var filteredCategories = bTLContext.Requests
+                 .Where(c =>
+                 c.CompanyName.Contains(searchValue) ||
+                 //c.RequestDate.ToString().Contains(searchValue) ||
+                 c.ClientEmail.Contains(searchValue) ||
+                 c.ClientMobile.ToString().Contains(searchValue))
+                 .ToList();
+
+            return filteredCategories;
+        }
+
         public void Update(string id, Request request)
         {
             //get old
             Request oldRequest = GetRequest(id);
-            oldRequest.RequestDate = request.RequestDate;
+            //oldRequest.RequestDate = request.RequestDate;
+            oldRequest.CompanyName = request.CompanyName;
+            oldRequest.ClientMobile = request.ClientMobile;
+            oldRequest.ClientEmail = request.ClientEmail;
             oldRequest.Channel = request.Channel;
             oldRequest.Description = request.Description;
             oldRequest.Assignee = request.Assignee;

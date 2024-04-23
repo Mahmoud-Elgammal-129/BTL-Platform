@@ -17,11 +17,20 @@ namespace BTL_Platform.Models
 
         [Key]
         public string RequestID { get; set; }
+        [Required(ErrorMessage = "CompanyName is required")]
+        public string CompanyName { get; set; }
+        [Required(ErrorMessage = "Client email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        public string ClientEmail { get; set; }
+        [Required(ErrorMessage = "Client mobile number is required")]
+       // [RegularExpression(@"^\d{10}$", ErrorMessage = "Client mobile number must be 10 digits")]
+        public int ClientMobile { get; set; }
         [Required(ErrorMessage = "Request date is required")]
         public DateTime RequestDate { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Channel is required")]
         public string Channel { get; set; }
+       
 
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }

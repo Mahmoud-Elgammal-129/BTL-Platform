@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int counter = 1;
 }
 
 <div class="mt-5">
@@ -13,19 +14,17 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Unit Type Name</th>
-                <th>Unit Type ID</th>
-                
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var unitType in Model)
             {
                 <tr>
+                    <td>@(counter++)</td>
                     <td>@unitType.UnitTypeName</td>
-                    <td>@unitType.UnitTypeId</td>
-                    
                     <td>
                         <a asp-action="Edit" asp-route-id="@unitType.UnitTypeId" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@unitType.UnitTypeId" class="btn btn-outline-danger">Delete</a>

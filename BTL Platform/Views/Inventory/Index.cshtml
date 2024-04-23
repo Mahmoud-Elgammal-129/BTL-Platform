@@ -1,6 +1,7 @@
 ﻿@model List<Inventory>
 @{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int counter = 1;
 }
 <div class="mt-5">
     <a asp-action="Create" asp-controller="Inventory" class="btn btn-success">New Inventory Item</a>
@@ -11,17 +12,19 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Item Name</th>
                 <th>Description</th>
                 <th>Count</th>
                 <th>Status</th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@(counter++)</td>
                     <td>@item.ItemName</td>
                     <td>@item.Description</td>
                     <td>@item.Count</td>

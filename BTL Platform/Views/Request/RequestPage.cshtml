@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    int counter = 1;
 }
 @model List<Request>
 
@@ -7,14 +8,23 @@
     <a asp-action="Create" asp-controller="Request" class="btn btn-success">NewRequest</a>
 
 </div>
+<form asp-controller="Request" asp-action="Search" method="get">
+    <label for="searchValue class="form-label">Search</label>
+    <input type="text" name="searchValue" placeholder="Search..." value="@ViewBag.SearchValue" />
+    <button type="submit">Search</button>
+    <a asp-action="Index">Reset</a>
+</form>
 
-
-<div class="m-5">
+<div class="m-5" id="allUsersContainer">
     <h1>Requests</h1>
-    <table class ="table table-border table-hover">
+    <table class="table table-border table-hover" id="allUsersTable">
         <thead>
             <tr>
+                <th>#</th>
                 <th>RequestDate</th>
+                <th>CompanyName</th>
+                <th>ClientMobile</th>
+                <th>ClientEmail</th>
                 <th>Channel</th>
                 <th>Description</th>
                 <th>Assignee</th>
@@ -26,8 +36,8 @@
                 <th>TrucksNeeded</th>
                 <th>StartDate</th>
                 <th>EndDate</th>
-                <th>RequestType</th>
-                <th></th>
+               @* <th>RequestType</th>*@
+                <th>Action</th>
                 
             </tr>
         </thead>
@@ -35,8 +45,13 @@
             @foreach (var request in Model)
             {
                 <tr>
+                    <td>@(counter++)</td>
                    @* <td>@request.RequestID</td>*@
                     <td>@request.RequestDate</td>
+                    
+                    <td>@request.CompanyName</td>
+                    <td>@request.ClientMobile</td>
+                    <td>@request.ClientEmail</td>
                     <td>@request.Channel</td>
                     <td>@request.Description</td>
                     <td>@request.Assignee</td>
@@ -49,23 +64,89 @@
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
                     @*<td>@request.Request_type.TypeName</td>*@
-                   <td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>
                          
                     </td>
-                   </td>
-                   @* <td>
-                        <form asp-controller="Request" asp-action="Delete" method="post">
-                            <input type="hidden" name="id" value="@request.RequestID" />
-                            <button type="submit">Soft Delete</button>
-                        </form>
-                    </td>*@
+
                 </tr>
             }
         </tbody>
     </table>
 </div>
+@* <div id="searchResultsContainer" class="hide">
+    <h2>Search Results</h2>
+    <table id="searchUsersTable" class="table table-striped">
+        <tbody>
+        </tbody>
+    </table>
+</div> *@
+@* @section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().trim();
+                if (searchValue !== '') {
+                    searchUsers(searchValue);
+                } else {
+                    resetSearch();
+                }
+            });
+        });
+        function searchUsers(searchValue) {
+            $.ajax({
+                url: '/Request/Search',
+                type: 'GET',
+                data: { searchValue: searchValue },
+                success: function (result) {
+                    if (result.trim() !== '') {
+                        $('#allUsersContainer').hide();
+                        $('#searchResultsContainer').show().find('tbody').html(result);
+                        $('#notFoundMessage').addClass('hide');
 
+                    } else {
+                        $('#allUsersContainer').hide();
+                        $('#searchResultsContainer').hide();
+                        $('#notFoundMessage').removeClass('hide');
+
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while searching users.');
+                }
+            });
+        }
+
+
+        function resetSearch() {
+            $.ajax({
+                url: '/Request/ResetSearch',
+                type: 'GET',
+                success: function (result) {
+                    if (result.trim() !== '') {
+                        $('#allUsersContainer').show();
+                        $('#searchResultsContainer').hide();
+                        $('#searchResultsContainer').addClass('hide');
+
+
+                    } else {
+                        $('#allUsersContainer').show();
+                        $('#searchResultsContainer').hide();
+
+                    }
+                    $('#searchUsersTable tbody').empty(); // Clear search results table
+                },
+                error: function () {
+                    alert('Error occurred while resetting the search.');
+                }
+            });
+        }
+    </script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+} *@
 

@@ -2,17 +2,20 @@
 using BTL_Platform.Reposatiory;
 using BTL_Platform.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BTL_Platform.Controllers
 {
     public class PlacesController : Controller
     {
         PlacesRepository PlacesRepository;
-
-        public PlacesController(PlacesRepository _PlacesRepository)
+        UnitTypeRepository UnitTypeRepository;
+        BTLContext btlContext;
+        public PlacesController(PlacesRepository _PlacesRepository, BTLContext btlContext, UnitTypeRepository _UnitTypeRepository)
         {
             PlacesRepository = _PlacesRepository;
-
+            UnitTypeRepository = _UnitTypeRepository;
+            this.btlContext = btlContext;
         }
         public IActionResult Index()
         {
@@ -22,8 +25,12 @@ namespace BTL_Platform.Controllers
 
         public IActionResult Create()
         {
-
-
+            //ViewBag.UnitTypeList = btlContext.UnitTypes.Select(u => new SelectListItem
+            //{
+            //    Value = u.UnitTypeId.ToString(),
+            //    Text = u.UnitTypeName
+            //}).ToList();
+            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
             return View();
 
         }
@@ -51,6 +58,7 @@ namespace BTL_Platform.Controllers
         [HttpGet]
         public IActionResult Edit(string id)
         {
+            ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
             Places Placesid = PlacesRepository.GetPlaces(id);
             return View(Placesid);
         }
