@@ -30,6 +30,27 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="editForm" asp-action="UploadEdit" asp-controller="Request" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Excel File</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ExcelFile">Select Excel File : </label>
+                        <input type="file" class="form-control" name="ExcelFile" id="EditExcelFile" required />
+                        <input type="hidden" name="id" id="editRequestId" value="" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <nav class="navbar p-0 shadow-none">
     <div class="container-fluid m-0 p-0">
         <a asp-action="Create" asp-controller="Request" class="btn btn-success m-0">New Request</a>
@@ -113,7 +134,9 @@
                     <td>
                         <button type="button" class="btn btn-primary uploadExcelBtn" data-bs-toggle="modal" data-bs-target="#uploadModal" data-request-id="@request.RequestID">Upload Excel</button>
                     </td>
-
+                    <td>
+                        <button type="button" class="btn btn-primary editExcelBtn" data-bs-toggle="modal" data-bs-target="#uploadModal" data-request-id="@request.RequestID">Edit Excel</button>
+                    </td>
                 </tr>
             }
         </tbody>

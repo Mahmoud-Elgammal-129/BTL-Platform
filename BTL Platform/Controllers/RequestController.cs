@@ -141,6 +141,21 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
+        public IActionResult Delete(string id)
+        {
+            try
+            {
+                RequestRepository.Delete(id);
+                RequestRepository.Save();
+                return RedirectToAction("RequestPage");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"Error in Delete action: {ex.Message}");
+                return RedirectToAction("Error", "Home"); // Redirect to error page
+            }
+        }
 
         [HttpPost]
         public IActionResult Upload(IFormFile excelFile, string id)
@@ -189,21 +204,34 @@ namespace BTL_Platform.Controllers
             }
         }
 
-        public IActionResult Delete(string id)
+        [HttpPost]
+        public IActionResult UploadEdit(IFormFile excelFile, string id)
         {
-            try
+            if (excelFile != null && excelFile.Length > 0)
             {
-                RequestRepository.Delete(id);
-                RequestRepository.Save();
-                return RedirectToAction("RequestPage");
+                string sheetName = "Reports";
+                var dataTable = ReadExcel(excelFile, sheetName);
+
+                var visits = ConvertDataTableToVisitList(dataTable);
+
+                var RequestData = RequestRepository.GetRequest(id);
+
+                #region passing Values to Table visit
+                foreach (var item in visits)
+                {
+                    item.RequestID = RequestData.RequestID;
+                }
+                #endregion
+
+
+                VisitRepository.UpdatesList(RequestData.RequestID, visits);
+
+                return RedirectToAction("Index");
             }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                Console.WriteLine($"Error in Delete action: {ex.Message}");
-                return RedirectToAction("Error", "Home"); // Redirect to error page
-            }
+            return View();
         }
+
+       
         public static DataTable ReadExcel(IFormFile excelFile, string sheetName)
         {
             try

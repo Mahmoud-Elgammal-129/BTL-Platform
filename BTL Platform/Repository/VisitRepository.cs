@@ -143,5 +143,52 @@ namespace BTL_Platform.Repository
                 throw;
             }
         }
+
+        public void UpdatesList(string RequestId, List<Visit> newVisits)
+        {
+            // Retrieve old visits based on the request ID
+            var oldVisits = GetVisitsBasedOnRequest(RequestId);
+
+            // Loop through the old visits and update them
+            foreach (var oldVisit in oldVisits)
+            {
+                // Find the corresponding new visit in the new list based on VisitId
+                var newVisit = newVisits.FirstOrDefault(v => v.VisitId == oldVisit.VisitId);
+
+                // Check if a corresponding new visit exists
+                if (newVisit != null)
+                {
+                    // Update the properties of the old visit with the new values
+                    oldVisit.UTCoffset = newVisit.UTCoffset;
+                    oldVisit.POSPhoto = newVisit.POSPhoto;
+                    oldVisit.UnitsPhotobefore = newVisit.UnitsPhotobefore;
+                    oldVisit.UnitsPhotoAfter = newVisit.UnitsPhotoAfter;
+                    oldVisit.placeName = newVisit.placeName;
+                    oldVisit.placeChain = newVisit.placeChain;
+                    oldVisit.Status = newVisit.Status;
+                    oldVisit.Notes = newVisit.Notes;
+                    oldVisit.UserName = newVisit.UserName;
+                    oldVisit.PlannedDate = newVisit.PlannedDate;
+                    oldVisit.TaskId = newVisit.TaskId;
+                    oldVisit.TaskName = newVisit.TaskName;
+                    oldVisit.UnitsNumbers = newVisit.UnitsNumbers;
+
+                    // Update the old visit in the database
+                    bTLContext.Visits.Update(oldVisit);
+                }
+            }
+
+            // Save changes to the database
+            Save();
+        }
+        private List<Visit> GetVisitsBasedOnRequest(string RequestId)
+        {
+            if (RequestId != null)
+            {
+                var Visits = bTLContext.Visits.Where(n => n.RequestID == RequestId).ToList();
+                return Visits;
+            }
+            return null;
+        }
     }
 }
