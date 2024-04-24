@@ -31,12 +31,12 @@
                     <input asp-for="UnitNumber" class="form-control" />
                     <span asp-validation-for="UnitNumber" class="text-danger"></span>
                 </div>
-                <div>
+            @*     <div>
                     <label asp-for="InventoryId">InventoryName</label>
                     <select class="form-control" asp-for="InventoryId" asp-items="inventoryList">
                     </select>
                     <span asp-validation-for="InventoryId" class="text-danger"></span>
-                </div>
+                </div> *@
                 <div>
                     <label asp-for="Unit_type_Id">UnitType</label>
                     <select class="form-control" asp-for="Unit_type_Id" asp-items="unitTypeList">

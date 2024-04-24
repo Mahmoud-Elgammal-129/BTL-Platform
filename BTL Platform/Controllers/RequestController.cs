@@ -324,7 +324,7 @@ namespace BTL_Platform.Controllers
                 }
                 if (row["User_id"] != null)
                 {
-                        User? user = GetUserByID(Convert.ToInt32(row["User_id"].ToString()));
+                        User? user = GetUserByID(row["User_id"].ToString());
                     visit.Id = user.Id;
                 }
                 if (row["place_name"] != null)
@@ -425,7 +425,7 @@ namespace BTL_Platform.Controllers
                 throw; // Re-throw the exception to propagate it to the caller
             }
         }
-        public User? GetUserByID(int User_ID)
+        public User? GetUserByID(string User_ID)
         {
 
 

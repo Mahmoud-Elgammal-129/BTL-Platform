@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    [Migration("20240419191949_v1")]
-    partial class v1
+    [Migration("20240424150808_v")]
+    partial class v
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,16 +109,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8fa42c90-bfa3-4516-b6b9-79bf6c0fb4f0",
+                            ConcurrencyStamp = "c647c237-ffdd-4410-b08a-8ebe499c8167",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKq4+6mFd2/+6UtR69WBKrtjcbZ+uU37GFQFDmK2qyTq+ipXep22C2Ptt7lqFDf0Ag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF8WdkzaoLKKYrMIcjmrycfcFNbUHTskhAZ2ekRmbWm/POyOBn5nBIAelP5ajVwyuw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1edb0292-edc0-49ee-9a29-2450930e19ba",
+                            SecurityStamp = "1d481bab-ac3b-49b5-b286-95b100729d91",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -128,9 +128,6 @@ namespace BTL_Platform.Migrations
                 {
                     b.Property<string>("InventoryId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -150,6 +147,24 @@ namespace BTL_Platform.Migrations
                     b.HasKey("InventoryId");
 
                     b.ToTable("Inventories");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.InventoryUnit", b =>
+                {
+                    b.Property<string>("InventoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UnitId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("UnitCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("InventoryId", "UnitId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("InventoryUnits");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Places", b =>
@@ -239,6 +254,17 @@ namespace BTL_Platform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ClientEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClientMobile")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -314,9 +340,6 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("UnitId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("InventoryId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -331,8 +354,6 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UnitId");
-
-                    b.HasIndex("InventoryId");
 
                     b.HasIndex("Unit_type_Id");
 
@@ -371,8 +392,9 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("Team")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -673,6 +695,25 @@ namespace BTL_Platform.Migrations
                     b.HasDiscriminator().HasValue("Employee");
                 });
 
+            modelBuilder.Entity("BTL_Platform.Models.InventoryUnit", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.Inventory", "inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BTL_Platform.Models.Unit", "unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("inventory");
+
+                    b.Navigation("unit");
+                });
+
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
                 {
                     b.HasOne("BTL_Platform.Models.Employee", "Employee")
@@ -692,17 +733,11 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
                 {
-                    b.HasOne("BTL_Platform.Models.Inventory", "inventory")
-                        .WithMany()
-                        .HasForeignKey("InventoryId");
-
                     b.HasOne("BTL_Platform.Models.UnitType", "Unit_type")
                         .WithMany()
                         .HasForeignKey("Unit_type_Id");
 
                     b.Navigation("Unit_type");
-
-                    b.Navigation("inventory");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Visit", b =>

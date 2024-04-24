@@ -24,8 +24,8 @@ namespace BTL_Platform.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Count must be a positive number")]
-        public int Count { get; set; }
+        //[Range(0, int.MaxValue, ErrorMessage = "Count must be a positive number")]
+        //public int Count { get; set; }
 
         [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }

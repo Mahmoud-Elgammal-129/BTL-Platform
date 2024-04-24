@@ -95,7 +95,7 @@ namespace BTL_Platform.Repository
                 Inventory Oldinventory = GetInventory(id);
 
                 Oldinventory.ItemName = inventory.ItemName;
-                Oldinventory.Count = inventory.Count;
+                //Oldinventory.Count = inventory.Count;
                 Oldinventory.Description = inventory.Description;
                 Oldinventory.Status = inventory.Status;
                 bTLContext.Inventories.Update(Oldinventory);

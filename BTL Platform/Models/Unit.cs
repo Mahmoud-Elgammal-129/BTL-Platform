@@ -33,11 +33,7 @@ namespace BTL_Platform.Models
 
         public virtual UnitType? Unit_type { get; set; }
         
-        [ForeignKey(nameof(inventory))]
-        //[Required(ErrorMessage = "InventoryId is required")]
-
-        public string? InventoryId { get; set; }
-        public virtual Inventory? inventory { get; set; }
+       
 
 
     }

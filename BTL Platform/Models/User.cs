@@ -18,7 +18,7 @@ namespace BTL_Platform.Models
         [Key]
         public string Id { get; set; }
         [Required(ErrorMessage = "User ID is required")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }

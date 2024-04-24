@@ -38,7 +38,7 @@ namespace BTL_Platform.Repository
             {
                 return bTLContext.Units
                     .Include(n => n.Unit_type)
-                    .Include(n => n.inventory)
+                    //.Include(n => n.inventory)
                     .FirstOrDefault(a => a.UnitId == id && !a.IsDeleted);
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace BTL_Platform.Repository
                 return bTLContext.Units
                     .Where(n => !n.IsDeleted)
                     .Include(n => n.Unit_type)
-                    .Include(n => n.inventory)
+                    //.Include(n => n.inventory)
                     .ToList();
             }
             catch (Exception ex)

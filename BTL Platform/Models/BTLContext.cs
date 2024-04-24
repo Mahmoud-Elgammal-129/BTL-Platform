@@ -22,6 +22,7 @@ namespace BTL_Platform.Models
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<VisitStatus> VisitStatuses { get; set; }
         public virtual DbSet<VisitType> VisitTypes { get; set; }
+        public virtual DbSet<InventoryUnit> InventoryUnits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
