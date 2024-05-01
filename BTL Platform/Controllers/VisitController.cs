@@ -18,13 +18,17 @@ namespace BTL_Platform.Controllers
         VisitTypeRepository VisitTypeRepository;
         VisitStatusRepository VisitStatusRepository;
         PlacesRepository PlacesRepository;
-        public VisitController(VisitRepository _VisitRepository, VisitTypeRepository visitTypeRepository, UserRepository userRepository, PlacesRepository placesRepository, VisitStatusRepository visitStatusRepository)
+        VisitDetailRepository visitDetailRepository;
+        PlacesDetailRepository placesDetailRepository;
+        public VisitController(VisitRepository _VisitRepository, VisitTypeRepository visitTypeRepository, UserRepository userRepository, PlacesRepository placesRepository, VisitStatusRepository visitStatusRepository, VisitDetailRepository visitDetailRepository, PlacesDetailRepository placesDetailRepository)
         {
             VisitRepository = _VisitRepository;
             VisitTypeRepository = visitTypeRepository;
             UserRepository = userRepository;
             PlacesRepository = placesRepository;
             VisitStatusRepository = visitStatusRepository;
+            this.visitDetailRepository = visitDetailRepository;
+            this.placesDetailRepository = placesDetailRepository;
         }
         public IActionResult Index()
         {
@@ -172,12 +176,40 @@ namespace BTL_Platform.Controllers
                     //}
 
                 VisitRepository.Insert(visits);
+                    // we will make loop for checking if installation to add it to visit Detail and Place Detail 
+                    foreach (var item in visits)
+                    {
+                        if (true) // we will put the condition 
+                        {
 
+                            // we will add it to visit Detail
+
+                            VisitDetail v1=new VisitDetail();
+                            v1.VisitId = item.VisitId;
+                            v1.VisitDate = item.date;
+                            v1.VisitDetailCount = item.UnitsNumbers;
+
+                            visitDetailRepository.Insert(v1);
+                            // we will add it to place Detail
+
+                            PlacesDetail P1 = new PlacesDetail();
+                            P1.PlacesId = item.Place_Id;
+                            P1.PlacesDetailCount = item.UnitsNumbers;
+                            P1.PlacesDate = item.date;
+
+
+                            //P1.unitId= ???
+
+                            placesDetailRepository.Insert(P1);
+
+                        }
+                    }
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    return View("Upload");
+                    return StatusCode(500, "An error occurred while uploading the file.");
+
                 }
             }
             catch (Exception ex)
