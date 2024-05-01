@@ -1,0 +1,50 @@
+﻿@model BTL_Platform.Models.VisitDetail
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    ViewBag.Title = "Create VisitDetails";
+    ViewBag.Nav = "VisitDetails";
+}
+@{
+}
+
+<div class="">
+    <h1>Create VisitDetail</h1>
+    <form asp-controller="VisitDetail" asp-action="Create" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="VisitDetailCount" class="form-label">VisitDetailCount</label>
+                    <input asp-for="VisitDetailCount" class="form-control" />
+                    <span asp-validation-for="VisitDetailCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="VisitDate" class="form-label">VisitDate</label>
+                    <input asp-for="VisitDate" class="form-control" />
+                    <span asp-validation-for="VisitDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="form-control">@ViewBag.Id</span>
+                    <input asp-for="VisitId" type="hidden" value=@ViewBag.Id class="form-control" />
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" asp-route-id="@ViewBag.Id" class="btn btn-outline-primary float-right">Back to VisitDetails List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

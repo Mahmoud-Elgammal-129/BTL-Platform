@@ -1,0 +1,40 @@
+﻿@model List<VisitDetail>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    ViewBag.Title = "Visit Detail";
+    ViewBag.Nav = "Visits Detail";
+}
+
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="VisitDetail" asp-route-id="@ViewBag.Id" class="btn btn-success m-0">New Visit Detail</a>
+    </div>
+</nav>
+<div class="Visit-detail-container">
+    <h3>Visit Detail: @ViewBag.Id</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Visit Detail Date</th>
+                <th>Visit Detail Count</th>
+                <th>Type of Proccessing</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Visit in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@Visit.VisitDate</td>
+                    <td>@Visit.VisitDetailCount</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

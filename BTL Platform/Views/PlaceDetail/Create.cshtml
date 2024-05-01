@@ -1,0 +1,56 @@
+﻿@model BTL_Platform.Models.PlacesDetail
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    ViewBag.Title = "Create PlacesDetails";
+    ViewBag.Nav = "PlacesDetails";
+}
+
+
+<div class="">
+    <h1>Create PlacesDetail</h1>
+    <form asp-controller="PlaceDetail" asp-action="Create" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="PlacesDetailCount" class="form-label">PlacesDetailCount</label>
+                    <input asp-for="PlacesDetailCount" class="form-control" />
+                    <span asp-validation-for="PlacesDetailCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PlacesDate" class="form-label">PlacesDate</label>
+                    <input asp-for="PlacesDate" class="form-control" />
+                    <span asp-validation-for="PlacesDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="unitId"></label>
+                    <select class="form-control" asp-for="unitId" asp-items="ViewBag.units">
+                        <option value="0">--Select unit  --</option>
+                    </select>
+                    <span asp-validation-for="unitId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="form-control">@ViewBag.Name</span>
+                    <input asp-for="PlacesId" type="hidden" value=@ViewBag.Id class="form-control" />
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col">
+                <a asp-action="Index" asp-route-id="@ViewBag.Id" class="btn btn-outline-primary float-right">Back to PlacesDetails List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

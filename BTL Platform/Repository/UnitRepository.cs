@@ -36,10 +36,7 @@ namespace BTL_Platform.Repository
         {
             try
             {
-                return bTLContext.Units
-                    .Include(n => n.Unit_type)
-                    //.Include(n => n.inventory)
-                    .FirstOrDefault(a => a.UnitId == id && !a.IsDeleted);
+                return bTLContext.Units.FirstOrDefault(a => a.UnitId == id && !a.IsDeleted);
             }
             catch (Exception ex)
             {
@@ -54,8 +51,6 @@ namespace BTL_Platform.Repository
             {
                 return bTLContext.Units
                     .Where(n => !n.IsDeleted)
-                    .Include(n => n.Unit_type)
-                    //.Include(n => n.inventory)
                     .ToList();
             }
             catch (Exception ex)
@@ -99,6 +94,7 @@ namespace BTL_Platform.Repository
                 if (oldUnit != null)
                 {
                     oldUnit.UnitName = unit.UnitName;
+                    oldUnit.Count=unit.Count;
                     oldUnit.UnitNumber = unit.UnitNumber;
                     bTLContext.Units.Update(oldUnit);
                     Save();

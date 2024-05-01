@@ -17,6 +17,11 @@ namespace BTL_Platform.Models
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UnitDetail> UnitDetails { get; set; }
+        public virtual DbSet<VisitDetail> VisitDetails { get; set; }
+        public virtual DbSet<PlacesDetail> PlacesDetails { get; set; }
+
+
         public virtual DbSet<UnitType> UnitTypes { get; set; }
         public virtual DbSet<User> Users { get => users; set => users = value; }
         public virtual DbSet<Visit> Visits { get; set; }

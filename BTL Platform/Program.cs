@@ -26,6 +26,12 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<VisitRepository>();
 builder.Services.AddScoped<VisitStatusRepository>();
 builder.Services.AddScoped<VisitTypeRepository>();
+builder.Services.AddScoped<UnitDetailRepository>();
+builder.Services.AddScoped<PlacesDetailRepository>();
+builder.Services.AddScoped<VisitDetailRepository>();
+
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 

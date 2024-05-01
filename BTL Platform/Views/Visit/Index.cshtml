@@ -102,6 +102,8 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@visit.VisitId" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@visit.VisitId" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Index" asp-controller="VisitDetail" asp-route-id="@visit.VisitId" class="btn btn-outline-info">Details</a>
+
                     </td>
                 </tr>
             }

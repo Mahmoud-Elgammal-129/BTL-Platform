@@ -1,0 +1,42 @@
+﻿@model List<UnitDetail>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    ViewBag.Title = "Unit Detail";
+    ViewBag.Nav = "Units Detail";
+}
+
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="UnitDetail" asp-route-id="@ViewBag.Id" class="btn btn-success m-0">New Unit Detail</a>
+    </div>
+</nav>
+<div class="unit-detail-container">
+    <h3>Unit Detail: @ViewBag.Name</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Unit Detail Date</th>
+                <th>Unit Detail Count</th>
+                <th>Type of Proccessing</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@unit.UnitDate</td>
+                    <td>@unit.UnitDetailCount</td>
+                    <td style="background-color: @(unit.TypeInserted == "Add" ? "#69ff6d" : "#f0928e")">
+                        @unit.TypeInserted
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

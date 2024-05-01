@@ -4,6 +4,7 @@ using BTL_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    partial class BTLContextModelSnapshot : ModelSnapshot
+    [Migration("20240501115839_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,16 +109,16 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a0093e1-99f6-4000-908d-7198c2d8f18f",
+                            ConcurrencyStamp = "af3a1000-1eed-4c81-82aa-d4995f6efccd",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAELSUMj8L6+Hrd0BLe2Pplfaj9zU9z+XeDz/qTxiK6Ij+KMmjSjU6olT9EoqVhWvQNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOj5qDQ4JLfxhbWtP3Fq2AfZz0XH7rB6C31fNc6fh5fvByJEN2OYHZ3FtuOrQi8tfQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2195943d-06fe-4a04-9d55-9bc08eccdd66",
+                            SecurityStamp = "1831964c-3ff6-4b06-a6f6-056c2fe236ea",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -236,37 +239,6 @@ namespace BTL_Platform.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Places");
-                });
-
-            modelBuilder.Entity("BTL_Platform.Models.PlacesDetail", b =>
-                {
-                    b.Property<string>("PlacesDetailId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PlacesDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PlacesDetailCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PlacesId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("unitId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PlacesDetailId");
-
-                    b.HasIndex("PlacesId");
-
-                    b.HasIndex("unitId");
-
-                    b.ToTable("PlacesDetails");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
@@ -466,7 +438,6 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -553,31 +524,6 @@ namespace BTL_Platform.Migrations
                     b.HasIndex("VisitTypeId");
 
                     b.ToTable("Visits");
-                });
-
-            modelBuilder.Entity("BTL_Platform.Models.VisitDetail", b =>
-                {
-                    b.Property<string>("VisitDetailId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("VisitDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("VisitDetailCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VisitId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("VisitDetailId");
-
-                    b.HasIndex("VisitId");
-
-                    b.ToTable("VisitDetails");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.VisitStatus", b =>
@@ -795,25 +741,6 @@ namespace BTL_Platform.Migrations
                     b.Navigation("unit");
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.PlacesDetail", b =>
-                {
-                    b.HasOne("BTL_Platform.Models.Places", "Places")
-                        .WithMany()
-                        .HasForeignKey("PlacesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BTL_Platform.Models.Unit", "unit")
-                        .WithMany()
-                        .HasForeignKey("unitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Places");
-
-                    b.Navigation("unit");
-                });
-
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
                 {
                     b.HasOne("BTL_Platform.Models.Employee", "Employee")
@@ -846,9 +773,7 @@ namespace BTL_Platform.Migrations
                 {
                     b.HasOne("BTL_Platform.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Id");
 
                     b.HasOne("BTL_Platform.Models.Places", "Place")
                         .WithMany()
@@ -875,17 +800,6 @@ namespace BTL_Platform.Migrations
                     b.Navigation("visitStatus");
 
                     b.Navigation("visitType");
-                });
-
-            modelBuilder.Entity("BTL_Platform.Models.VisitDetail", b =>
-                {
-                    b.HasOne("BTL_Platform.Models.Visit", "Visit")
-                        .WithMany()
-                        .HasForeignKey("VisitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

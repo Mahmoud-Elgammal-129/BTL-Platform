@@ -20,20 +20,13 @@ namespace BTL_Platform.Models
         [Required(ErrorMessage = "UnitName is required")]
 
         public string? UnitName { get; set; }
-        [Required(ErrorMessage = "UnitNumber is required")]
-
+        [Required(ErrorMessage = "Count is required")]
+        public int Count { get; set; } 
         public int UnitNumber { get; set; }
         
         public bool IsDeleted { get; set; }=false;
-        [ForeignKey(nameof(Unit_type))]
 
-        //[Required(ErrorMessage = "Unit_type_Id is required")]
-
-        public string? Unit_type_Id { get; set; }
-
-        public virtual UnitType? Unit_type { get; set; }
-        
-       
+        public virtual List<UnitDetail> UnitDetails { get; set;}
 
 
     }

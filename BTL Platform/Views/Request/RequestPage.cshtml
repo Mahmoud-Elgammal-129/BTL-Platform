@@ -97,7 +97,7 @@
                 <th>TrucksNeeded</th>
                 <th>StartDate</th>
                 <th>EndDate</th>
-               @* <th>RequestType</th>*@
+               
                 <th>Action</th>
                 <th>Upload Visit</th>
                 
@@ -125,7 +125,7 @@
                     <td>@request.TrucksNeeded</td>
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
-                    @*<td>@request.Request_type.TypeName</td>*@
+                    
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>

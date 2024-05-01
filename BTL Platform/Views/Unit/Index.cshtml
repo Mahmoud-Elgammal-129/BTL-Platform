@@ -22,7 +22,7 @@
                 <th>#</th>
                 <th>Unit  Name</th>
                 <th>Unit Number</th>
-                <th>Unit Type Name</th>
+                <th>Unit Count</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -33,11 +33,11 @@
                     <td>@(counter++)</td>
                     <td>@unit.UnitName</td>
                     <td>@unit.UnitNumber</td>
-                    <td>@(unit.Unit_type != null ? unit.Unit_type.UnitTypeName : " ")</td>
-
+                    <td>@unit.Count</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@unit.UnitId" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@unit.UnitId" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Index" asp-controller="UnitDetail" asp-route-id="@unit.UnitId" class="btn btn-outline-info">Details</a>
                     </td>
                 </tr>
             }

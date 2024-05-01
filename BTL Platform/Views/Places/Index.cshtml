@@ -60,6 +60,7 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@place.Id" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@place.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Index" asp-controller="PlaceDetail" asp-route-id="@place.Id" class="btn btn-outline-info">Details</a>
                     </td>
                 </tr>
             }

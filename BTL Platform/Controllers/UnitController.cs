@@ -26,7 +26,6 @@ namespace BTL_Platform.Controllers
         {
             try
             {
-                
                 List<Unit> units = UnitRepository.GetUnits();
                 return View(units);
             }
@@ -41,8 +40,6 @@ namespace BTL_Platform.Controllers
         {
             try
             {
-                ViewData["InventoryList"] = InventoryRepository.GetInventorys();
-                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
                 return View();
             }
             catch (Exception ex)
@@ -93,8 +90,7 @@ namespace BTL_Platform.Controllers
         {
             try
             {
-                ViewData["InventoryList"] = InventoryRepository.GetInventorys();
-                ViewData["UnitTypeList"] = UnitTypeRepository.GetUnitTypes();
+
                 Unit unit = UnitRepository.GetUnit(id);
                 return View(unit);
             }

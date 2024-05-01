@@ -1,0 +1,43 @@
+﻿@model List<PlacesDetail>
+@{
+    int counter = 1;
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Of_Us.cshtml";
+    ViewBag.Title = "Place Detail";
+    ViewBag.Nav = "place Detail";
+}
+@* for trying  *@
+<nav class="navbar p-0 shadow-none">
+    <div class="container-fluid m-0 p-0">
+        <a asp-action="Create" asp-controller="PlaceDetail" asp-route-id="@ViewBag.Id" class="btn btn-success m-0">New Place Detail</a>
+    </div>
+</nav>
+<div class="unit-detail-container">
+    <h3>Place Name Detail: @ViewBag.Name</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Place Date</th>
+                <th>Place Count</th>
+                <th>place Name</th>
+                <th>Unit Name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var place in Model)
+            {
+                <tr>
+                    <td>@(counter++)</td>
+                    <td>@place.PlacesDate</td>
+                    <td>@place.PlacesDetailCount</td>
+                    <td>@place.Places.DisplayName?</td>
+                    <td>@place.unit.UnitName?</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
