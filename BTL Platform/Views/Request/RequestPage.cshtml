@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="ExcelFile">Select Excel File : </label>
                         <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required />
-                        <input type="" name="id" id="requestId" value="" />
+                        <input type="input" name="id" id="editRequestId" value="" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -41,8 +41,8 @@
                     <div class="form-group">
                         <label for="ExcelFile">Select Excel File : </label>
                         <input type="file" class="form-control" name="ExcelFile" id="EditExcelFile" required />
-                        <input type="hidden" name="id" id="editRequestId" value="" />
-                    </div>
+@*                         <input type="input" name="id" id="editRequestId" value="" />
+ *@                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -256,3 +256,14 @@
     </script>
 
 }*@
+@* @section scripts {
+
+<script>
+        $(document).ready(function () {
+            $('.uploadExcelBtn').click(function () {
+                var requestId = $(this).data('request-id');
+                $('#requestId').val(requestId);
+            });
+        });
+</script>
+} *@

@@ -179,6 +179,7 @@ namespace BTL_Platform.Controllers
                     // we will make loop for checking if installation to add it to visit Detail and Place Detail 
                     foreach (var item in visits)
                     {
+                        //"Installation"
                         if (true) // we will put the condition 
                         {
 

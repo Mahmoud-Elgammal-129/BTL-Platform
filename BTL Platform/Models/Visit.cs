@@ -33,6 +33,8 @@ namespace BTL_Platform.Models
         public string placeChain { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
+        [NotMapped]
+        public string Unit_Id { get; set; } = string.Empty;
         public string UserName  { get; set; } = string.Empty;
         [Required(ErrorMessage = "Planned date is required")]
 

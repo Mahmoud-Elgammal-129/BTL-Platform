@@ -25,7 +25,9 @@ namespace BTL_Platform.Controllers
         VisitRepository visitRepository;
         UserManager<ApplicationUser> usermanager;
         BTLContext context;
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context)
+        VisitDetailRepository visitDetailRepository;
+        PlacesDetailRepository placesDetailRepository;
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
@@ -34,11 +36,14 @@ namespace BTL_Platform.Controllers
             VisitTypeRepository = visitTypeRepository;
             VisitRepository = visitRepository;
             this.context = context;
+            this.placesDetailRepository = placesDetailRepository;
+            this.visitDetailRepository = visitDetailRepository;
         }
         public IActionResult Index()
         {
             try
             {
+                
                 ViewData["IsRequestActive"] = true;
                 List<Request> requests = RequestRepository.GetRequests();
                 return View("RequestPage", requests);
@@ -174,20 +179,41 @@ namespace BTL_Platform.Controllers
                     #region passing Values to Table visit
                     foreach (var item in visits)
                     {
-                        //item.Id = null; // you will rememove it 
-                        //item.Place_Id = RequestData.
-                        //item.Place_Id = null;    // you will remove it and add taht after adding placeid to requet  ;// you will add place id after adding it to request 
-
 
                         item.RequestID = id;
 
 
-                        //item.date = RequestData.RequestDate;// ensure from the data specific 
+
 
                     }
                     #endregion
 
                     VisitRepository.Insert(visits);
+                    foreach (var item in visits)
+                    {
+                        //"Installation"
+                        if (item.TaskName.Trim()== "Installation") // we will put the condition 
+                        {
+
+                            // we will add it to visit Detail
+
+                            VisitDetail v1 = new VisitDetail();
+                            v1.VisitId = item.VisitId;
+                            v1.VisitDate = item.date;
+                            v1.VisitDetailCount = item.UnitsNumbers;
+
+                            visitDetailRepository.Insert(v1);
+                            // we will add it to place Detail
+
+                            PlacesDetail P1 = new PlacesDetail();
+                            P1.PlacesId = item.Place_Id;
+                            P1.PlacesDetailCount = item.UnitsNumbers;
+                            P1.PlacesDate = item.date;
+                            P1.unitId = item.Unit_Id;
+
+                            placesDetailRepository.Insert(P1);
+                        }
+                    }
 
                     return RedirectToAction("Index");
                 }
@@ -298,25 +324,17 @@ namespace BTL_Platform.Controllers
         private List<Visit> ConvertDataTableToVisitList(DataTable dataTable)
         {
             List<Visit> visits = new List<Visit>();
-
             try
             {
                 foreach (DataRow row in dataTable.Rows)
                 {
                     Visit visit = new Visit();
 
-                //if (row["Request_ID"] != null )
-                //{
-                //    visit.RequestID = row["Request_ID"].ToString();
-                //}
                 if (row["date"] != null && DateTime.TryParse(row["date"].ToString(), out DateTime date))
                 {
                     visit.date = date;
                 }
-                if (row["UTC offset"] != null && DateTime.TryParse(row["UTC offset"].ToString(), out DateTime utcOffset))
-                {
-                    visit.UTCoffset = utcOffset;
-                }
+                
                 if (row["place_id"] != null)
                 {
                         Places? places = GetPlaceByID(row["place_id"].ToString());
@@ -352,7 +370,6 @@ namespace BTL_Platform.Controllers
                     if (!string.IsNullOrEmpty(row["Units Numbers"].ToString()))
                         visit.UnitsNumbers = int.Parse(row["Units Numbers"].ToString());
                 }
-
                 if (row["Units Photo After"] != null)
                 {
                     visit.UnitsPhotoAfter = row["Units Photo After"].ToString();
@@ -377,9 +394,11 @@ namespace BTL_Platform.Controllers
                 {
                     visit.TaskName = row["Task_name"].ToString();
                 }
-
-                // Continue setting other properties similarly
-
+                    // Unit_Id
+                    if (row["Unit_Id"] != null)
+                    {
+                        visit.Unit_Id = row["Unit_Id"].ToString();
+                    }
                     visits.Add(visit);
                 }
             }
@@ -389,7 +408,6 @@ namespace BTL_Platform.Controllers
                 Console.WriteLine($"Error in ConvertDataTableToVisitList method: {ex.Message}");
                 throw; // Re-throw the exception to propagate it to the caller
             }
-
             return visits;
         }
 
@@ -429,7 +447,7 @@ namespace BTL_Platform.Controllers
         {
 
 
-            User? user = context.Users.Where(x=>x.UserId==User_ID).FirstOrDefault();
+            User? user = context.Users.Where(x=>x.Id==User_ID).FirstOrDefault();
             return user;
 
         }
@@ -437,7 +455,7 @@ namespace BTL_Platform.Controllers
         {
 
 
-            Places? places = context.Places.Where(x => x.PlaceId == Place_ID).FirstOrDefault();
+            Places? places = context.Places.Where(x => x.Id == Place_ID).FirstOrDefault();
             return places;
 
         }
