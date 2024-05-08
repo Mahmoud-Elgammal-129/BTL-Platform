@@ -156,7 +156,7 @@ namespace BTL_Platform.Repository
                 var newVisit = newVisits.FirstOrDefault(v => v.VisitId == oldVisit.VisitId);
 
                 // Check if a corresponding new visit exists
-                if (newVisit != null)
+                if (newVisit != null && newVisit.UnitsNumbers>0)
                 {
                     // Update the properties of the old visit with the new values
                     oldVisit.UTCoffset = newVisit.UTCoffset;
@@ -172,6 +172,8 @@ namespace BTL_Platform.Repository
                     oldVisit.TaskId = newVisit.TaskId;
                     oldVisit.TaskName = newVisit.TaskName;
                     oldVisit.UnitsNumbers = newVisit.UnitsNumbers;
+                    oldVisit.Unit_Id = newVisit.Unit_Id;
+
 
                     // Update the old visit in the database
                     bTLContext.Visits.Update(oldVisit);
@@ -181,7 +183,7 @@ namespace BTL_Platform.Repository
             // Save changes to the database
             Save();
         }
-        private List<Visit> GetVisitsBasedOnRequest(string RequestId)
+        public List<Visit> GetVisitsBasedOnRequest(string RequestId)
         {
             if (RequestId != null)
             {

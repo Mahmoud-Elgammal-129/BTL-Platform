@@ -18,7 +18,7 @@ namespace BTL_Platform.Models
         public string VisitId { get; set; }
 
         [Required(ErrorMessage = "UTC offset is required")]
-        public DateTime UTCoffset { get; set; }
+        public DateTime? UTCoffset { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Date is required")]
         public DateTime date { get; set; } = DateTime.Now;
@@ -26,19 +26,19 @@ namespace BTL_Platform.Models
         public string UnitsPhotobefore { get; set; } = string.Empty;
         [Range(1, int.MaxValue, ErrorMessage = "Units numbers must be greater than zero")]
 
-        public int UnitsNumbers { get; set; } 
+        public int UnitsNumbers { get; set; } = 0;
         public string UnitsType { get; set; } = string.Empty;
         public string UnitsPhotoAfter { get; set; } = string.Empty;
         public string placeName { get; set; } = string.Empty;
         public string placeChain { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
-        [NotMapped]
+       
         public string Unit_Id { get; set; } = string.Empty;
         public string UserName  { get; set; } = string.Empty;
         [Required(ErrorMessage = "Planned date is required")]
 
-        public DateTime PlannedDate { get; set; } 
+        public DateTime? PlannedDate { get; set; } = DateTime.Now;
         public string TaskId { get; set; } = string.Empty;
         public string TaskName { get; set; } = string.Empty;
         //public string RequestID  { get; set; } = string.Empty;

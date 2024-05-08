@@ -18,7 +18,7 @@ namespace BTL_Platform.Models
         [Key]
         public string VisitDetailId { get; set; }
         public int VisitDetailCount { get; set; }
-        public DateTime VisitDate { get; set; }
+        public DateTime VisitDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
 
         [ForeignKey(nameof(Visit))]

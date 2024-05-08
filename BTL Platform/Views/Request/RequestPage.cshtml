@@ -20,7 +20,9 @@
                     <div class="form-group">
                         <label for="ExcelFile">Select Excel File : </label>
                         <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required />
-                        <input type="input" name="id" id="editRequestId" value="" />
+                        <input type="hidden" name="id" id="editRequestId" value="" />
+                        @*                         <input type="input" name="id" id="editRequestId" value="" />
+                        *@
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -40,9 +42,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="ExcelFile">Select Excel File : </label>
-                        <input type="file" class="form-control" name="ExcelFile" id="EditExcelFile" required />
-@*                         <input type="input" name="id" id="editRequestId" value="" />
- *@                    </div>
+                        <input type="file" class="form-control" name="ExcelFile" id="ExcelFile" required />
+                        <input type="hidden" name="id" id="editRequestId2" value="" />
+
+                        @*                         <input type="input" name="id" id="editRequestId" value="" />
+                        *@
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -65,18 +70,15 @@
 <div class="row">
     <div class="col-6">
         <div class="">
-            
-
         </div>
     </div>
     <div class="col-6">
-        
     </div>
 </div>
 <h1>Requests</h1>
 
 <div class="table-responsive" id="allUsersContainer">
-    
+
     <table class="table table-sm table-border table-hover" id="allUsersTable">
         <thead>
             <tr>
@@ -97,10 +99,10 @@
                 <th>TrucksNeeded</th>
                 <th>StartDate</th>
                 <th>EndDate</th>
-               
+
                 <th>Action</th>
                 <th>Upload Visit</th>
-                
+
             </tr>
         </thead>
         <tbody>
@@ -108,9 +110,9 @@
             {
                 <tr>
                     <td>@(counter++)</td>
-                   <td>@request.RequestID</td>
+                    <td>@request.RequestID</td>
                     <td>@request.RequestDate</td>
-                    
+
                     <td>@request.CompanyName</td>
                     <td>@request.ClientMobile</td>
                     <td>@request.ClientEmail</td>
@@ -125,7 +127,7 @@
                     <td>@request.TrucksNeeded</td>
                     <td>@request.StartDate</td>
                     <td>@request.EndDate</td>
-                    
+
                     <td>
                         <a asp-action="Edit" asp-route-id="@request.RequestID" class="btn btn-outline-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@request.RequestID" class="btn btn-outline-danger">Delete</a>
@@ -135,7 +137,7 @@
                         <button type="button" class="btn btn-primary uploadExcelBtn" data-bs-toggle="modal" data-bs-target="#uploadModal" data-request-id="@request.RequestID">Upload Excel</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary editExcelBtn" data-bs-toggle="modal" data-bs-target="#uploadModal" data-request-id="@request.RequestID">Edit Excel</button>
+                        <button type="button" class="btn btn-primary EditExcelBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-request-id="@request.RequestID">Edit Excel</button>
                     </td>
                 </tr>
             }
@@ -256,14 +258,38 @@
     </script>
 
 }*@
-@* @section scripts {
+@section scripts {
 
-<script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
         $(document).ready(function () {
+            // Listen for click event on the button with class 'uploadExcelBtn'
             $('.uploadExcelBtn').click(function () {
+                console.log("AddExcelBtn clicked");
+                // Retrieve the value of 'data-request-id' attribute
                 var requestId = $(this).data('request-id');
-                $('#requestId').val(requestId);
+                // Set the value of input field with id 'editRequestId'
+                $('#editRequestId').val(requestId);
+                // Show the modal
+                $('#uploadModal').modal('show');
             });
         });
-</script>
-} *@
+        $(document).ready(function () {
+            // Listen for click event on the button with class 'EditExcelBtn'
+            $('.EditExcelBtn').click(function () {
+                console.log("EditExcelBtn clicked"); // Check if this message appears in the console
+                // Retrieve the value of 'data-request-id' attribute
+                var requestId2 = $(this).data('request-id');
+                console.log(requestId2); // Check if this message appears in the console
+
+                // Set the value of input field with id 'editRequestId'
+                $('#editRequestId2').val(requestId2);
+                // Show the modal
+                $('#editModal').modal('show');
+            });
+        });
+
+    </script>
+}

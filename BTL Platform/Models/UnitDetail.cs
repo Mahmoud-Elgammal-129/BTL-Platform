@@ -18,7 +18,7 @@ namespace BTL_Platform.Models
         [Key]
         public string UnitDetailId { get; set; }
         public int UnitDetailCount { get; set; }
-        public DateTime UnitDate { get; set; }
+        public DateTime UnitDate { get; set; } = DateTime.Now;
         public string  TypeInserted { get; set; }
         public bool IsDeleted { get; set; }=false;
 

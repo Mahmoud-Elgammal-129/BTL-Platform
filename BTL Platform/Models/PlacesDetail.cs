@@ -18,7 +18,7 @@ namespace BTL_Platform.Models
         [Key]
         public string PlacesDetailId { get; set; }
         public int PlacesDetailCount { get; set; }
-        public DateTime PlacesDate { get; set; }
+        public DateTime PlacesDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
 
         [ForeignKey(nameof(Places))]

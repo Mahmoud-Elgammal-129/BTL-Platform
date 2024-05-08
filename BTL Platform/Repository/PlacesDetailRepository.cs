@@ -45,14 +45,15 @@ namespace BTL_Platform.Repository
 
                 bTLContext.PlacesDetails.Add(PlacesDetail);
 
-                var unitupdate = bTLContext.Units.Where(n => n.IsDeleted == false && n.UnitId == PlacesDetail.unitId).FirstOrDefault();
-                if (unitupdate != null)
-                {
-                    unitupdate.Count -= PlacesDetail.PlacesDetailCount;
+                Save();
+                //var unitupdate = bTLContext.Units.Where(n => n.IsDeleted == false && n.UnitId == PlacesDetail.unitId).FirstOrDefault();
 
-                    bTLContext.Units.Update(unitupdate);
-                    Save();
-                }
+                //if (unitupdate != null)
+                //{
+                //    unitupdate.Count -= PlacesDetail.PlacesDetailCount;
+
+                //    bTLContext.Units.Update(unitupdate);
+                //}
 
             }
             catch (Exception ex)

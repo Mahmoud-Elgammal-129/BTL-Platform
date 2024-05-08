@@ -27,7 +27,9 @@ namespace BTL_Platform.Controllers
         BTLContext context;
         VisitDetailRepository visitDetailRepository;
         PlacesDetailRepository placesDetailRepository;
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository)
+        UnitDetailRepository unitDetailRepository;
+
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository, UnitDetailRepository unitDetailRepository)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
@@ -38,6 +40,7 @@ namespace BTL_Platform.Controllers
             this.context = context;
             this.placesDetailRepository = placesDetailRepository;
             this.visitDetailRepository = visitDetailRepository;
+            this.unitDetailRepository = unitDetailRepository;
         }
         public IActionResult Index()
         {
@@ -187,33 +190,48 @@ namespace BTL_Platform.Controllers
 
                     }
                     #endregion
+                    var InsertedVisits = new List<Visit>();
 
-                    VisitRepository.Insert(visits);
                     foreach (var item in visits)
                     {
-                        //"Installation"
-                        if (item.TaskName.Trim()== "Installation") // we will put the condition 
+                        // Create a new Visit object with only the necessary properties
+                        var modifiedVisit = new Visit
                         {
+                            VisitId = item.VisitId,
+                            Place_Id = item.Place_Id,
+                            Id = item.Id,
+                            date = item.date // Assuming you also want to include the original date
+                        };
 
-                            // we will add it to visit Detail
-
-                            VisitDetail v1 = new VisitDetail();
-                            v1.VisitId = item.VisitId;
-                            v1.VisitDate = item.date;
-                            v1.VisitDetailCount = item.UnitsNumbers;
-
-                            visitDetailRepository.Insert(v1);
-                            // we will add it to place Detail
-
-                            PlacesDetail P1 = new PlacesDetail();
-                            P1.PlacesId = item.Place_Id;
-                            P1.PlacesDetailCount = item.UnitsNumbers;
-                            P1.PlacesDate = item.date;
-                            P1.unitId = item.Unit_Id;
-
-                            placesDetailRepository.Insert(P1);
-                        }
+                        // Add the modified Visit object to the list
+                        InsertedVisits.Add(modifiedVisit);
                     }
+                    VisitRepository.Insert(InsertedVisits);
+                    //foreach (var item in visits)
+                    //{
+                    //    //"Installation"
+                    //    if (item.TaskName.Trim()== "Installation") // we will put the condition 
+                    //    {
+
+                    //        // we will add it to visit Detail
+
+                    //        VisitDetail v1 = new VisitDetail();
+                    //        v1.VisitId = item.VisitId;
+                    //        v1.VisitDate = item.date;
+                    //        v1.VisitDetailCount = item.UnitsNumbers;
+
+                    //        visitDetailRepository.Insert(v1);
+                    //        // we will add it to place Detail
+
+                    //        PlacesDetail P1 = new PlacesDetail();
+                    //        P1.PlacesId = item.Place_Id;
+                    //        P1.PlacesDetailCount = item.UnitsNumbers;
+                    //        P1.PlacesDate = item.date;
+                    //        P1.unitId = item.Unit_Id;
+
+                    //        placesDetailRepository.Insert(P1);
+                    //    }
+                    //}
 
                     return RedirectToAction("Index");
                 }
@@ -251,10 +269,41 @@ namespace BTL_Platform.Controllers
 
 
                 VisitRepository.UpdatesList(RequestData.RequestID, visits);
+                var oldVisits = VisitRepository.GetVisitsBasedOnRequest(RequestData.RequestID);
+                foreach (var item in oldVisits)
+                {
+                    //"Installation"
+                    if (item.TaskName.Trim() == "Installation"&&item.UnitsNumbers>0) // we will put the condition 
+                    {
+
+                        // we will add it to visit Detail
+                        VisitDetail v1 = new VisitDetail();
+                        v1.VisitId = item.VisitId;
+                        v1.VisitDetailCount = item.UnitsNumbers;
+                        visitDetailRepository.Insert(v1);
+                        // we will add it to place Detail
+
+                        PlacesDetail P1 = new PlacesDetail();
+                        P1.PlacesId = item.Place_Id;
+                        P1.PlacesDetailCount = item.UnitsNumbers;
+                        P1.unitId = item.Unit_Id;
+                        placesDetailRepository.Insert(P1);
+                        // we will add it to unit Detail
+
+                        UnitDetail u1 = new UnitDetail();
+                        
+                        u1.UnitId=item.Unit_Id;
+                        u1.UnitDetailCount = item.UnitsNumbers;
+                        unitDetailRepository.Insert(u1);
+
+
+
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
-            return View();
+            return View("Upload");
         }
 
        
