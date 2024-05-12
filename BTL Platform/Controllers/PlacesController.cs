@@ -10,12 +10,15 @@ namespace BTL_Platform.Controllers
     {
         PlacesRepository PlacesRepository;
         UnitTypeRepository UnitTypeRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         BTLContext btlContext;
-        public PlacesController(PlacesRepository _PlacesRepository, BTLContext btlContext, UnitTypeRepository _UnitTypeRepository)
+        public PlacesController(PlacesRepository _PlacesRepository, BTLContext btlContext, UnitTypeRepository _UnitTypeRepository, IHttpContextAccessor httpContextAccessor)
         {
             PlacesRepository = _PlacesRepository;
             UnitTypeRepository = _UnitTypeRepository;
             this.btlContext = btlContext;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -54,6 +57,8 @@ namespace BTL_Platform.Controllers
             {
                 if (Placess != null)
                 {
+                    var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
+                    Placess.CreatedBy = userId;
                     PlacesRepository.Insert(Placess);
                     PlacesRepository.Save();
                     return RedirectToAction("Index");

@@ -67,12 +67,15 @@ namespace BTL_Platform.Models
         [ForeignKey(nameof(Employee))]
 
         public string? Employee_Id { get; set; }
-        public virtual Employee? Employee { get; set; }
+        public virtual ApplicationUser? Employee { get; set; }
 
         [ForeignKey(nameof(Request_type))]
         [Required(ErrorMessage = "Request Type ID is required")]
 
         public string? RequestTypeID { get; set; }
         public virtual RequestType Request_type { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
     }
 }

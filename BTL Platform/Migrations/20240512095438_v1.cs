@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BTL_Platform.Migrations
 {
     /// <inheritdoc />
-    public partial class v : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,10 +31,8 @@ namespace BTL_Platform.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -68,34 +66,6 @@ namespace BTL_Platform.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inventories", x => x.InventoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Places",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlaceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Chain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StreetNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StreetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    County = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Channel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    latitude = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    longitude = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    lastupdated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Places", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,7 +154,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,7 +175,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,7 +195,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,13 +213,13 @@ namespace BTL_Platform.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -269,7 +239,66 @@ namespace BTL_Platform.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Places",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PlaceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Chain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    County = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Channel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    latitude = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    longitude = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    lastupdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Places", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Places_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    UnitNumber = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.UnitId);
+                    table.ForeignKey(
+                        name: "FK_Units_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -294,7 +323,8 @@ namespace BTL_Platform.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Employee_Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RequestTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RequestTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -309,84 +339,7 @@ namespace BTL_Platform.Migrations
                         column: x => x.RequestTypeID,
                         principalTable: "RequestTypes",
                         principalColumn: "RequestTypeID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitNumber = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Unit_type_Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.UnitId);
-                    table.ForeignKey(
-                        name: "FK_Units_UnitTypes_Unit_type_Id",
-                        column: x => x.Unit_type_Id,
-                        principalTable: "UnitTypes",
-                        principalColumn: "UnitTypeId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Visits",
-                columns: table => new
-                {
-                    VisitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UTCoffset = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    POSPhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitsPhotobefore = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitsNumbers = table.Column<int>(type: "int", nullable: false),
-                    UnitsType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitsPhotoAfter = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    placeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    placeChain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlannedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TaskId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    RequestID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    VisitStatusId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    VisitTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Place_Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Visits", x => x.VisitId);
-                    table.ForeignKey(
-                        name: "FK_Visits_Places_Place_Id",
-                        column: x => x.Place_Id,
-                        principalTable: "Places",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Visits_Requests_RequestID",
-                        column: x => x.RequestID,
-                        principalTable: "Requests",
-                        principalColumn: "RequestID");
-                    table.ForeignKey(
-                        name: "FK_Visits_Users_Id",
-                        column: x => x.Id,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Visits_VisitStatuses_VisitStatusId",
-                        column: x => x.VisitStatusId,
-                        principalTable: "VisitStatuses",
-                        principalColumn: "VisitStatusId");
-                    table.ForeignKey(
-                        name: "FK_Visits_VisitTypes_VisitTypeId",
-                        column: x => x.VisitTypeId,
-                        principalTable: "VisitTypes",
-                        principalColumn: "VisitTypeId");
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -405,13 +358,151 @@ namespace BTL_Platform.Migrations
                         column: x => x.InventoryId,
                         principalTable: "Inventories",
                         principalColumn: "InventoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_InventoryUnits_Units_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Units",
                         principalColumn: "UnitId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlacesDetails",
+                columns: table => new
+                {
+                    PlacesDetailId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PlacesDetailCount = table.Column<int>(type: "int", nullable: false),
+                    PlacesDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    PlacesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    unitId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlacesDetails", x => x.PlacesDetailId);
+                    table.ForeignKey(
+                        name: "FK_PlacesDetails_Places_PlacesId",
+                        column: x => x.PlacesId,
+                        principalTable: "Places",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_PlacesDetails_Units_unitId",
+                        column: x => x.unitId,
+                        principalTable: "Units",
+                        principalColumn: "UnitId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnitDetails",
+                columns: table => new
+                {
+                    UnitDetailId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UnitDetailCount = table.Column<int>(type: "int", nullable: false),
+                    UnitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TypeInserted = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnitDetails", x => x.UnitDetailId);
+                    table.ForeignKey(
+                        name: "FK_UnitDetails_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "UnitId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Visits",
+                columns: table => new
+                {
+                    VisitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UTCoffset = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    POSPhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitsPhotobefore = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitsNumbers = table.Column<int>(type: "int", nullable: false),
+                    UnitsType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitsPhotoAfter = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    placeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    placeChain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unit_Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PlannedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TaskId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    RequestID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VisitStatusId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    VisitTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Place_Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visits", x => x.VisitId);
+                    table.ForeignKey(
+                        name: "FK_Visits_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Visits_Places_Place_Id",
+                        column: x => x.Place_Id,
+                        principalTable: "Places",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Visits_Requests_RequestID",
+                        column: x => x.RequestID,
+                        principalTable: "Requests",
+                        principalColumn: "RequestID");
+                    table.ForeignKey(
+                        name: "FK_Visits_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Visits_VisitStatuses_VisitStatusId",
+                        column: x => x.VisitStatusId,
+                        principalTable: "VisitStatuses",
+                        principalColumn: "VisitStatusId");
+                    table.ForeignKey(
+                        name: "FK_Visits_VisitTypes_VisitTypeId",
+                        column: x => x.VisitTypeId,
+                        principalTable: "VisitTypes",
+                        principalColumn: "VisitTypeId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VisitDetails",
+                columns: table => new
+                {
+                    VisitDetailId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VisitDetailCount = table.Column<int>(type: "int", nullable: false),
+                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    VisitId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisitDetails", x => x.VisitDetailId);
+                    table.ForeignKey(
+                        name: "FK_VisitDetails_Visits_VisitId",
+                        column: x => x.VisitId,
+                        principalTable: "Visits",
+                        principalColumn: "VisitId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -421,8 +512,8 @@ namespace BTL_Platform.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "address" },
-                values: new object[] { "1", 0, "c647c237-ffdd-4410-b08a-8ebe499c8167", "ApplicationUser", "zaghlol@gmail.com", true, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAEF8WdkzaoLKKYrMIcjmrycfcFNbUHTskhAZ2ekRmbWm/POyOBn5nBIAelP5ajVwyuw==", null, false, "1d481bab-ac3b-49b5-b286-95b100729d91", false, "Zaghlol", null });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "address" },
+                values: new object[] { "1", 0, "444f3883-c20e-4f4c-bdb7-12c5afef17eb", "zaghlol@gmail.com", true, false, false, null, "Zaghlol", "zaghlol@gmail.com", "zaghlol", "AQAAAAIAAYagAAAAEJhb7K03Iv3j75B7yAwwfPdfgD2g/yErzvdGUDmqzEmeBaJWERVCg27PJ99dYTHm+Q==", null, false, "e916a0f0-06b8-4899-a3e6-22d3357b86a0", false, "Zaghlol", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -474,6 +565,21 @@ namespace BTL_Platform.Migrations
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Places_CreatedBy",
+                table: "Places",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacesDetails_PlacesId",
+                table: "PlacesDetails",
+                column: "PlacesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacesDetails_unitId",
+                table: "PlacesDetails",
+                column: "unitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Requests_Employee_Id",
                 table: "Requests",
                 column: "Employee_Id");
@@ -484,9 +590,24 @@ namespace BTL_Platform.Migrations
                 column: "RequestTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_Unit_type_Id",
+                name: "IX_UnitDetails_UnitId",
+                table: "UnitDetails",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Units_CreatedBy",
                 table: "Units",
-                column: "Unit_type_Id");
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisitDetails_VisitId",
+                table: "VisitDetails",
+                column: "VisitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_CreatedBy",
+                table: "Visits",
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visits_Id",
@@ -536,7 +657,16 @@ namespace BTL_Platform.Migrations
                 name: "InventoryUnits");
 
             migrationBuilder.DropTable(
-                name: "Visits");
+                name: "PlacesDetails");
+
+            migrationBuilder.DropTable(
+                name: "UnitDetails");
+
+            migrationBuilder.DropTable(
+                name: "UnitTypes");
+
+            migrationBuilder.DropTable(
+                name: "VisitDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -546,6 +676,9 @@ namespace BTL_Platform.Migrations
 
             migrationBuilder.DropTable(
                 name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "Visits");
 
             migrationBuilder.DropTable(
                 name: "Places");
@@ -561,9 +694,6 @@ namespace BTL_Platform.Migrations
 
             migrationBuilder.DropTable(
                 name: "VisitTypes");
-
-            migrationBuilder.DropTable(
-                name: "UnitTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

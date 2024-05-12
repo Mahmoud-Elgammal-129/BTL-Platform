@@ -1,7 +1,10 @@
 ﻿using BTL_Platform.Models;
 using BTL_Platform.ViewModels;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BTL_Platform.Controllers
 {
@@ -10,7 +13,7 @@ namespace BTL_Platform.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -21,14 +24,15 @@ namespace BTL_Platform.Controllers
             RoleManager<IdentityRole> roleManager,
 
             IWebHostEnvironment webHostEnvironment
-            )
+,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
 
             _webHostEnvironment = webHostEnvironment;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Login()
         {
@@ -45,7 +49,8 @@ namespace BTL_Platform.Controllers
                 if (data.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.UserName);
-
+                    var userId = user.Id;
+                    _httpContextAccessor.HttpContext.Session.SetString("UserId", userId);
                     if (user != null)
                     {
                         return RedirectToAction("Home", "Home");
@@ -94,6 +99,13 @@ namespace BTL_Platform.Controllers
             }
             return View(model);
         }
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            return View(users);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

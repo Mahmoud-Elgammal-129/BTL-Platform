@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BTL_Platform.Models
@@ -64,6 +65,12 @@ namespace BTL_Platform.Models
         public DateTime lastupdated { get; set; } = DateTime.Now;
         // Other properties SOFT DELETE
         public bool IsDeleted { get; set; } = false;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [ForeignKey(nameof(user))]
+        public string CreatedBy { get; set; }
+        public ApplicationUser user { get; set; }
+
 
     }
 }

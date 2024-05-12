@@ -152,12 +152,13 @@ namespace BTL_Platform.Repository
             // Loop through the old visits and update them
             foreach (var oldVisit in oldVisits)
             {
-                // Find the corresponding new visit in the new list based on VisitId
-                var newVisit = newVisits.FirstOrDefault(v => v.VisitId == oldVisit.VisitId);
-
-                // Check if a corresponding new visit exists
-                if (newVisit != null && newVisit.UnitsNumbers>0)
+                if (oldVisit != null && oldVisit.UnitsNumbers == 0)
                 {
+                    // Find the corresponding new visit in the new list based on VisitId
+                    var newVisit = newVisits.FirstOrDefault(v => v.RequestID == oldVisit.RequestID && v.Place_Id == oldVisit.Place_Id && v.date == oldVisit.date);
+
+                    // Check if a corresponding new visit exists
+
                     // Update the properties of the old visit with the new values
                     oldVisit.UTCoffset = newVisit.UTCoffset;
                     oldVisit.POSPhoto = newVisit.POSPhoto;

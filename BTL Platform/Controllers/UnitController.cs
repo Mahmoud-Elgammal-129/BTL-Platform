@@ -12,15 +12,18 @@ namespace BTL_Platform.Controllers
         InventoryRepository InventoryRepository;
         UnitTypeRepository UnitTypeRepository;
         BTLContext btlContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
 
         public UnitController(UnitRepository _UnitRepository, BTLContext btlContext
             , InventoryRepository _InventoryRepository, UnitTypeRepository _UnitTypeRepository
-            )
+, IHttpContextAccessor httpContextAccessor)
         {
             UnitRepository = _UnitRepository;
             this.btlContext = btlContext;
             this.InventoryRepository = _InventoryRepository;
             UnitTypeRepository = _UnitTypeRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -56,6 +59,8 @@ namespace BTL_Platform.Controllers
             {
                 if (unit != null)
                 {
+                    var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
+                    unit.CreatedBy = userId;
                     UnitRepository.Insert(unit);
                     UnitRepository.Save();
                     return RedirectToAction("Index");

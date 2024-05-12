@@ -28,6 +28,11 @@ namespace BTL_Platform.Models
 
         public virtual List<UnitDetail> UnitDetails { get; set;}
 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [ForeignKey(nameof(user))]
+        public string CreatedBy { get; set; }
+        public ApplicationUser user { get; set; }
+
 
     }
 }

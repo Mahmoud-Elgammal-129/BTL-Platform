@@ -11,7 +11,7 @@ namespace BTL_Platform.Models
         public BTLContext(DbContextOptions<BTLContext> options) : base(options)
         {
         }
-        public virtual DbSet<Employee> Employees { get; set; }
+        
         public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Places> Places { get; set; }
         public virtual DbSet<Request> Requests { get; set; }

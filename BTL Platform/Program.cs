@@ -34,7 +34,11 @@ builder.Services.AddScoped<VisitDetailRepository>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
-
+builder.Services.AddSession(options =>
+{
+    // Optional: Configure session options (e.g., cookie name, expiration)
+    options.Cookie.HttpOnly = true; // Recommended for security
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,7 +51,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

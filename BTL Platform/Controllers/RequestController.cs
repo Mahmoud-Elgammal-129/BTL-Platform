@@ -28,8 +28,9 @@ namespace BTL_Platform.Controllers
         VisitDetailRepository visitDetailRepository;
         PlacesDetailRepository placesDetailRepository;
         UnitDetailRepository unitDetailRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository, UnitDetailRepository unitDetailRepository)
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository, UnitDetailRepository unitDetailRepository, IHttpContextAccessor httpContextAccessor)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
@@ -41,6 +42,7 @@ namespace BTL_Platform.Controllers
             this.placesDetailRepository = placesDetailRepository;
             this.visitDetailRepository = visitDetailRepository;
             this.unitDetailRepository = unitDetailRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -78,6 +80,7 @@ namespace BTL_Platform.Controllers
         {
             try
             {
+                var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
                 var user = await usermanager.GetUserAsync(User);
 
             if (requests != null)
@@ -178,13 +181,14 @@ namespace BTL_Platform.Controllers
                 var visits = ConvertDataTableToVisitList(dataTable);
 
                 var RequestData = RequestRepository.GetRequest(id);
+                    var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
 
                     #region passing Values to Table visit
                     foreach (var item in visits)
                     {
 
                         item.RequestID = id;
-
+                        item.CreatedBy = userId;
 
 
 
@@ -200,7 +204,9 @@ namespace BTL_Platform.Controllers
                             VisitId = item.VisitId,
                             Place_Id = item.Place_Id,
                             Id = item.Id,
-                            date = item.date // Assuming you also want to include the original date
+                            date = item.date,
+                            CreatedBy=item.CreatedBy,
+                            RequestID=item.RequestID// Assuming you also want to include the original date
                         };
 
                         // Add the modified Visit object to the list
@@ -267,13 +273,15 @@ namespace BTL_Platform.Controllers
                 }
                 #endregion
 
-
+                var oldVisits = VisitRepository.GetVisitsBasedOnRequest(RequestData.RequestID).Where(n=>n.UnitsNumbers==0).ToList();
+                
                 VisitRepository.UpdatesList(RequestData.RequestID, visits);
-                var oldVisits = VisitRepository.GetVisitsBasedOnRequest(RequestData.RequestID);
+                
+                
                 foreach (var item in oldVisits)
                 {
                     //"Installation"
-                    if (item.TaskName.Trim() == "Installation"&&item.UnitsNumbers>0) // we will put the condition 
+                    if (item.TaskName.Trim() == "Installation") // we will put the condition 
                     {
 
                         // we will add it to visit Detail
@@ -295,9 +303,6 @@ namespace BTL_Platform.Controllers
                         u1.UnitId=item.Unit_Id;
                         u1.UnitDetailCount = item.UnitsNumbers;
                         unitDetailRepository.Insert(u1);
-
-
-
                     }
                 }
 

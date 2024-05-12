@@ -71,5 +71,10 @@ namespace BTL_Platform.Models
 
         public string? Place_Id { get; set; } = null;
         public virtual Places? Place { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [ForeignKey(nameof(user))]
+        public string CreatedBy { get; set; }
+        public ApplicationUser user { get; set; }
     }
 }

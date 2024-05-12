@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    [Migration("20240424150808_v")]
-    partial class v
+    [Migration("20240512095438_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,15 +37,14 @@ namespace BTL_Platform.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -55,7 +54,6 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -100,25 +98,22 @@ namespace BTL_Platform.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
-
-                    b.UseTphMappingStrategy();
-
                     b.HasData(
                         new
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c647c237-ffdd-4410-b08a-8ebe499c8167",
+                            ConcurrencyStamp = "444f3883-c20e-4f4c-bdb7-12c5afef17eb",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
+                            IsDeleted = false,
                             LockoutEnabled = false,
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF8WdkzaoLKKYrMIcjmrycfcFNbUHTskhAZ2ekRmbWm/POyOBn5nBIAelP5ajVwyuw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhb7K03Iv3j75B7yAwwfPdfgD2g/yErzvdGUDmqzEmeBaJWERVCg27PJ99dYTHm+Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1d481bab-ac3b-49b5-b286-95b100729d91",
+                            SecurityStamp = "e916a0f0-06b8-4899-a3e6-22d3357b86a0",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -192,6 +187,13 @@ namespace BTL_Platform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -238,7 +240,40 @@ namespace BTL_Platform.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.ToTable("Places");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.PlacesDetail", b =>
+                {
+                    b.Property<string>("PlacesDetailId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PlacesDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PlacesDetailCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlacesId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("unitId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PlacesDetailId");
+
+                    b.HasIndex("PlacesId");
+
+                    b.HasIndex("unitId");
+
+                    b.ToTable("PlacesDetails");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
@@ -264,6 +299,9 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -340,6 +378,16 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("UnitId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -350,14 +398,40 @@ namespace BTL_Platform.Migrations
                     b.Property<int>("UnitNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("Unit_type_Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("UnitId");
 
-                    b.HasIndex("Unit_type_Id");
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Units");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.UnitDetail", b =>
+                {
+                    b.Property<string>("UnitDetailId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypeInserted")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UnitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UnitDetailCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UnitDetailId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("UnitDetails");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.UnitType", b =>
@@ -410,7 +484,15 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("VisitId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Id")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -427,7 +509,8 @@ namespace BTL_Platform.Migrations
                     b.Property<string>("Place_Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("PlannedDate")
+                    b.Property<DateTime?>("PlannedDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RequestID")
@@ -445,8 +528,13 @@ namespace BTL_Platform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UTCoffset")
+                    b.Property<DateTime?>("UTCoffset")
+                        .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Unit_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UnitsNumbers")
                         .HasColumnType("int");
@@ -486,6 +574,8 @@ namespace BTL_Platform.Migrations
 
                     b.HasKey("VisitId");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("Id");
 
                     b.HasIndex("Place_Id");
@@ -497,6 +587,31 @@ namespace BTL_Platform.Migrations
                     b.HasIndex("VisitTypeId");
 
                     b.ToTable("Visits");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.VisitDetail", b =>
+                {
+                    b.Property<string>("VisitDetailId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("VisitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VisitDetailCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VisitId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("VisitDetailId");
+
+                    b.HasIndex("VisitId");
+
+                    b.ToTable("VisitDetails");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.VisitStatus", b =>
@@ -681,20 +796,6 @@ namespace BTL_Platform.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BTL_Platform.Models.Employee", b =>
-                {
-                    b.HasBaseType("BTL_Platform.Models.ApplicationUser");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasDiscriminator().HasValue("Employee");
-                });
-
             modelBuilder.Entity("BTL_Platform.Models.InventoryUnit", b =>
                 {
                     b.HasOne("BTL_Platform.Models.Inventory", "inventory")
@@ -714,9 +815,39 @@ namespace BTL_Platform.Migrations
                     b.Navigation("unit");
                 });
 
+            modelBuilder.Entity("BTL_Platform.Models.Places", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.ApplicationUser", "user")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.PlacesDetail", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.Places", "Places")
+                        .WithMany()
+                        .HasForeignKey("PlacesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BTL_Platform.Models.Unit", "unit")
+                        .WithMany()
+                        .HasForeignKey("unitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Places");
+
+                    b.Navigation("unit");
+                });
+
             modelBuilder.Entity("BTL_Platform.Models.Request", b =>
                 {
-                    b.HasOne("BTL_Platform.Models.Employee", "Employee")
+                    b.HasOne("BTL_Platform.Models.ApplicationUser", "Employee")
                         .WithMany()
                         .HasForeignKey("Employee_Id");
 
@@ -733,18 +864,39 @@ namespace BTL_Platform.Migrations
 
             modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
                 {
-                    b.HasOne("BTL_Platform.Models.UnitType", "Unit_type")
+                    b.HasOne("BTL_Platform.Models.ApplicationUser", "user")
                         .WithMany()
-                        .HasForeignKey("Unit_type_Id");
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Unit_type");
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.UnitDetail", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.Unit", "unit")
+                        .WithMany("UnitDetails")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("unit");
                 });
 
             modelBuilder.Entity("BTL_Platform.Models.Visit", b =>
                 {
+                    b.HasOne("BTL_Platform.Models.ApplicationUser", "user")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BTL_Platform.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("Id");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BTL_Platform.Models.Places", "Place")
                         .WithMany()
@@ -768,9 +920,22 @@ namespace BTL_Platform.Migrations
 
                     b.Navigation("request");
 
+                    b.Navigation("user");
+
                     b.Navigation("visitStatus");
 
                     b.Navigation("visitType");
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.VisitDetail", b =>
+                {
+                    b.HasOne("BTL_Platform.Models.Visit", "Visit")
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -822,6 +987,11 @@ namespace BTL_Platform.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BTL_Platform.Models.Unit", b =>
+                {
+                    b.Navigation("UnitDetails");
                 });
 #pragma warning restore 612, 618
         }
