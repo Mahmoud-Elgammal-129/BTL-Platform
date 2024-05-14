@@ -173,7 +173,8 @@ namespace BTL_Platform.Repository
                     oldVisit.TaskId = newVisit.TaskId;
                     oldVisit.TaskName = newVisit.TaskName;
                     oldVisit.UnitsNumbers = newVisit.UnitsNumbers;
-                    oldVisit.Unit_Id = newVisit.Unit_Id;
+                    oldVisit.UnitsType = newVisit.UnitsType;
+
 
 
                     // Update the old visit in the database
@@ -188,7 +189,7 @@ namespace BTL_Platform.Repository
         {
             if (RequestId != null)
             {
-                var Visits = bTLContext.Visits.Where(n => n.RequestID == RequestId).ToList();
+                var Visits = bTLContext.Visits.Where(n => n.RequestID == RequestId&&n.IsDeleted==false).ToList();
                 return Visits;
             }
             return null;

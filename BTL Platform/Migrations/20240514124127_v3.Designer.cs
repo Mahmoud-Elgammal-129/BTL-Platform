@@ -4,6 +4,7 @@ using BTL_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTL_Platform.Migrations
 {
     [DbContext(typeof(BTLContext))]
-    partial class BTLContextModelSnapshot : ModelSnapshot
+    [Migration("20240514124127_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +103,7 @@ namespace BTL_Platform.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6f541f3a-a395-4399-87de-05037d4c9e0f",
+                            ConcurrencyStamp = "e74e4e6e-e74a-43b7-92de-d4670f5f9a67",
                             Email = "zaghlol@gmail.com",
                             EmailConfirmed = true,
                             IsDeleted = false,
@@ -108,9 +111,9 @@ namespace BTL_Platform.Migrations
                             Name = "Zaghlol",
                             NormalizedEmail = "zaghlol@gmail.com",
                             NormalizedUserName = "zaghlol",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOyQ4n/MhhDVhqxEA/TfLS+UC44CxXeCw7tLZKYpiRpomhHkEuyLms108gS5ioKauQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBicUXuMIEZsp2wuDP31FssYf+z9oCAkpQIhmzPXsxLECyjW7U/eTiWE7uPBDi8frQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5da837fc-ceff-4e02-a3f0-f0c725d4734e",
+                            SecurityStamp = "2baa349e-4497-4908-9df9-c5dbc57a7403",
                             TwoFactorEnabled = false,
                             UserName = "Zaghlol"
                         });
@@ -177,6 +180,10 @@ namespace BTL_Platform.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("County")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -520,6 +527,10 @@ namespace BTL_Platform.Migrations
                     b.Property<DateTime?>("UTCoffset")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Unit_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UnitsNumbers")
                         .HasColumnType("int");

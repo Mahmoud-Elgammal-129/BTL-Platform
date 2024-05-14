@@ -34,15 +34,14 @@ namespace BTL_Platform.Models
         public string Status { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
        
-        public string Unit_Id { get; set; } = string.Empty;
+        
         public string UserName  { get; set; } = string.Empty;
         [Required(ErrorMessage = "Planned date is required")]
 
         public DateTime? PlannedDate { get; set; } = DateTime.Now;
         public string TaskId { get; set; } = string.Empty;
         public string TaskName { get; set; } = string.Empty;
-        //public string RequestID  { get; set; } = string.Empty;
-        // Other properties SOFT DELETE
+
         public bool IsDeleted { get; set; } = false;
         [ForeignKey(nameof(request))]
         public string? RequestID { get; set; } = null;

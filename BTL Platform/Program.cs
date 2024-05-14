@@ -17,7 +17,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<RequestRepository>();
 builder.Services.AddScoped<RequestTypeRepository>();
-builder.Services.AddScoped<EmployeeRepository>();
+
 builder.Services.AddScoped<InventoryRepository>();
 builder.Services.AddScoped<PlacesRepository>();
 builder.Services.AddScoped<UnitRepository>();

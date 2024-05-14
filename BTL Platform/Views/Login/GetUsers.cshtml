@@ -34,8 +34,8 @@
                     <td>@emp.UserName</td>
 
                     <td>
-                        <a asp-action="Edit" asp-route-id="@emp.Id" class="btn btn-outline-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@emp.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-controller="Login"  asp-action="EditEmployee" asp-route-id="@emp.Id" class="btn btn-outline-warning">Edit</a>
+                        <a asp-controller="Login"  asp-action="Delete" asp-route-id="@emp.Id" class="btn btn-outline-danger">Delete</a>
                         
                     </td>
                 </tr>

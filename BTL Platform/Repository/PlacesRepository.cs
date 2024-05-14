@@ -101,12 +101,12 @@ namespace BTL_Platform.Repository
                     oldPlaces.Channel = places.Channel;
                     oldPlaces.City = places.City;
                     oldPlaces.Country = places.Country;
-                    oldPlaces.County = places.County;
+                   
                     oldPlaces.DisplayName = places.DisplayName;
                     oldPlaces.longitude = places.longitude;
                     oldPlaces.PostalCode = places.PostalCode;
                     oldPlaces.PlaceId = places.PlaceId;
-                    oldPlaces.UnitType = places.UnitType;
+                    
                     bTLContext.Places.Update(oldPlaces);
                     Save();
                 }

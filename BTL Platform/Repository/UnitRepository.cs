@@ -59,6 +59,30 @@ namespace BTL_Platform.Repository
                 throw;
             }
         }
+        public List<Unit> GetUnitsByName(List<string> names)
+        {
+            try
+            {
+                List<Unit> units = new List<Unit>();
+
+                foreach (string name in names)
+                {
+                    Unit unit = bTLContext.Units.FirstOrDefault(u => u.UnitName == name && !u.IsDeleted);
+                    if (unit != null)
+                    {
+                        units.Add(unit); 
+                    }
+                }
+
+                return units; 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving units: {ex.Message}");
+                throw;
+            }
+        }
+
 
         public void Insert(Unit unit)
         {

@@ -21,7 +21,7 @@ namespace BTL_Platform.Controllers
         VisitRepository VisitRepository;
 
         VisitTypeRepository VisitTypeRepository;
-        EmployeeRepository employeeRepository;
+        UnitRepository unitRepository;
         VisitRepository visitRepository;
         UserManager<ApplicationUser> usermanager;
         BTLContext context;
@@ -30,11 +30,11 @@ namespace BTL_Platform.Controllers
         UnitDetailRepository unitDetailRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, EmployeeRepository _employeeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository, UnitDetailRepository unitDetailRepository, IHttpContextAccessor httpContextAccessor)
+        public RequestController(RequestRepository _RequestRepository, RequestTypeRepository _requestTypeRepository, UserManager<ApplicationUser> usermanager, VisitTypeRepository visitTypeRepository, VisitRepository visitRepository, BTLContext context, PlacesDetailRepository placesDetailRepository, VisitDetailRepository visitDetailRepository, UnitDetailRepository unitDetailRepository, IHttpContextAccessor httpContextAccessor, UnitRepository unitRepository)
         {
             RequestRepository = _RequestRepository;
             RequestTypeRepository = _requestTypeRepository;
-            employeeRepository = _employeeRepository;
+
             this.usermanager = usermanager;
             VisitTypeRepository = visitTypeRepository;
             VisitRepository = visitRepository;
@@ -43,6 +43,7 @@ namespace BTL_Platform.Controllers
             this.visitDetailRepository = visitDetailRepository;
             this.unitDetailRepository = unitDetailRepository;
             _httpContextAccessor = httpContextAccessor;
+            this.unitRepository = unitRepository;
         }
         public IActionResult Index()
         {
@@ -60,7 +61,6 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
-
         public IActionResult Create()
         {
             try
@@ -100,7 +100,6 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
-
         public IActionResult Details(string id)
         {
             try
@@ -167,7 +166,6 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
-
         [HttpPost]
         public IActionResult Upload(IFormFile excelFile, string id)
         {
@@ -253,7 +251,6 @@ namespace BTL_Platform.Controllers
                 return RedirectToAction("Error", "Home"); // Redirect to error page
             }
         }
-
         [HttpPost]
         public IActionResult UploadEdit(IFormFile excelFile, string id)
         {
@@ -291,18 +288,32 @@ namespace BTL_Platform.Controllers
                         visitDetailRepository.Insert(v1);
                         // we will add it to place Detail
 
-                        PlacesDetail P1 = new PlacesDetail();
-                        P1.PlacesId = item.Place_Id;
-                        P1.PlacesDetailCount = item.UnitsNumbers;
-                        P1.unitId = item.Unit_Id;
-                        placesDetailRepository.Insert(P1);
+
                         // we will add it to unit Detail
 
-                        UnitDetail u1 = new UnitDetail();
-                        
-                        u1.UnitId=item.Unit_Id;
-                        u1.UnitDetailCount = item.UnitsNumbers;
-                        unitDetailRepository.Insert(u1);
+
+
+                        // we will make comma seperation and then we will insert data based on it 
+                        var List_Unit = SeparateByComma(item.UnitsType);
+                        // and add it to unit only
+                        var units = unitRepository.GetUnitsByName(List_Unit);
+
+                        foreach (var unit in units)
+                        {
+                            UnitDetail u1 = new UnitDetail();
+
+                            u1.UnitId = unit.UnitId;
+                            u1.UnitDetailCount = 1;
+                            unitDetailRepository.Insert(u1);
+
+
+                            PlacesDetail P1 = new PlacesDetail();
+                            P1.PlacesId = item.Place_Id;
+                            P1.PlacesDetailCount = 1;
+                            P1.unitId = unit.UnitId;
+                            placesDetailRepository.Insert(P1);
+                        }
+
                     }
                 }
 
@@ -310,8 +321,6 @@ namespace BTL_Platform.Controllers
             }
             return View("Upload");
         }
-
-       
         public static DataTable ReadExcel(IFormFile excelFile, string sheetName)
         {
             try
@@ -374,7 +383,6 @@ namespace BTL_Platform.Controllers
                 throw; // Re-throw the exception to propagate it to the caller
             }
         }
-
         private List<Visit> ConvertDataTableToVisitList(DataTable dataTable)
         {
             List<Visit> visits = new List<Visit>();
@@ -448,11 +456,12 @@ namespace BTL_Platform.Controllers
                 {
                     visit.TaskName = row["Task_name"].ToString();
                 }
-                    // Unit_Id
-                    if (row["Unit_Id"] != null)
+                    if (row["Units Type"] != null)
                     {
-                        visit.Unit_Id = row["Unit_Id"].ToString();
+                        visit.UnitsType = row["Units Type"].ToString();
                     }
+
+
                     visits.Add(visit);
                 }
             }
@@ -464,9 +473,6 @@ namespace BTL_Platform.Controllers
             }
             return visits;
         }
-
-
-
         public IActionResult Search(string searchValue)
         {
             try
@@ -513,7 +519,23 @@ namespace BTL_Platform.Controllers
             return places;
 
         }
+        private List<string> SeparateByComma(string input)
+        {
+            // Split the input string by commas
+            string[] separatedStrings = input.Split(',');
 
+            // Create a list to store the separated strings
+            List<string> resultList = new List<string>();
+
+            // Add each separated string to the result list after trimming leading and trailing whitespace
+            foreach (string str in separatedStrings)
+            {
+                resultList.Add(str.Trim());
+            }
+
+            // Return the list of separated strings
+            return resultList;
+        }
     }
 }
 

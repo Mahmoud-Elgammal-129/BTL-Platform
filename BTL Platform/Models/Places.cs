@@ -34,8 +34,7 @@ namespace BTL_Platform.Models
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "County is required")]
-        public string County { get; set; }
+
 
         [Required(ErrorMessage = "State is required")]
         public string State { get; set; }
@@ -52,8 +51,6 @@ namespace BTL_Platform.Models
         [Display(Name = "Unit Number")]
         public string UnitNumber { get; set; }
 
-        [Display(Name = "Unit Type")]
-        public string UnitType { get; set; }
 
         [Range(-90, 90, ErrorMessage = "Latitude must be between -90 and 90")]
         public decimal latitude { get; set; }

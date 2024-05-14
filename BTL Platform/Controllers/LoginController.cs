@@ -1,9 +1,7 @@
 ﻿using BTL_Platform.Models;
 using BTL_Platform.ViewModels;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BTL_Platform.Controllers
@@ -63,21 +61,21 @@ namespace BTL_Platform.Controllers
             }
 
             return View(model);
-            
+
         }
         public IActionResult RegisterEmployee()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> RegisterEmployee( RegisterVM model )
+        public async Task<IActionResult> RegisterEmployee(RegisterVM model)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser()
                 {
                     Email = model.Email,
-                    Name=model.UserName,
+                    Name = model.UserName,
                     UserName = model.UserName,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -85,7 +83,7 @@ namespace BTL_Platform.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "employee");
                     return RedirectToAction(nameof(Login));
-                    
+
                 }
                 else
                 {
@@ -96,6 +94,60 @@ namespace BTL_Platform.Controllers
                     }
                 }
 
+            }
+            return View(model);
+        }
+        public async Task<IActionResult> EditEmployee(string Id)
+        {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditVM
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                UserName = user.UserName
+                // Add other properties you want to edit here
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEmployee(EditVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+                // Update other properties you want to edit here
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(GetUsers));
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
             return View(model);
         }
